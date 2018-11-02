@@ -1,7 +1,7 @@
 body {
     margin: 0;
-    font-family: "Roboto Condensed"
-
+    font-family: "Roboto Condensed";
+    background-color: #323741;
 }
 
 
@@ -19,6 +19,7 @@ body {
   width: 10%;
   height: 10%;
   margin: auto;
+  padding-top: 20px;
 }
 
 #passwordfield{
@@ -26,4 +27,5 @@ body {
   width: 10%;
   height: 15%;
   margin: auto;
+  padding-top: 20px;
 }
