@@ -1,0 +1,29 @@
+body {
+    margin: 0;
+    font-family: "Roboto Condensed"
+
+}
+
+
+#mainlogo{
+  width: 50%;
+  height: 10%;
+  margin-top: 5%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#usernamefield{
+  display: block;
+  width: 10%;
+  height: 10%;
+  margin: auto;
+}
+
+#passwordfield{
+  display: block;
+  width: 10%;
+  height: 15%;
+  margin: auto;
+}
