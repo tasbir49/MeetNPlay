@@ -1,0 +1,56 @@
+#chatboxcontainer {
+
+    background-color: white;
+      margin-left:auto;
+  margin-right:auto;
+    width: 500px;
+    max-height: 500px;
+        overflow-y: scroll;
+          hyphens: auto;
+            overflow-wrap: break-word;
+
+}
+
+body {
+    background-color: aquamarine;
+}
+
+#title {
+    text-align: center;
+    color: blue;
+    }
+    
+#chatboxcontainer ul {
+    
+    list-style-type: none;
+    list-style-position: inside;    
+    padding: 0;
+
+}
+
+.userNameInMsg {
+    font-weight: bold;
+    color: gray;
+}
+.adminNameInMsg {
+    font-weight: 900;
+    color: red;
+}
+.submitter {
+    font-size: 0;
+    text-align: center;
+    margin-left:auto;
+    margin-right: auto;
+}
+
+.submitter input[type="text"] {
+    width: 450px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.submitter input[type="submit"] {
+    margin: 0px;
+    padding: 0px;
+    width: 50px;
+}
