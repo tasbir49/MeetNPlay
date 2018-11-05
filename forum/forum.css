@@ -102,6 +102,26 @@ a.linkAnimate:active:before {
 	border: 1px solid #272822;
 }
 
+a.sideNavGames{
+	color: white;
+}
+
+a.sideNavGames:hover{
+	color: gold;
+	cursor: pointer;
+}
+#sideNavContents li{
+	margin-top: 10px;
+	list-style-position: inside;
+	list-style: none;
+	list-style-type: none;
+	overflow: hidden;
+	padding-left: 0;
+}
+
+#sideNavContents ul{
+	padding-left: 0;
+}
 #topNav {
 	position: absolute;
 	width: 100%;
@@ -136,30 +156,29 @@ a.linkAnimate:active:before {
 #sideNav {
 	float: left;
 	width: 20%;
-	margin: 5% 5% 5% 5%;
+	margin: 2% 2% 2% 2%;
 	height: 500px;
 	border: 2px solid grey;
 }
 #sideNavContents {
 	padding: 20px;
 }
-#thread {
+#gamePost {
 	float: left;
-	width: 58%;
-	padding: 5% 5% 5% 5%;
+	width: 65%;
+	padding: 2% 2% 2% 2%;
 	display: inline-block;
 	height: 400px;
 }
-#post {
-	border: 2px solid grey;
-	padding: 30px;
-	height: 200px;
-	margin-bottom: 30px;
-}
-.comment {
+
+.post {
 	border: 2px solid grey;
 	padding: 30px;
 	height: 100px;
+}
+
+.post:hover{
+	background: black;
 }
 
 .userProfilePic {

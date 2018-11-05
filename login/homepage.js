@@ -19,6 +19,8 @@ function login(e){
 }
 
 function validLogin(user,pass){
+
+  //api call for correct user name and password
   const rightUser = "Test"
   const rightPass = "Test"
 
