@@ -162,6 +162,24 @@ a.sideNavGames:hover{
 	padding: 10px;
 }
 
+#headerProfile{
+	color: white;
+	display: inline-block;
+	float: right;
+	padding: 1% 1% 1% 1%;
+	margin: 0;
+	width: 20%;
+	}
+#headerProfileText{
+	color:white;
+	display: inherit;
+}
+#headerProfilePic{
+	max-width: 30%;
+	padding: 0;
+	margin-top: 10px;
+}
+
 #sideNav {
 	float: left;
 	width: 20%;
