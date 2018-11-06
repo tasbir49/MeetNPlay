@@ -33,6 +33,11 @@ a {
     background: none;
 }
 
+* {
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
 /* a tag hover animation */
 a.linkAnimate {
 	position: relative;
@@ -136,18 +141,24 @@ header #headerTitle {
 	margin-bottom: 10px;
 }
 #topNav_title {
+	position: absolute;
 	display: inline-block;
+	top: 1.2rem;
 	margin: 0;
-	margin-top: 1px;
-	margin-right: 0.75rem;
+	padding: 0;
 }
-#topNav_title a {
-	color: white;
+#topNav_title img {
+	margin: 0;
+	padding: 0;
+	height: 4.5em;
+	border: 2px solid #DDD;
+	border-radius: 50%;
 }
 #topNav_links {
 	display: inline-block;
 	list-style-type: none;
 	margin: 0;
+	margin-left: 5em;
 	padding: 0;
 }
 #topNav_links li {
