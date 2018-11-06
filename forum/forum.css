@@ -98,8 +98,17 @@ a.linkAnimate:hover:before {
 }
 
 a.linkAnimate:active:before {
-	opacity: 0.75;
+	/* opacity: 0.75; */
 	border: 1px solid #272822;
+}
+
+a.linkAnimateCurrent{
+	/* opacity: 0.75; */
+	/* border: 1px solid #272822; */
+	color: #fff;
+	color: #fff;
+	background-color: #06858C;
+
 }
 
 a.sideNavGames{
@@ -185,50 +194,3 @@ a.sideNavGames:hover{
 	width: 75px;
 	border-radius: 50%;
 }
-
-
-/*
-323741
-06858C
-45C48B
-FFD039
-EB3E4A
-*/
-/*#colours {
-	position: fixed;
-	bottom: 0;
-	right: 0;
-}
-#colours > div {
-	display: inline-block;
-}
-#colours > div:nth-child(1) {
-	width: 40px;
-	height: 40px;
-	background-color: #323741;
-	border: 1px solid white;
-}
-#colours > div:nth-child(2) {
-	width: 40px;
-	height: 40px;
-	background-color: #06858C;
-	border: 1px solid white;
-}
-#colours > div:nth-child(3) {
-	width: 40px;
-	height: 40px;
-	background-color: #45C48B;
-	border: 1px solid white;
-}
-#colours > div:nth-child(4) {
-	width: 40px;
-	height: 40px;
-	background-color: #FFD039;
-	border: 1px solid white;
-}
-#colours > div:nth-child(5) {
-	width: 40px;
-	height: 40px;
-	background-color: #EB3E4A;
-	border: 1px solid white;
-}*/
