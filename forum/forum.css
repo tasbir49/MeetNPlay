@@ -6,8 +6,8 @@ FFD039
 EB3E4A
 */
 
-#headerBG {
-	background-image: url("../resources/images/loz.jpg") !important;
+header #headerBG {
+	background-image: url("../resources/images/loz.jpg");
 }
 
 a.sideNavGames{
