@@ -33,6 +33,11 @@ a {
     background: none;
 }
 
+* {
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
 /* a tag hover animation */
 a.linkAnimate {
 	position: relative;
