@@ -1,105 +1,19 @@
-@font-face {
-	font-family: "EncodeSans";
-	src: url("../../../resources/fonts/EncodeSans/EncodeSans-Medium.ttf");
-}
-@font-face {
-	font-family: "EncodeSans-Light";
-	src: url("../../../resources/fonts/EncodeSans/EncodeSans-Light.ttf");
-}
-@font-face {
-	font-family: "EncodeSans-ExtraBold";
-	src: url("../../../resources/fonts/EncodeSans/EncodeSans-ExtraBold.ttf");
-}
+/*
+323741
+06858C
+45C48B
+FFD039
+EB3E4A
+*/
 
-html, body {
-	font-family: "EncodeSans";
-	margin: 0;
-	color: #EEE;
-}
-body {
-	background-color: #323741;
-}
-
-header {
-	position: relative;
-	z-index: -1;
-	top: 0;
-	padding: 0;
-	margin: 0;
-	width: 100%;
-	background-image: url("../../../resources/images/loz.jpg");
-	background-size: 125%;
-	background-position: 50% 50%;
-}
-header #headerTitle {
-	display: inline-block;
-	font-family: "EncodeSans-ExtraBold";
-	font-size: 2.5em;
-	margin: 0;
-	padding: 15% 10% 10% 10%;
-	height: 100%;
-	color: white;
-	background-color: rgba(0,0,0,0.5);
-}
-
-a {
-	position: relative;
-	text-decoration: none;
-    background: none;
-}
-
-a.linkAnimate {
-	position: relative;
-	text-decoration: none;
-    background: none;
-    border: none;
-    outline: none;
-    padding: 1px 1px;
-    color: white;
-    -webkit-transition: color 100ms;
-    -o-transition: color 100ms;
-    transition: color 100ms;
-    /* Safari-flicker/shift-graphical-glitch hacky fix*/
-    -webkit-perspective: 1000;
-	-webkit-backface-visibility: hidden;
-}
-
-/* Before pseudoelements are usually used as hover styles */
-a.linkAnimate:before {
-	position: absolute;
-	content: '';
-	background-color: #06858C;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-	z-index: -1;
-	-webkit-transform: scaleY(0.07);
-	    -ms-transform: scaleY(0.07);
-	        transform: scaleY(0.07);
-	-webkit-transform-origin: bottom;
-	    -ms-transform-origin: bottom;
-	        transform-origin: bottom;
-    -webkit-transition: -webkit-transform 100ms;
-    transition: -webkit-transform 100ms;
-    -o-transition: transform 100ms;
-    transition: transform 100ms;
-    transition: transform 100ms, -webkit-transform 100ms;
-}
-a.linkAnimate:hover {
-	color: #FFF;
-}
-
-a.linkAnimate:hover:before {
-	-webkit-transform: scaleY(1);
-	    -ms-transform: scaleY(1);
-	        transform: scaleY(1);
-	border-radius: 2px;
-}
-
+<<<<<<< HEAD
 a.linkAnimate:active:before {
 	/* opacity: 0.75; */
 	border: 1px solid #272822;
+=======
+header #headerBG {
+	background-image: url("../resources/images/loz.jpg");
+>>>>>>> 88e76d5b4c609da7007fc20a8e904aa50b28132d
 }
 
 a.linkAnimateCurrent{
@@ -130,36 +44,6 @@ a.sideNavGames:hover{
 
 #sideNavContents ul{
 	padding-left: 0;
-}
-#topNav {
-	position: absolute;
-	width: 100%;
-	background-image: linear-gradient(#323741, rgba(0,0,0,0));
-	background-size: 100% 60%;
-	background-repeat: no-repeat;
-}
-#topNav_title {
-	display: inline-block;
-	padding: 1% 1% 1% 10%;
-}
-#topNav_title a {
-	color: white;
-}
-#topNav_links {
-	display: inline-block;
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-}
-#topNav_links li {
-	display: inline-block;
-	margin: 0;
-	padding: 0;
-}
-#topNav_links a {
-	display: inline-block;
-	text-align: center;
-	padding: 10px;
 }
 
 #headerProfile{

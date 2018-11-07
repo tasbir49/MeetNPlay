@@ -1,0 +1,292 @@
+/*
+323741
+06858C
+45C48B
+FFD039
+EB3E4A
+*/
+
+@font-face {
+	font-family: "EncodeSans";
+	src: url("../resources/fonts/EncodeSans/EncodeSans-Medium.ttf");
+}
+@font-face {
+	font-family: "EncodeSans-Light";
+	src: url("../resources/fonts/EncodeSans/EncodeSans-Light.ttf");
+}
+@font-face {
+	font-family: "EncodeSans-ExtraBold";
+	src: url("../resources/fonts/EncodeSans/EncodeSans-ExtraBold.ttf");
+}
+
+html, body {
+	font-family: "EncodeSans", sans-serif;
+	margin: 0;
+	color: #EEE;
+}
+body {
+	background-color: #323741;
+}
+a {
+	position: relative;
+	text-decoration: none;
+    background: none;
+}
+
+/* a tag hover animation */
+a.linkAnimate {
+	position: relative;
+	text-decoration: none;
+    background: none;
+    border: none;
+    outline: none;
+    padding: 1px 1px;
+    color: white;
+    -webkit-transition: color 100ms;
+    -o-transition: color 100ms;
+    transition: color 100ms;
+    /* Safari-flicker/shift-graphical-glitch hacky fix*/
+    -webkit-perspective: 1000;
+	-webkit-backface-visibility: hidden;
+}
+
+a.linkAnimate:before {
+	position: absolute;
+	content: '';
+	background-color: #06858C;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: -1;
+	-webkit-transform: scaleY(0.07);
+	    -ms-transform: scaleY(0.07);
+	        transform: scaleY(0.07);
+	-webkit-transform-origin: bottom;
+	    -ms-transform-origin: bottom;
+	        transform-origin: bottom;
+    -webkit-transition: -webkit-transform 100ms;
+    transition: -webkit-transform 100ms;
+    -o-transition: transform 100ms;
+    transition: transform 100ms;
+    transition: transform 100ms, -webkit-transform 100ms;
+}
+a.linkAnimate:hover {
+	color: #FFF;
+}
+
+a.linkAnimate:hover:before {
+	-webkit-transform: scaleY(1);
+	    -ms-transform: scaleY(1);
+	        transform: scaleY(1);
+	border-radius: 2px;
+}
+
+a.linkAnimate:active:before {
+	opacity: 0.75;
+	border: 1px solid #272822;
+}
+/* end of a tag hover animation */
+
+header {
+	position: relative;
+	padding: 0;
+	margin: 0;
+	height: 250px;
+}
+header #headerBG {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	width: 100%;
+	height: 250px;
+	background-color: black;
+	background-image: url("../resources/images/fortnite.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+}
+header #headerContainer {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	background-color: rgba(0,0,0,0.5);
+	width: 40%;	
+	animation: iniEnter 750ms;
+}
+#headerContainerPadding {
+	padding: 2rem 1rem 2rem 2rem;
+}
+header #headerTitleContainer {
+	position: absolute;
+	bottom: 0px;
+	padding-right: 2rem;
+}
+header #headerTitle {
+	font-family: "EncodeSans-ExtraBold", sans-serif;
+	font-size: 2.5em;
+	text-shadow: 3px 3px black;
+	color: white;
+}
+
+#topNav {
+	width: 100%;
+	display: inline-block;
+	margin-bottom: 10px;
+}
+#topNav_title {
+	display: inline-block;
+	margin: 0;
+	margin-top: 1px;
+	margin-right: 0.75rem;
+}
+#topNav_title a {
+	color: white;
+}
+#topNav_links {
+	display: inline-block;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+#topNav_links li {
+	display: inline-block;
+	margin: 0 4px;
+	padding: 0;
+}
+#topNav_links a {
+	min-width: 75px;
+	display: inline-block;
+	text-align: center;
+	padding: 10px;
+}
+
+#topNav #loginButtonContainer {
+	position: absolute;
+	right: 0;
+	top: 0;
+	background-color: rgba(0,0,0,0.5);
+	height: 100%;
+	margin-right: 1rem;
+}
+#topNav #loginButton {
+	margin: 2rem 1rem;
+}
+#topNav #loginButton:before {
+	background-color: #FFD039;
+}
+#topNav #loginButton:hover {
+	color: black;
+}
+
+.hamburger {
+	position: absolute;
+    z-index: 11;
+    cursor: pointer;
+}
+.hamburger .bar {
+    width: 1.75em;
+    height: 5px;
+    background-color: #FFF;
+    margin-bottom: 6px;
+    transition: opacity 250ms, transform 250ms;
+    transform-origin: right;
+}
+.hamburger:hover .bar {
+	background-color: #FFD039;
+}
+.hamburger.active .bar {
+	opacity: 0;
+}
+
+.hamburger.active .bar:first-child {
+	opacity: 1;
+    -webkit-transform: rotate(-45deg) scaleX(1.1);
+    transform: rotate(-45deg) scaleX(1.1);
+}
+
+.hamburger.active .bar:last-child {
+	opacity: 1;
+    -webkit-transform: rotate(45deg) scaleX(1.1);
+    transform: rotate(45deg) scaleX(1.1);
+}
+
+#topNav_hamburger {
+	display: none;
+	right: 2rem;
+}
+
+@media screen and (max-width: 992px) {
+	header #headerContainer {
+		width: 53%;
+	}
+}
+@media screen and (max-width: 768px) {
+	header #headerContainer {
+		width: 100%;
+	}
+	#headerContainerPadding {
+		padding: 2rem;
+	}
+	#topNav, #headerTitle {
+		animation: iniEnter 750ms;
+	}
+	header #headerTitle {
+		font-size: 2em;
+	}
+	#topNav_hamburger {
+		display: inline-block;
+	}
+	#topNav_links {
+		position: fixed;
+		top: 0;
+		right: -175px;
+		z-index: 10;
+		padding: 75px 2rem;
+		background-color: rgba(0,0,0,0.6);
+		height: 100vh;
+		animation: navSlideOut 300ms forwards;
+	}
+	#topNav_hamburger.active ~ #topNav_links {
+		animation: navSlideIn 300ms forwards;
+	}
+	#topNav_links li {
+		display: block;
+	}
+	#topNav_links #loginButtonContainer {
+		position: relative;
+		padding: 0;
+		margin: 2rem 0;
+		height: auto;
+		background: none;
+	}
+	#topNav_links #loginButton {
+		margin: 0;	
+	}
+}
+
+@keyframes iniEnter {
+	0%, 40% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@keyframes navSlideIn {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-175px);
+	}
+}
+@keyframes navSlideOut {
+	0% {
+		transform: translateX(-175px);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}

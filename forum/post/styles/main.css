@@ -1,0 +1,33 @@
+#sideNav {
+	float: left;
+	width: 20%;
+	margin: 5% 5% 5% 5%;
+	height: 500px;
+	border: 2px solid grey;
+}
+#sideNavContents {
+	padding: 20px;
+}
+#thread {
+	float: left;
+	width: 58%;
+	padding: 5% 5% 5% 5%;
+	display: inline-block;
+	height: 400px;
+}
+#post {
+	border: 2px solid grey;
+	padding: 30px;
+	height: 200px;
+	margin-bottom: 30px;
+}
+.comment {
+	border: 2px solid grey;
+	padding: 30px;
+	height: 100px;
+}
+
+.userProfilePic {
+	width: 75px;
+	border-radius: 50%;
+}
