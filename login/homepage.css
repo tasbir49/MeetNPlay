@@ -5,6 +5,13 @@ body {
 }
 
 footer{
+  color: #323741;
+  font-family: "Roboto Condensed";
+
+  position: fixed;
+  bottom: 0;
+}
+footer:hover{
   font-family: "Roboto Condensed";
   background-color: black;
   color: white;
@@ -12,11 +19,26 @@ footer{
   bottom: 0;
 }
 
+input{
+  border-radius: 7px;
+  width: 100%;
+padding: 12px 20px;
+margin: 8px 0;
+display: inline-block;
+border: 1px solid #ccc;
+box-sizing: border-box;
+}
+input:hover{
+  opacity: 0.8;
+}
+
+
 #mainlogo{
   width: 33%;
   display: block;
   margin-left: auto;
   margin-right: auto;
+  border-radius: 50%;
 }
 
 #loginField{

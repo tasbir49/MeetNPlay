@@ -11,9 +11,7 @@ a.linkAnimate:active:before {
 	/* opacity: 0.75; */
 	border: 1px solid #272822;
 }
-#headerBG {
-	background-image: url("../resources/images/loz.jpg");
-}
+
 
 a.linkAnimateCurrent{
 	/* opacity: 0.75; */
@@ -95,5 +93,25 @@ a.sideNavGames:hover{
 	width: 75px;
 	border-radius: 50%;
 }
-=======
+
+.none{
+
 }
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    z-index: 1;
+		padding: 0;
+}
+
+.dropdown-content a {
+    color: black;
+    text-decoration: none;
+    display: block;
+		width:84%;
+}
+.dropdown-content a:hover {background-color: #ddd;}
+
+
+#topNav #loginButtonContainer:hover .dropdown-content{display: block;}
