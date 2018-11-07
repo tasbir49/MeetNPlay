@@ -6,14 +6,13 @@ FFD039
 EB3E4A
 */
 
-<<<<<<< HEAD
+
 a.linkAnimate:active:before {
 	/* opacity: 0.75; */
 	border: 1px solid #272822;
-=======
-header #headerBG {
+}
+#headerBG {
 	background-image: url("../resources/images/loz.jpg");
->>>>>>> 88e76d5b4c609da7007fc20a8e904aa50b28132d
 }
 
 a.linkAnimateCurrent{
@@ -95,4 +94,6 @@ a.sideNavGames:hover{
 .userProfilePic {
 	width: 75px;
 	border-radius: 50%;
+}
+=======
 }
