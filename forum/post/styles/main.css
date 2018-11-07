@@ -9,36 +9,127 @@ EB3E4A
 header #headerBG {
 	background-image: url("../../../resources/images/shovelknight.jpg");
 }
-#sideNav {
+#contents {
+	margin: 2.25rem 10rem;
+	animation: iniEnter 1500ms;
+}
+#sideNavContainer {
 	float: left;
 	width: 20%;
-	margin: 5% 5% 5% 5%;
-	height: 500px;
-	border: 2px solid grey;
 }
-#sideNavContents {
+#sideNav {
 	padding: 20px;
+	height: 400px;
+	background-color: rgba(0,0,0,0.2);
+	box-shadow: 0 3px 7px 1px rgba(0,0,0,1);
+}
+#threadContainer {
+	/*float: left;*/
+	width: 100%;
 }
 #thread {
-	float: left;
-	width: 58%;
-	padding: 5% 5% 5% 5%;
-	display: inline-block;
-	height: 400px;
+	/*margin: 0 0 2rem 2rem;*/
 }
-#post {
-	border: 2px solid grey;
+#thread > section {
+	background-color: rgba(0,0,0,0.2);
+	box-shadow: 0 3px 7px 1px rgba(0,0,0,1);
 	padding: 30px;
-	height: 200px;
 	margin-bottom: 30px;
 }
-.comment {
-	border: 2px solid grey;
+
+.keywordLabel {
+	display: inline-block;
+	background-color: #45C48B;
+	color: black;
+	padding: 4px 5px;
+	margin-right: 1em;
+	margin-bottom: 10px;
+}
+.keywordLabel.gameGenre {
+	background-color: #06858C;
+}
+.keywordLabel.gamePlatform {
+	background-color: #FFD039;
+}
+
+#post hr {
+	margin: 10px 0 20px 0;
+}
+
+#gameContainer {
+	display: inline-block;
+	width: 35%;
+}
+#game {
 	padding: 30px;
-	height: 100px;
+	background-color: rgba(0,0,0,0.4);
+	box-shadow: 0 3px 7px 1px rgba(0,0,0,1);
+	overflow: scroll;
+}
+#game .keywordLabel {
+	font-size: 12px;
+}
+#gameImg {
+	width: 100%;
+	max-width: 800px;
+	margin-bottom: 10px;
+	box-shadow: 0 3px 7px 4px rgba(0,0,0,1);
+}
+#gameImgContainer {
+	text-align: center;
+}
+#game h2, #game h3 {
+	font-weight: normal;
+	margin-top: 0;
+	margin-bottom: 10px;
+}
+#game h3 {
+	opacity: 0.75;
+}
+
+#postDetailsContainer {
+	float: right;
+	width: 65%;
+}
+
+#postDetails {
+	padding: 30px;
+	background-color: rgba(0,0,0,0.4);
+	box-shadow: 0 3px 7px 1px rgba(0,0,0,1);
+	margin-left: 20px;
+	overflow: scroll;
 }
 
 .userProfilePic {
+	vertical-align: middle;
 	width: 75px;
 	border-radius: 50%;
+	margin-bottom: 20px;
+}
+
+@media screen and (max-width: 992px) {
+	#contents {
+		margin: 2.25rem 5rem;
+	}
+}
+@media screen and (max-width: 768px) {
+	#contents {
+		margin: 2.25rem 2rem;
+		animation: iniEnter2 1500ms;
+	}
+	#gameImg {
+		width: 70%;
+		margin: 0 15% 20px 15%;
+	}
+	#gameContainer {
+		width: 100%;
+		margin-bottom: 20px;
+	}
+	#postDetailsContainer {
+		float: none;
+		width: 100%;
+	}
+	#postDetails {
+		margin-left: 0;
+	}
 }
