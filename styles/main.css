@@ -95,6 +95,7 @@ a.linkAnimate:active:before {
 
 header {
 	position: relative;
+	z-index: 2;
 	padding: 0;
 	margin: 0;
 	height: 250px;
@@ -107,7 +108,7 @@ header #headerBG {
 	width: 100%;
 	height: 250px;
 	background-color: black;
-	background-image: url("../resources/images/fortnite.jpg");
+	background-image: url("../resources/images/loz.jpg");
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
@@ -136,30 +137,41 @@ header #headerTitle {
 }
 
 #topNav {
+	position: fixed;
+	z-index: 3;
 	width: 100%;
+	top: 0;
+	left: 0;
+	padding-top: 2rem;
 	display: inline-block;
-	margin-bottom: 10px;
+	padding-bottom: 2rem;
+	background-color: rgba(31, 35, 41, 0);
+	transition: padding-top 300ms, padding-bottom 300ms, background-color 300ms;
 }
 #topNav_title {
 	position: absolute;
 	display: inline-block;
 	top: 1.2rem;
+	left: 2rem;
 	margin: 0;
 	padding: 0;
+	transition: top 300ms;
 }
-#topNav_title img {
+#topNav_titleImg {
 	margin: 0;
 	padding: 0;
 	height: 4.5em;
 	border: 2px solid #DDD;
 	border-radius: 50%;
+	transition: height 300ms;
 }
 #topNav_links {
 	display: inline-block;
 	list-style-type: none;
 	margin: 0;
-	margin-left: 5em;
+	margin-left: 7.5em;
 	padding: 0;
+	transition: margin-left 300ms;
 }
 #topNav_links li {
 	display: inline-block;
@@ -177,12 +189,26 @@ header #headerTitle {
 	position: absolute;
 	right: 0;
 	top: 0;
-	background-color: rgba(0,0,0,0.5);
 	height: 100%;
 	margin-right: 1rem;
 }
+#loginButtonBG{
+	position: absolute;
+	background-color: rgba(0,0,0,0.5);
+	right: 0;
+	top: 0;
+	height: 100%;
+	width: 95px;
+	margin-right: 1rem;
+	padding: 0 1rem;
+}
+
 #topNav #loginButton {
+	position: relative;
+	width: 75px;
+	z-index: 2;
 	margin: 2rem 1rem;
+	transition: margin-top 300ms;
 }
 #topNav #loginButton:before {
 	background-color: #FFD039;
@@ -225,7 +251,10 @@ header #headerTitle {
 
 #topNav_hamburger {
 	display: none;
+	top: 20px;
+	top: 2rem;
 	right: 2rem;
+	transition: top 300ms;
 }
 
 @media screen and (max-width: 992px) {
@@ -236,12 +265,16 @@ header #headerTitle {
 @media screen and (max-width: 768px) {
 	header #headerContainer {
 		width: 100%;
+		animation: iniEnter2 750ms;
 	}
 	#headerContainerPadding {
 		padding: 2rem;
 	}
-	#topNav, #headerTitle {
-		animation: iniEnter 750ms;
+	#topNav_title {
+		position: relative;
+		top: 0px;
+		margin: 0;
+		padding: 0;
 	}
 	header #headerTitle {
 		font-size: 2em;
@@ -255,7 +288,7 @@ header #headerTitle {
 		right: -175px;
 		z-index: 10;
 		padding: 75px 2rem;
-		background-color: rgba(0,0,0,0.6);
+		background-color: rgba(0,0,0,0.8);
 		height: 100vh;
 		animation: navSlideOut 300ms forwards;
 	}
@@ -275,9 +308,20 @@ header #headerTitle {
 	#topNav_links #loginButton {
 		margin: 0;
 	}
+	#loginButtonBG {
+		display: none;
+	}
 }
 
 @keyframes iniEnter {
+	0%, 40% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@keyframes iniEnter2 {
 	0%, 40% {
 		opacity: 0;
 	}
