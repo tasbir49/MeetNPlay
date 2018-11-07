@@ -11,7 +11,7 @@ function login(e){
 
   if (validLogin(loginForm.firstElementChild.value,loginForm.firstElementChild.nextElementSibling.value)){
     console.log("hi");
-    window.location.href = "../forum/forum.html";
+    window.location.href = "../forum/loggedInForum.html";
   } else{
     console.log("wrong");
     alert("wrong login please try again");

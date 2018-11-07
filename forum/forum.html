@@ -42,9 +42,19 @@
 		<div id="sideNavContents">
 			<strong> Games </strong>
 			<ul>
-				<li class ='sideNavList'><a class = 'sideNavGames' href = ''>Kirby</a></li>
-				<li class ='sideNavList'><a class = 'sideNavGames' href = ''>Legend of Zelda</a></li>
-				<li class ='sideNavList'><a class = 'sideNavGames' href = ''>Game of Thrones</a></li>
+				<li class ='sideNavList'>
+
+					<form id="userSearchInput">
+							<input type="text" placeholder="Search a Game">
+							<input type="submit" value="Find Game">
+					</form>
+				</li>
+				<li class ='sideNavList'><a class = 'sideNavGames' href = ''>
+					Filters
+				</a></li>
+				<li class ='sideNavList'><a class = 'sideNavGames' href = ''>
+					Sort
+				</a></li>
 				<li class ='sideNavList'><a class = 'sideNavGames' href = ''>Super Smash Brothers Brawl</a></li>
 			</ul>
 		</div>
@@ -64,7 +74,16 @@
 			This game is awesome
 		</section>
 	</nav>
+	<div class="dialogContainer" id="userNotFound">
+			<div class="dialogBox">
+					<span class="closeBox">x</span>
+					<br>User not found
 
+			</div>
+	</div>
 	<script src="../scripts/main.js"></script>
+	<script type="text/javascript" src="forum.js">
+
+	</script>
 </body>
 </html>
