@@ -1,3 +1,14 @@
+/*
+323741
+06858C
+45C48B
+FFD039
+EB3E4A
+*/
+
+header #headerBG {
+	background-image: url("../../../resources/images/shovelknight.jpg");
+}
 #sideNav {
 	float: left;
 	width: 20%;

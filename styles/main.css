@@ -99,6 +99,7 @@ header {
 	padding: 0;
 	margin: 0;
 	height: 250px;
+	border-bottom: 1px solid #222;
 }
 header #headerBG {
 	position: absolute;
@@ -108,7 +109,7 @@ header #headerBG {
 	width: 100%;
 	height: 250px;
 	background-color: black;
-	background-image: url("../resources/images/loz.jpg");
+	background-image: url("../resources/images/fortnite.jpg");
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
@@ -207,7 +208,7 @@ header #headerTitle {
 	position: relative;
 	width: 75px;
 	z-index: 2;
-	margin: 2rem 1rem;
+	margin: 2rem 1rem 0 0;
 	transition: margin-top 300ms;
 }
 #topNav #loginButton:before {
@@ -285,7 +286,11 @@ header #headerTitle {
 	#topNav_links {
 		position: fixed;
 		top: 0;
-		right: -175px;
+		left: 100vw;
+		margin: 0 !important;
+		width: 100px;
+		overflow: scroll;
+		text-align: center;
 		z-index: 10;
 		padding: 75px 2rem;
 		background-color: rgba(0,0,0,0.8);
@@ -334,12 +339,12 @@ header #headerTitle {
 		transform: translateX(0);
 	}
 	100% {
-		transform: translateX(-175px);
+		transform: translateX(-164px);
 	}
 }
 @keyframes navSlideOut {
 	0% {
-		transform: translateX(-175px);
+		transform: translateX(-164px);
 	}
 	100% {
 		transform: translateX(0);
