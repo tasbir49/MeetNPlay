@@ -4,12 +4,12 @@ allGames = ["Kirby","Legend of Zelda","Game of Thrones","Super Smash Brothers Br
 
 const userNotFound = document.querySelector("#userNotFound");
 
-
+const reportButton = document.getElementsByClassName("reportButton")[0]
 const usrSearchForm = document.querySelector("#userSearchInput");
 
 
 
-
+reportButton.addEventListener("click",reportPrompt);
 userNotFound.addEventListener("click", bringDownUserPrompt);
 
 usrSearchForm.addEventListener("submit", searchUser);
@@ -46,4 +46,13 @@ for (i = 0; i < acc.length; i++) {
       panel.style.maxHeight = panel.scrollHeight + "px";
     }
   });
+}
+
+function reportPrompt(e){
+
+  const reportIssue = prompt("Reason for Reporting","");
+  alert("Issue Reported. Thanks")
+
+
+  //api call for reporting issue
 }

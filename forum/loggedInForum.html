@@ -37,8 +37,7 @@
 							<a href="#">Link 3</a>
 						</div>
 
-					</li>
-					</ul>
+					</li>					</ul>
 				</nav>
 				<div id="headerTitleContainer">
 					<h1 id="headerTitle">FIND A GAME</h1>
@@ -51,29 +50,91 @@
 		<div id="sideNavContents">
 			<strong> Games </strong>
 			<ul>
-				<li class ='sideNavList'><a class = 'sideNavGames' href = ''>Kirby</a></li>
-				<li class ='sideNavList'><a class = 'sideNavGames' href = ''>Legend of Zelda</a></li>
-				<li class ='sideNavList'><a class = 'sideNavGames' href = ''>Game of Thrones</a></li>
-				<li class ='sideNavList'><a class = 'sideNavGames' href = ''>Super Smash Brothers Brawl</a></li>
+				<li class ='sideNavList'>
+
+					<form id="userSearchInput">
+							<input type="text" placeholder="Search a Game">
+							<input type="submit" value="Find Game">
+					</form>
+				</li>
+				<li class ='sideNavList'>
+					<p>Filters</p>
+					<button class="accordion">Game Station</button>
+					<div class="panel">
+						<ul>
+							<li><button class = "accordionButton">XBox One</button></li>
+							<li><button class = "accordionButton">Xbox 360</button></li>
+							<li><button class = "accordionButton">other Xbox</button></li>
+							<li><button class = "accordionButton">PS3</button></li>
+							<li><button class = "accordionButton">PS4</button></li>
+							<li><button class = "accordionButton">PC</button></li>
+							<li><button class = "accordionButton">Wii</button></li>
+							<li><button class = "accordionButton">WiiU</button></li>
+							<li><button class = "accordionButton">Switch</button></li>
+						</ul>
+					</div>
+
+					<button class="accordion">Number of People</button>
+					<div class="panel">
+						<ul>
+							<li><button class = "accordionButton">2</button></li>
+							<li><button class = "accordionButton">3</button></li>
+							<li><button class = "accordionButton">4</button></li>
+							<li><button class = "accordionButton">5</button></li>
+							<li><button class = "accordionButton">6</button></li>
+							<li><button class = "accordionButton">7+</button></li>
+						</ul>
+					</div>
+
+					<button class="accordion">Genre</button>
+					<div class="panel">
+						<ul>
+							<li><button class = "accordionButton">MMRPG</button></li>
+							<li><button class = "accordionButton">FPS</button></li>
+							<li><button class = "accordionButton">Racing</button></li>
+							<li><button class = "accordionButton">Strategy</button></li>
+						</ul>
+					</div>
+				</li>
+				<li class ='sideNavList'>
+					<p>Sort</p>
+					<button class="accordion">Options</button>
+					<div class="panel">
+						<ul>
+							<li><button class = "accordionButton">by Date Posted</button></li>
+							<li><button class = "accordionButton">by Game Name</button></li>
+						</ul>
+					</div>
+				</li>
 			</ul>
 		</div>
 	</nav>
 	<nav id="gamePost">
 <anything to do with homepages>
 		<section class="post">
-			This group in the Game
-		</section>
-		<section class="post">
-			That group in this Game
-		</section>
-		<section class="post">
-			Let's play this gaaaaame
-		</section>
-		<section class="post">
-			This game is awesome
-		</section>
-	</nav>
+			<div class="gameImgIcon">
+				<img src="../resources/images/rayman.jpg" class = "gameImg">
+				<span class= "gameTitle">Rayman Origins</span>
+				<span class= "status">Status: <strong>1/2</strong></span>
+				<span class= "postTitle">Looking for players</span>
+			</div>
+			<div class="gameDetails">
+				<button class ="reportButton" type="button" name="Report">Report</button>
 
+			</div>
+		</section>
+
+	</nav>
+	<div class="dialogContainer" id="userNotFound">
+			<div class="dialogBox">
+					<span class="closeBox">x</span>
+					<br>User not found
+
+			</div>
+	</div>
 	<script src="../scripts/main.js"></script>
+	<script type="text/javascript" src="forum.js">
+
+	</script>
 </body>
 </html>

@@ -99,14 +99,41 @@ li.sideNavGames:hover{
 	background: black;
 }
 
+.gameImgIcon{
+	display: inline;
+	float: left;
+	height: 50%;
+	width: 100%;
+	border: 10px;
+	padding: 0;
+	margin: 0;
+	float: left;
+}
+.gameImg{
+	height: 100%;
+	max-width: 100%;
+	padding: 0;
+	margin: 0;
+	float: left;
+}
+.gameTitle{
+	display: inline-block;
+	float: left;
+}
+
+.postTitle{
+	display:inline;
+	float: right;
+}
+.gameDetails{
+	display: inline-block;
+	height: 50%;
+}
 .userProfilePic {
 	width: 75px;
 	border-radius: 50%;
 }
 
-.none{
-
-}
 .dropdown-content {
     display: none;
     position: absolute;
@@ -183,11 +210,16 @@ padding: 0;
 font: inherit;
 cursor: pointer;
 outline: inherit;
+width: 100%;
 }
 
 .accordionButton:hover{
 	background-color: grey;
 	color: white;
+}
+
+.status{
+	margin-left: 10%
 }
 
 #leftSideAccountPage button {
