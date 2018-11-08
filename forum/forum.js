@@ -29,25 +29,21 @@ function bringUpUserPrompt(e) {
 }
 
 
-function bringUpInfoPrompt(e) {
-    infoChange.style.display = "block";
-
-}
-
-
-function bringUpPassPrompt(e) {
-    passChange.style.display = "block";
-
-}
-
-function bringDownInfoPrompt(e) {
-    if(e.target.classList.contains("closeBox") || e.target.classList.contains("dialogContainer"))
-    {
-        infoChange.querySelector("textarea").value = "";
-        infoChange.style.display = "none";
-    }
-}
 
 function bringDownUserPrompt(e) {
     userNotFound.style.display = "none";
+}
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    }
+  });
 }

@@ -26,7 +26,10 @@ a.sideNavGames{
 	color: white;
 }
 
-a.sideNavGames:hover{
+a li:hover{
+	color: gold;
+}
+li.sideNavGames:hover{
 	color: gold;
 	cursor: pointer;
 }
@@ -41,6 +44,7 @@ a.sideNavGames:hover{
 
 #sideNavContents ul{
 	padding-left: 0;
+	color: black;
 }
 
 
@@ -71,11 +75,11 @@ a.sideNavGames:hover{
 	float: left;
 	width: 20%;
 	margin: 2% 2% 2% 2%;
-	height: 500px;
-	border: 2px solid grey;
+	height: 100%;	border: 2px solid grey;
 }
 #sideNavContents {
 	padding: 20px;
+	height: 100%;
 }
 #gamePost {
 	float: left;
@@ -169,6 +173,21 @@ button {
     background-color:   #4d0000;
     color: white;
 
+}
+
+.accordionButton{
+	background: none;
+color: inherit;
+border: none;
+padding: 0;
+font: inherit;
+cursor: pointer;
+outline: inherit;
+}
+
+.accordionButton:hover{
+	background-color: grey;
+	color: white;
 }
 
 #leftSideAccountPage button {
@@ -281,4 +300,29 @@ button:hover {
     margin-left: auto;
     margin-right: auto;
     padding: 1%;
+}
+
+.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+.active, .accordion:hover {
+    background-color: #ccc;
+}
+
+.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
 }
