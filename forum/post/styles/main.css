@@ -10,9 +10,13 @@ header #headerBG {
 	background-image: url("../../../resources/images/shovelknight.jpg");
 }
 #contents {
-	margin: 2.25rem 10rem;
+	margin: 2.25rem 2rem;
 	animation: iniEnter 1500ms;
 }
+div.clearFloat {
+	clear: both;
+}
+
 #sideNavContainer {
 	float: left;
 	width: 20%;
@@ -37,6 +41,17 @@ header #headerBG {
 	margin-bottom: 30px;
 }
 
+.sectionCard {
+	padding: 20px;
+	background-color: rgba(0,0,0,0.4);
+	box-shadow: 0 3px 7px 1px rgba(0,0,0,1);
+	overflow: scroll;
+}
+
+#postTitle {
+	margin-top: 0;
+}
+
 .keywordLabel {
 	display: inline-block;
 	background-color: #45C48B;
@@ -44,6 +59,12 @@ header #headerBG {
 	padding: 4px 5px;
 	margin-right: 1em;
 	margin-bottom: 10px;
+}
+.keywordLabel.BYOC:after {
+	content: "BYOC";
+}
+.keywordLabel.BYOC:hover:after {
+	content: "Bring Your Own Controller";
 }
 .keywordLabel.gameGenre {
 	background-color: #06858C;
@@ -55,19 +76,16 @@ header #headerBG {
 #post hr {
 	margin: 10px 0 20px 0;
 }
-
-#gameContainer {
-	display: inline-block;
+#gameDetailsContainer {
+	float: left;
 	width: 35%;
 }
-#game {
-	padding: 30px;
-	background-color: rgba(0,0,0,0.4);
-	box-shadow: 0 3px 7px 1px rgba(0,0,0,1);
-	overflow: scroll;
+#gameContainer {
+	display: inline-block;
+	width: 100%;
 }
 #game .keywordLabel {
-	font-size: 12px;
+	font-size: 13px;
 }
 #gameImg {
 	width: 100%;
@@ -91,15 +109,68 @@ header #headerBG {
 	float: right;
 	width: 65%;
 }
-
 #postDetails {
-	padding: 30px;
-	background-color: rgba(0,0,0,0.4);
-	box-shadow: 0 3px 7px 1px rgba(0,0,0,1);
 	margin-left: 20px;
-	overflow: scroll;
+}
+.userMessage {
+	position: relative;
+	font-family: "EncodeSans-Regular";
+	line-height: 1.5em;
+	overflow: hidden;
+	max-height: 480px;
+}
+.userMessage.overflow {
+	overflow: visible;
+	max-height: 100%;
+}
+.userMessageOverflowButton {
+	font-family: "EncodeSans-Regular";
+	font-size: 12px;
+	border-radius: 3px;
+	text-align: center;
+	margin-top: 10px;
+	padding: 5px 0;
+	background-color: #323741;
+	opacity: 0.75;
+	cursor: pointer;
+}
+.userMessageOverflowButton:hover {
+	opacity: 1;
+}
+.userMessageOverflowButton:active {
+	opacity: 0.8;
+}
+.userMessageOverflowButton:after {
+	content: "SHOW MORE";
+}
+.userMessageOverflowButton.overflow:after {
+	content: "SHOW LESS";
 }
 
+#spaceAvailableContainer {
+	width: 100%;
+	margin-top: 20px;
+}
+#spaceAvailableTitle {
+	opacity: 0.5;
+}
+#spaceAvailableNum {
+	font-size: 1.5rem;
+	margin-left: 5px;
+}
+#spaceAvailableSlots {
+	line-height: 1em;
+	margin-top: 10px;
+}
+.spaceAvailableSlotsImg {
+	display: inline-block;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	border-radius: 50%;
+	height: 50px;
+	width: 50px;
+	background-color: black;
+}
 .userProfilePic {
 	vertical-align: middle;
 	width: 75px;
@@ -107,21 +178,21 @@ header #headerBG {
 	margin-bottom: 20px;
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1200px) {
 	#contents {
-		margin: 2.25rem 5rem;
+		margin: 2.25rem 2rem;
 	}
 }
 @media screen and (max-width: 768px) {
 	#contents {
-		margin: 2.25rem 2rem;
+		margin: 2.25rem 1rem;
 		animation: iniEnter2 1500ms;
 	}
-	#gameImg {
-		width: 70%;
-		margin: 0 15% 20px 15%;
+	#thread > section {
+		padding: 15px;
 	}
-	#gameContainer {
+	#gameDetailsContainer {
+		float: none;
 		width: 100%;
 		margin-bottom: 20px;
 	}
