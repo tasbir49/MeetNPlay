@@ -1,5 +1,6 @@
 
-//the dialog boxes
+//normally these doms would be filled with info loaded from
+//a server. For the front end we hardcoded everything in the html
 const infoChange = document.querySelector("#infoChange");
 const passChange = document.querySelector("#passChange");
 const userNotFound = document.querySelector("#userNotFound");
