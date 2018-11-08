@@ -42,6 +42,7 @@ div.clearFloat {
 }
 
 .sectionCard {
+	position: relative;
 	padding: 20px;
 	background-color: rgba(0,0,0,0.4);
 	box-shadow: 0 3px 7px 1px rgba(0,0,0,1);
@@ -67,10 +68,10 @@ div.clearFloat {
 	content: "Bring Your Own Controller";
 }
 .keywordLabel.gameGenre {
-	background-color: #06858C;
+	background-color: #6369EB;
 }
 .keywordLabel.gamePlatform {
-	background-color: #FFD039;
+	background-color: #EBA652;
 }
 
 #post hr {
@@ -112,6 +113,116 @@ div.clearFloat {
 #postDetails {
 	margin-left: 20px;
 }
+#postDetailsUser {
+	background-color: #1F2329;
+	margin-bottom: 20px;
+	white-space: nowrap;
+}
+#postDetailsUserInfo {
+	vertical-align: middle;
+	display: inline-block;
+}
+#postDetailsUserInfo .postDetailsLabel {
+	display: block;
+	font-size: 10px;
+	font-family: "EncodeSans-Light";
+}
+.postDetailsLabel i {
+	font-size: 13px;
+}
+i > .time {
+	display: none;
+}
+#postDetailsUserInfo:hover .postDetailsLabel i > .time {
+	display: inline;
+}
+
+.userName {
+	font-family: "EncodeSans-Regular";
+	margin: 0;
+}
+.userProfilePic {
+	vertical-align: middle;
+	height: 3em;
+	border-radius: 50%;
+	margin-right: 10px;
+}
+.userReport {
+	position: absolute;
+	top: 10px;
+	right: 30px;
+}
+.userReport svg {
+	fill: red;
+	opacity: 0.5;
+	background-color: white;
+	padding: 3px;
+	height: 1.5em;
+	width: 1.5em;
+}
+.userSectionOptionsContainer {
+	position: absolute;
+	top: 30px;
+	right: 25px;
+	cursor: pointer;
+}
+.userSectionOptions {
+	position: relative;
+	font-family: "EncodeSans-Light";
+	white-space: nowrap;
+}
+.userSectionOptions svg {
+	position: relative;
+	z-index: 1;
+	fill: white;
+	opacity: 0.45;
+	height: 1.5em;
+	width: 1.5em;
+}
+.userSectionOptions svg:hover,
+.userSectionOptions svg.active {
+	opacity: 1;
+}.userSectionOptions svg.active {
+	fill: #45C48B;
+}
+.userSectionOptionsList {
+	position: absolute;
+	top: 0;
+	right: 1.5em;
+	display: none;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	background-color: #323741;
+	box-shadow: 0 3px 7px 2px rgba(0,0,0,1);
+	border-radius: 5px;
+}
+.userSectionOptionsList li {
+	text-align: center;
+	margin: 0;
+}
+.userSectionOptionsList li a {
+	position: relative;
+	color: white;
+	width: 110px;
+	padding: 5px;
+	display: inline-block;
+	font-size: 14px;
+	color: rgba(255,255,255,0.5);
+	border-bottom: 1px solid grey;
+}
+.userSectionOptionsList li:last-child a {
+	border-bottom: none;
+}
+.userSectionOptionsList li a:hover {
+	color: rgba(255,255,255,1);
+}
+.userSectionOptions svg.active ~ .userSectionOptionsList {
+	display: block;
+}
+
+
+
 .userMessage {
 	position: relative;
 	font-family: "EncodeSans-Regular";
@@ -170,12 +281,6 @@ div.clearFloat {
 	height: 50px;
 	width: 50px;
 	background-color: black;
-}
-.userProfilePic {
-	vertical-align: middle;
-	width: 75px;
-	border-radius: 50%;
-	margin-bottom: 20px;
 }
 
 @media screen and (max-width: 1200px) {
