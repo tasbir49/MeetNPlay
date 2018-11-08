@@ -5,10 +5,11 @@ allGames = ["Kirby","Legend of Zelda","Game of Thrones","Super Smash Brothers Br
 const userNotFound = document.querySelector("#userNotFound");
 
 const reportButton = document.getElementsByClassName("reportButton")[0]
+const requestInviteButton = document.getElementsByClassName("requestInvite")[0]
 const usrSearchForm = document.querySelector("#userSearchInput");
 
 
-
+requestInviteButton.addEventListener("click",processRequest);
 reportButton.addEventListener("click",reportPrompt);
 userNotFound.addEventListener("click", bringDownUserPrompt);
 
@@ -55,4 +56,18 @@ function reportPrompt(e){
 
 
   //api call for reporting issue
+}
+function processRequest(e){
+  //api send invite request
+  if(requestInviteButton.innerText == "Request Invite"){
+    requestInviteButton.innerText = "Invite Requested";
+    setTimeout(function () {
+      acceptRequest();
+    }, 2000);
+  }
+
+}
+
+function acceptRequest() {
+  requestInviteButton.innerText = "Invited";
 }

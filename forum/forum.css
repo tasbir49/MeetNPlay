@@ -128,6 +128,7 @@ li.sideNavGames:hover{
 .gameDetails{
 	display: inline-block;
 	height: 50%;
+	width: 100%;
 }
 .userProfilePic {
 	width: 75px;
@@ -222,6 +223,9 @@ width: 100%;
 	margin-left: 10%
 }
 
+.requestInvite{
+	float: right;
+}
 #leftSideAccountPage button {
     margin-top: 4%;
     margin-bottom: 4%;
