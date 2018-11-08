@@ -52,7 +52,7 @@ window.onscroll = () => {
 		nav["topNav"].style.paddingTop = "1rem";
 		nav["topNav"].style.paddingBottom = "1rem";
 		nav["topNav"].style.backgroundColor = "rgba(31, 35, 41, 1)";
-		nav["topNav"].style.boxShadow = "0 3px 7px 1px rgba(0,0,0,1)";
+		nav["topNav"].style.boxShadow = "0 3px 3px 1px rgba(0,0,0,0.7)";
 		nav["topNav_titleImg"].style.height = "30px";
 		nav["topNav_links"].style.marginLeft = "5em";
 		nav["topNav_hamburger"].style.top = "20px";
@@ -61,7 +61,7 @@ window.onscroll = () => {
 		nav["topNav"].style.paddingTop = "2rem";
 		nav["topNav"].style.paddingBottom = "2rem";
 		nav["topNav"].style.backgroundColor = "rgba(31, 35, 41, 0)";
-		nav["topNav"].style.boxShadow = "0 3px 7px 1px rgba(0,0,0,0)";
+		nav["topNav"].style.boxShadow = "0 3px 3px 1px rgba(0,0,0,0)";
 		nav["topNav_titleImg"].style.height = "4.5em";
 		nav["topNav_links"].style.marginLeft = "7.5em";
 		nav["loginButton"].style.marginTop = "2rem";

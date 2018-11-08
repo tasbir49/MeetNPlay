@@ -25,7 +25,6 @@ div.clearFloat {
 	padding: 20px;
 	height: 400px;
 	background-color: rgba(0,0,0,0.2);
-	box-shadow: 0 3px 7px 1px rgba(0,0,0,1);
 }
 #threadContainer {
 	/*float: left;*/
@@ -35,8 +34,7 @@ div.clearFloat {
 	/*margin: 0 0 2rem 2rem;*/
 }
 #thread > section {
-	background-color: rgba(0,0,0,0.2);
-	box-shadow: 0 3px 7px 1px rgba(0,0,0,1);
+	background-color: rgb(40,44,52);
 	padding: 30px;
 	margin-bottom: 30px;
 }
@@ -45,7 +43,7 @@ div.clearFloat {
 	position: relative;
 	padding: 20px;
 	background-color: rgba(0,0,0,0.4);
-	box-shadow: 0 3px 7px 1px rgba(0,0,0,1);
+	box-shadow: 0 3px 3px 2px rgba(0,0,0,0.7);
 	overflow: scroll;
 }
 
@@ -92,7 +90,7 @@ div.clearFloat {
 	width: 100%;
 	max-width: 800px;
 	margin-bottom: 10px;
-	box-shadow: 0 3px 7px 4px rgba(0,0,0,1);
+	box-shadow: 0 3px 3px 2px rgba(0,0,0,0.7);
 }
 #gameImgContainer {
 	text-align: center;
@@ -194,7 +192,7 @@ i > .time {
 	padding: 0;
 	list-style: none;
 	background-color: #323741;
-	box-shadow: 0 3px 7px 2px rgba(0,0,0,1);
+	box-shadow: 0 3px 3px 1px rgba(0,0,0,0.7);
 	border-radius: 5px;
 }
 .userSectionOptionsList li {
@@ -220,8 +218,6 @@ i > .time {
 .userSectionOptions svg.active ~ .userSectionOptionsList {
 	display: block;
 }
-
-
 
 .userMessage {
 	position: relative;
