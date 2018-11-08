@@ -31,6 +31,13 @@ document.addEventListener("click", (e) => {
 	}
 });
 
+const inviteBtn = document.getElementById("requestInvite");
+inviteBtn.addEventListener("click", (e) => {
+	if (inviteBtn.className !== "active") {
+		inviteBtn.className = "active";
+	}
+});
+
 function isOverflown(elem) {
 	return elem.scrollHeight > elem.clientHeight;
 }

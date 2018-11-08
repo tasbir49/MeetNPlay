@@ -19,6 +19,10 @@ EB3E4A
 	src: url("../resources/fonts/EncodeSans/EncodeSans-Light.ttf");
 }
 @font-face {
+	font-family: "EncodeSans-Bold";
+	src: url("../resources/fonts/EncodeSans/EncodeSans-Bold.ttf");
+}
+@font-face {
 	font-family: "EncodeSans-ExtraBold";
 	src: url("../resources/fonts/EncodeSans/EncodeSans-ExtraBold.ttf");
 }
