@@ -11,6 +11,10 @@ EB3E4A
 	src: url("../resources/fonts/EncodeSans/EncodeSans-Medium.ttf");
 }
 @font-face {
+	font-family: "EncodeSans-Regular";
+	src: url("../resources/fonts/EncodeSans/EncodeSans-Regular.ttf");
+}
+@font-face {
 	font-family: "EncodeSans-Light";
 	src: url("../resources/fonts/EncodeSans/EncodeSans-Light.ttf");
 }

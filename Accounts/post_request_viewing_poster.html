@@ -48,7 +48,7 @@
             <input type="text" placeholder="View a User's Account">
             <input type="submit" value="Find User">
         </form>
-        <button type="button" id="changePassButton">Change Password</button>
+        <button type="button" id="reportUserButton">Report this User</button>
     </div>
     
     <div id="accountPageMainContent">
@@ -61,9 +61,6 @@
                 <div class="userInfoSectionContent" id="userLocation">
                     Toronto
                 </div>
-                <button type="button" class="infoEditButton">
-                    Edit
-                </button>
             </div>
             
             <div class="userInfoSection">
@@ -73,9 +70,7 @@
                 <div class="userInfoSectionContent" id="userBday">
                     July 25, 1998
                 </div>
-                <button type="button" class="infoEditButton">
-                    Edit
-                </button>
+
             </div>
             <div class="userInfoSection">
                 <div class="userInfoSectionHeading">
@@ -103,9 +98,7 @@
                     Video games are for kids with no lives. 
                     Subscribe to my youtube channel videoGamesRBad.
                 </div>
-                <button type="button" class="infoEditButton">
-                    Edit
-                </button>
+
             </div>
             <div class="userInfoSection">
                 <div class="userInfoSectionHeading">
@@ -118,14 +111,12 @@
 
         
     </div>
-    <div class="dialogContainer" id="passChange">
+    <div class="dialogContainer" id="reportUser">
         <div class="dialogBox">
             <span class="closeBox">x</span>
             <form>
-                <input type="text" id="oldPass" placeholder="Your old password">
-                <input type="text" id="newPass" placeholder="Your new password">
-                <input type="text" id="confirmPass" placeholder="Confirm new password">
-                <input type="submit" value="Change Password">
+                <input type="text" id="newPass" placeholder="Give report reason">
+                <input type="submit" value="Report">
             </form>
         </div>
     </div>
