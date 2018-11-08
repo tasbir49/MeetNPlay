@@ -1,1 +1,43 @@
-# team35 phase1.txt
+Our web app is a meetup app for local multiplayer games.
+Users can make posts saying they want to host a meetup.
+
+User Instructions:
+    Go to top right and select make post to create meetup post
+    
+    Go to post listing(the first page you see whenn logging in) to request an invite to a meetup
+    You can filter meetup posts on the right side (this does nothing for now).
+    You can report inappropriate posts on the page
+    
+    You can view the detailed page of a meetup post you created or are invited to.
+    Users who made a post can edit the info, and invite other users, or delete the post.
+    
+    The account page on the top navBar lets you view accounts.
+    You can edit the info on your own account EXCEPT for the Member Since field
+    Can change password(this does nothing without backend).
+    You can report other inappropriate users for any reason
+    
+
+Admin Instructions:
+    can view the details of a meetup post from homepage immediately
+    can edit all the info on a meetup post page
+    can edit all the information on the account page on any account
+    can ban/unban users
+    can change passwords WITHOUT knowing the old password
+    reports page shows open reports
+        the user on a report is the one reported AGAINST, the reporter on this page is anonymous
+        can close reports, removing them from the report page
+        
+
+user credentials:
+    
+    this account is the one that made the post on the home page
+    username: poster
+    password: password
+    
+    this account did not make any post, and can only view them
+    username: post_request
+    password: password
+    
+admin credentials:
+    username: admin
+    password: password
