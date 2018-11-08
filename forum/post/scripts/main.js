@@ -14,13 +14,22 @@ for (let i = 0; i < userMessages.length; i++) {
 	}
 }
 
-// const overflows = document.getElementsByClassName("userMessageOverflowButton");
-// for (let i = 0; i < overflows.length; i++) {
-// 	overflows[i].addEventListener("click", (e) => {
-// 		e.target.classList.toggle("overflow");
-// 		e.target.previousElementSibling.classList.toggle("overflow");
-// 	});
-// }
+const userOptionsButtons = document.getElementsByClassName("userSectionSVG");
+for (let i = 0; i < userOptionsButtons.length; i++) {
+	userOptionsButtons[i].addEventListener("click", (e) => {
+		userOptionsButtons[i].classList.toggle("active");
+	});
+}
+
+document.addEventListener("click", (e) => {
+	for (let i = 0; i < userOptionsButtons.length; i++) {
+		if (userOptionsButtons[i].classList.contains("active")){
+			if (!hasAncestorClass(e.target, "userSectionOptionsContainer")) {
+				userOptionsButtons[i].classList.remove("active");
+			}
+		}
+	}
+});
 
 function isOverflown(elem) {
 	return elem.scrollHeight > elem.clientHeight;
