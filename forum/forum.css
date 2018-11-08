@@ -128,6 +128,7 @@ li.sideNavGames:hover{
 .gameDetails{
 	display: inline-block;
 	height: 50%;
+	width: 100%;
 }
 .userProfilePic {
 	width: 75px;
@@ -216,6 +217,14 @@ width: 100%;
 .accordionButton:hover{
 	background-color: grey;
 	color: white;
+}
+.requestInvite{
+	float: right;
+	width:75%;
+	height:75%;
+}
+.reportButton{
+	width:10%;
 }
 
 .status{
