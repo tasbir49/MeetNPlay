@@ -39,7 +39,7 @@ const nav = {
 	"topNav_titleImg" : document.getElementById("topNav_titleImg"),
 	"topNav_links" : document.getElementById("topNav_links"),
 	"topNav_hamburger" : document.getElementById("topNav_hamburger"),
-	"loginButton" : document.getElementById("loginButton")
+	"loginButtonContainer" : document.getElementById("loginButtonContainer")
 }
 
 window.onscroll = () => {
@@ -56,7 +56,7 @@ window.onscroll = () => {
 		nav["topNav_titleImg"].style.height = "30px";
 		nav["topNav_links"].style.marginLeft = "5em";
 		nav["topNav_hamburger"].style.top = "20px";
-		nav["loginButton"].style.marginTop = "1rem";
+		nav["loginButtonContainer"].style.transform = "translateY(-1rem)";
 	} else {
 		nav["topNav"].style.paddingTop = "2rem";
 		nav["topNav"].style.paddingBottom = "2rem";
@@ -64,7 +64,7 @@ window.onscroll = () => {
 		nav["topNav"].style.boxShadow = "0 3px 3px 1px rgba(0,0,0,0)";
 		nav["topNav_titleImg"].style.height = "4.5em";
 		nav["topNav_links"].style.marginLeft = "7.5em";
-		nav["loginButton"].style.marginTop = "2rem";
+		nav["loginButtonContainer"].style.transform = "translateY(0)";
 		nav["topNav_hamburger"].style.top = "2rem";
 	}
 };
