@@ -23,6 +23,15 @@ function hasAncestorID(elem, id) {
 		return hasAncestorID(elem.parentElement, id);
 	}
 }
+function hasAncestorClass(elem, elemClass) {
+	if (elem.tagName === "HTML") {
+		return elem.classList.contains(elemClass);
+	} else if (elem.classList.contains(elemClass)) {
+		return true;
+	} else {
+		return hasAncestorClass(elem.parentElement, elemClass);
+	}
+}
 
 const nav = {
 	"topNav" : document.getElementById("topNav"),

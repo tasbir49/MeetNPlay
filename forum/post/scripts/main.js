@@ -14,12 +14,22 @@ for (let i = 0; i < userMessages.length; i++) {
 	}
 }
 
-const userOptionsButton = document.getElementsByClassName("userSectionSVG");
-for (let i = 0; i < userOptionsButton.length; i++) {
-	userOptionsButton[i].addEventListener("click", (e) => {
-		userOptionsButton[i].classList.toggle("active");
+const userOptionsButtons = document.getElementsByClassName("userSectionSVG");
+for (let i = 0; i < userOptionsButtons.length; i++) {
+	userOptionsButtons[i].addEventListener("click", (e) => {
+		userOptionsButtons[i].classList.toggle("active");
 	});
 }
+
+document.addEventListener("click", (e) => {
+	for (let i = 0; i < userOptionsButtons.length; i++) {
+		if (userOptionsButtons[i].classList.contains("active")){
+			if (!hasAncestorClass(e.target, "userSectionOptionsContainer")) {
+				userOptionsButtons[i].classList.remove("active");
+			}
+		}
+	}
+});
 
 function isOverflown(elem) {
 	return elem.scrollHeight > elem.clientHeight;
