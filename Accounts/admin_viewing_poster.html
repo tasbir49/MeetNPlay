@@ -48,7 +48,9 @@
             <input type="text" placeholder="View a User's Account">
             <input type="submit" value="Find User">
         </form>
-        <button type="button" id="changePassButton">Change Password</button>
+        <button type="button" id="changePassButtonAdmin">Change User's Password</button>
+        <button type="button" id="banUser">Ban this user</button>
+
     </div>
     
     <div id="accountPageMainContent">
@@ -114,6 +116,9 @@
                 <div class="userInfoSectionContent" id="userMemberSince">
                     July 25, 1898
                 </div>
+                <button type="button" class="infoEditButton">
+                    Edit
+                </button>
             </div>
 
         
@@ -144,6 +149,16 @@
         <div class="dialogBox">
             <span class="closeBox">x</span>
             <br>User not found
+        </div>
+    </div>
+    
+    <div class="dialogContainer" id="passChangeAdmin">
+        <div class="dialogBox">
+            <span class="closeBox">x</span>
+            <form>
+                <input type="text" id="newPass" placeholder="Set new password">
+                <input type="submit" value="Change Password">
+            </form>
         </div>
     </div>
     <script type="text/javascript" src="user_account_scripts.js"></script>

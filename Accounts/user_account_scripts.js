@@ -3,28 +3,18 @@
 const infoChange = document.querySelector("#infoChange");
 const passChange = document.querySelector("#passChange");
 const userNotFound = document.querySelector("#userNotFound");
+const passChangeAdmin = document.querySelector("#passChangeAdmin");
+const reportUser = document.querySelector("#reportUser");
 
-//the edit buttons
 const editButtons = document.querySelectorAll(".infoEditButton");
-
-
 const passChangeButton = document.querySelector("#changePassButton");
-
-
 const usrSearchForm = document.querySelector("#userSearchInput");
+const passChangeButtonAdmin = document.querySelector("#changePassButtonAdmin");
+const banUserButton = document.querySelector("#banUser");
+const reportUserButton = document.querySelector("#reportUserButton");
 
 //event listeners
-let i = 0;
 
-if(editButtons) {
-    for (i = 0; i < editButtons.length; i++) {
-        editButtons[i].addEventListener("click", editInfoCallback);
-    }
-}
-
-if(passChangeButton) {
-    passChangeButton.addEventListener("click", openPassPromptCallback);
-}
 if(infoChange){
     infoChange.addEventListener("click", closeInfoPromptCallback);
 }
@@ -34,11 +24,51 @@ if(passChange){
     passChange.addEventListener("submit", changePassCallback);
 }
 
+if(reportUser) {
+    reportUser.addEventListener("click", closeReportUserPromptCallback);
+    reportUser.addEventListener("submit", reportUserCallback);
+
+}
+
+if(passChangeAdmin){ 
+    passChangeAdmin.addEventListener("click", closePassPromptAdminCallback);
+    passChangeAdmin.addEventListener("submit", changePassAdminCallback);
+}
+
+
+
+
+
+if(passChangeButtonAdmin) {
+    passChangeButtonAdmin.addEventListener("click", openPassPromptAdminCallback);
+}
+
+
+if(banUserButton) {
+    banUserButton.addEventListener("click", banOrUnbanUserCallback);
+}
+
+
+if(editButtons) {
+    let i = 0;
+    for (i = 0; i < editButtons.length; i++) {
+        editButtons[i].addEventListener("click", editInfoCallback);
+    }
+}
+
+if(passChangeButton) {
+    passChangeButton.addEventListener("click", openPassPromptCallback);
+}
+if(reportUserButton) {
+    reportUserButton.addEventListener("click", openReportUserCallback);    
+}
+
 userNotFound.addEventListener("click", closeUserNotFoundPromptCallback);
 
 usrSearchForm.addEventListener("submit", searchUserCallback);
 
-
+//-----------------DOM--------------------------------------
+//------------Functions--------------------------------------
 
 //normally this function would search a database of users in back end /
 //and redirect to the found user's page
@@ -51,6 +81,7 @@ function searchUserCallback(e) {
 
 
 
+//user not found prompt -----------------------------
 function openUserNotFoundPromptCallback(e) {
     userNotFound.style.display = "block";
 }
@@ -58,9 +89,12 @@ function openUserNotFoundPromptCallback(e) {
 function closeUserNotFoundPromptCallback(e) {
     userNotFound.style.display = "none";
 }
+//---------------------------------------------
 
 
 
+
+//info prompt----------------------------------------------------
 function openInfoPromptCallback(e) {
     
     infoChange.style.display = "block";
@@ -76,11 +110,12 @@ function cleanInfoPrompt() {
     infoChange.querySelector("textarea").value = "";
     infoChange.style.display = "none";
 }
+//-----------------------------------------------------------------
 
 
-
+//password change prompt for user changing own ---------------------
+//due to no backend, this does nothing
 function openPassPromptCallback(e) {
-    
     passChange.style.display = "block";
     
 }
@@ -101,6 +136,77 @@ function cleanPassPrompt() {
     }
     passChange.style.display = "none";
 }
+//-------------------------------------------------------------------
+
+//password change prompt for admin changing pass ---------------------
+//so far no backend integration so changing pass does nothing
+function openPassPromptAdminCallback(e) {
+    passChangeAdmin.style.display = "block";
+    
+}
+
+function closePassPromptAdminCallback(e) {
+    
+     if(e.target.classList.contains("closeBox") || e.target.classList.contains("dialogContainer"))
+        {
+            cleanPassAdminPrompt();
+        }    
+}
+
+function cleanPassAdminPrompt() {
+    let textInputs = passChangeAdmin.querySelectorAll("input[type=\"text\"]");
+    let i = 0;
+    for(i = 0; i < textInputs.length; i++) {
+        textInputs[i].value = "";
+    }
+    passChangeAdmin.style.display = "none";
+}
+//-------------------------------------------------------------------
+
+
+//report user prompt-----------------
+
+function openReportUserCallback(e) {
+    reportUser.style.display = "block";    
+}
+
+function closeReportUserPromptCallback(e) {
+    if(e.target.classList.contains("closeBox") || e.target.classList.contains("dialogContainer"))
+        {
+            cleanReportUserPrompt();
+        }     
+}
+
+function cleanReportUserPrompt() {
+    let textInputs = reportUser.querySelectorAll("input[type=\"text\"]");
+    let i = 0;
+    for(i = 0; i < textInputs.length; i++) {
+        textInputs[i].value = "";
+    }
+    reportUser.style.display = "none";
+}
+
+//-----------------------------------
+
+
+
+
+
+function changeBanButton() {
+    let textVal = banUserButton.firstChild.nodeValue;
+    banUserButton.removeChild(banUserButton.firstChild);
+    let newTextNode;
+    if(textVal == "Ban this user") {
+        newTextNode = document.createTextNode("Unban this user");
+    } else {
+        newTextNode = document.createTextNode("Ban this user");
+    }
+    banUserButton.appendChild(newTextNode);
+}
+
+
+//----------------------------------------------------------
+//----------------------------------------------------------
 
 
 //normally this would update info to the backend as well
@@ -139,4 +245,23 @@ function infoEditSetup(infoSectionNode) {
 function changePassCallback(e) {
     e.preventDefault();
     cleanPassPrompt();
+}
+
+//normally the hash is updated to db and there are checks made with old
+//password
+function changePassAdminCallback(e) {
+    e.preventDefault();
+    cleanPassAdminPrompt();
+}
+
+//adds or removes user to banned database but does nothing for now
+//but change the button to say Unban
+function banOrUnbanUserCallback(e) {
+    changeBanButton();
+}
+
+//should add to report database in backend
+function reportUserCallback(e) {
+    e.preventDefault();
+    cleanReportUserPrompt();
 }
