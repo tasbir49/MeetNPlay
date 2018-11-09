@@ -69,5 +69,16 @@ function processRequest(e){
 }
 
 function acceptRequest() {
-  requestInviteButton.innerText = "Invited";
+  requestInviteButton.innerText = "Joined";
+  createLink();
+}
+
+function createLink() {
+    
+    linkNode = document.createElement("a");
+    linkNode.setAttribute("id","viewPost");
+    linkNode.setAttribute("href", "#");
+    linkNode.innerText = "View Post"
+    requestInviteButton.parentNode.insertBefore(linkNode, requestInviteButton.nextSibling);
+
 }

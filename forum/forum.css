@@ -7,6 +7,12 @@ EB3E4A
 */
 
 
+#viewPost {
+    float: right;
+    display: block;
+    clear: right;
+}
+
 a.linkAnimate:active:before {
 	/* opacity: 0.75; */
 	border: 1px solid #272822;
@@ -154,11 +160,6 @@ li.sideNavGames:hover{
 
 #topNav #loginButtonContainer:hover .dropdown-content{display: block;}
 
-#leftSideAccountPage form input[type="text"] {
-    margin: 1%;
-    padding: 3%;
-    width: 70%;
-}
 
 form input[type="text"] {
     color: white;
@@ -219,6 +220,7 @@ width: 100%;
 	color: white;
 }
 .requestInvite{
+    display: block;
 	float: right;
 	width:75%;
 	height:75%;
