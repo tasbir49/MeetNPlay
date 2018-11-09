@@ -10,7 +10,7 @@ header #headerBG {
 	background-image: url("../../../resources/images/shovelknight.jpg");
 }
 #contents {
-	margin: 2.25rem 2rem
+	margin: 2.25rem 2rem;
 }
 div.clearFloat {
 	clear: both;
@@ -19,9 +19,9 @@ div.clearFloat {
 #threadContainer {
 	width: 100%;
 }
-#thread {
-}
+
 #thread > section {
+	position: relative;
 	background-color: rgb(40,44,52);
 	padding: 30px;
 	margin-bottom: 30px;
@@ -40,6 +40,7 @@ div.clearFloat {
 }
 
 .keywordLabel {
+	position: relative;
 	display: inline-block;
 	background-color: #45C48B;
 	color: black;
@@ -47,11 +48,17 @@ div.clearFloat {
 	margin-right: 1em;
 	margin-bottom: 10px;
 }
-.keywordLabel.BYOC:after {
-	content: "BYOC";
-}
 .keywordLabel.BYOC:hover:after {
 	content: "Bring Your Own Controller";
+	position: absolute;
+	background-color: white;
+	opacity: 0.75;
+	top: 1.8rem;
+	left: -30px;
+	padding: 0 5px;
+	font-size: 0.55em;
+	width: 107px;
+	text-align: center;
 }
 .keywordLabel.gameGenre {
 	background-color: #6369EB;
@@ -128,6 +135,13 @@ i > .time {
 	margin: 0;
 }
 
+.userProfilePic {
+	vertical-align: middle;
+	height: 3em;
+	border-radius: 50%;
+	border: 2px solid rgba(255,255,255,1);
+}
+
 .userSection .userProfilePic {
 	margin-right: 10px;
 }
@@ -174,24 +188,55 @@ i > .time {
 	border-radius: 5px;
 }
 .userSectionOptionsList li {
-	text-align: center;
 	margin: 0;
 }
 .userSectionOptionsList li a {
 	position: relative;
 	color: white;
-	width: 110px;
+	width: 120px;
 	padding: 5px;
 	display: inline-block;
 	font-size: 14px;
 	color: rgba(255,255,255,0.5);
 	border-bottom: 1px solid grey;
+
+}
+.userSectionOptionsList li a.report {
+	color: rgba(235, 62, 74, 0.75);
+}
+.userSectionOptionsList li a svg {
+	fill: white;
+	opacity: 0.5;
+	height: 11px;
+	width: 11px;
+	margin-right: 2px;
+}
+.userSectionOptionsList li a.report svg {
+	fill: rgb(235, 62, 74);
+	opacity: 0.75;
+}
+.userSectionOptionsList li:first-child a {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 }
 .userSectionOptionsList li:last-child a {
 	border-bottom: none;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
 }
-.userSectionOptionsList li a:hover {
+.userSectionOptionsList li:hover a {
 	color: rgba(255,255,255,1);
+	background-color: rgba(255,255,255,0.1);
+}
+.userSectionOptionsList li:hover a.report {
+	color: rgb(235, 62, 74);
+	background-color: rgba(235, 62, 74, 0.15);
+}
+.userSectionOptionsList li:hover a svg {
+	opacity: 1;
+}
+.userSectionOptionsList li:hover a.report svg {
+	/*fill: black;*/
 }
 .userSectionOptions svg.active ~ .userSectionOptionsList {
 	display: block;
@@ -232,13 +277,13 @@ i > .time {
 	top: 4px;
 }
 #requestInvite:before {
-	content: "REQUEST INVITE";
+	content: "SEND INVITE";
 }
 #requestInvite.active {
 	background-color: #45C48B;
 }
 #requestInvite.active:before {
-	content: "INVITE REQUESTED";
+	content: "INVITE SENT";
 }
 .userMessage {
 	position: relative;
@@ -294,12 +339,14 @@ i > .time {
 	line-height: 1em;
 }
 .spaceAvailableSlotsImg {
+	opacity: 0.75;
 	display: inline-block;
 	margin-right: 10px;
 	margin-bottom: 10px;
 	border-radius: 50%;
 	height: 50px;
 	width: 50px;
+	cursor: pointer;
 	background-color: black;
 }
 

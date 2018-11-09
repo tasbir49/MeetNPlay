@@ -68,3 +68,20 @@ window.onscroll = () => {
 		nav["topNav_hamburger"].style.top = "2rem";
 	}
 };
+
+
+function insertLoadingIcon(elem, relativeX="0px", relativeY="0px", 
+	color="white", width="16px", height="16px") {
+	const loadingIcon = document.createElement("div");
+	loadingIcon.className = "loadingIcon";
+	for (let i = 0; i < 3; i++) {
+		let div = document.createElement("div");
+		div.style.borderColor = color + " transparent transparent transparent";
+		loadingIcon.appendChild(div);
+	}
+
+	loadingIcon.style.transform = "translate(" + relativeX + "," + relativeY + ")";
+	elem.appendChild(loadingIcon);
+
+	return loadingIcon;
+}
