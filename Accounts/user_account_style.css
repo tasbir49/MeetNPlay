@@ -10,13 +10,14 @@
 }
 
 #leftSideAccountPage img {
-    border-radius: 20%;
     width: 70%;
     min-width: 32px;
     display: block;
     margin-top: 5%;
     margin-left: auto;
     margin-right: auto;
+    border-radius: 50%;
+	border: 2px solid rgba(255,255,255,1);
 }
 
 #leftSideAccountPage form input[type="text"] {
