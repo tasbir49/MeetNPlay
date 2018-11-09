@@ -17,18 +17,23 @@ User Instructions:
         To edit or delete click on the three vertical dots on the right
     Click on usernames to view their profile.
     
-    The account page on the top navBar lets you view accounts.
+    On the top you can go to home page or go to top of page.
+    On the top right, clicking the circle brings out a menu that lets you make a post, view your profile or logout
     You can edit the info on your own account EXCEPT for the Member Since field
     Can change password(this does nothing without backend).
     You can report other inappropriate users for any reason
     
 
 Admin Instructions:
+    Mostly the same
+
     can view the details of a meetup post from homepage immediately. Admins are assumed to join every meetup
     can edit all the info on a meetup post page (the three vertically placed dots on the right)
     can edit all the information on the account page on any account
     can ban/unban users when on their account page
     can change passwords WITHOUT knowing the old password
+    
+    The circle on the top right lets you access the same things as user BUT also has a reports page link
     reports page shows open reports
         can click on username to view their profile
         the user on a report is the one reported AGAINST, the reporter on this page is anonymous
