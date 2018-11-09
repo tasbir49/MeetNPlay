@@ -2,7 +2,7 @@ allGames = ["Kirby","Legend of Zelda","Game of Thrones","Super Smash Brothers Br
 
 //the dialog boxes
 
-const userNotFound = document.querySelector("#userNotFound");
+const postNotFound = document.querySelector("#postNotFound");
 
 const reportButton = document.getElementsByClassName("reportButton")[0]
 const requestInviteButton = document.getElementsByClassName("requestInvite")[0]
@@ -11,7 +11,7 @@ const usrSearchForm = document.querySelector("#userSearchInput");
 
 requestInviteButton.addEventListener("click",processRequest);
 reportButton.addEventListener("click",reportPrompt);
-userNotFound.addEventListener("click", bringDownUserPrompt);
+postNotFound.addEventListener("click", bringDownUserPrompt);
 
 usrSearchForm.addEventListener("submit", searchUser);
 
@@ -26,13 +26,13 @@ function searchUser(e) {
 }
 
 function bringUpUserPrompt(e) {
-    userNotFound.style.display = "block";
+    postNotFound.style.display = "block";
 }
 
 
 
 function bringDownUserPrompt(e) {
-    userNotFound.style.display = "none";
+    postNotFound.style.display = "none";
 }
 var acc = document.getElementsByClassName("accordion");
 var i;
@@ -69,5 +69,16 @@ function processRequest(e){
 }
 
 function acceptRequest() {
-  requestInviteButton.innerText = "Invited";
+  requestInviteButton.innerText = "Joined";
+  createLink();
+}
+
+function createLink() {
+    
+    linkNode = document.createElement("a");
+    linkNode.setAttribute("id","viewPost");
+    linkNode.setAttribute("href", "#");
+    linkNode.innerText = "View Post"
+    requestInviteButton.parentNode.insertBefore(linkNode, requestInviteButton.nextSibling);
+
 }
