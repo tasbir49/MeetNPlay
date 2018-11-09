@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Games</title>
+
+	<meta charset="UTF-8">
+	<meta name="author" content="">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="theme-color" content="#323741">
+	<meta name="viewport" content="width=device-width">
+
+	<link rel="stylesheet" href="../styles/main.css">
+	<link rel="stylesheet" href="forum.css">
+	<link rel="stylesheet" href="../styles/user.css">
+</head>
+<body>
+	<header>
+		<div id="headerBG"></div>
+		<div id="headerContainer">
+			<div id="headerContainerPadding">
+				<nav id="topNav">
+					<a id ="topNav_title" href="#"><img id="topNav_titleImg" src="../resources/images/logo2.png" alt="logo"></a>
+					<div id="topNav_hamburger" class="hamburger">
+						<div class="bar"></div>
+						<div class="bar"></div>
+						<div class="bar"></div>
+					</div>
+					<ul id="topNav_links">
+						<li><a class="linkAnimate" href="#">Home</a></li>
+						<li><a class="linkAnimate" href="#">Browse</a></li>
+						<li id="loginButtonContainer">
+
+							<div id="navUser">
+								<img id="navUserImg" class="userProfilePic" src="../../resources/images/postRequestProfile.png" alt="adminPic">
+								<ul id="navUserOptionsList">
+									<li id="navUserName">User</li>
+									<li><a class="linkAnimate" href="#">Profile</a></li>
+									<li><a class="linkAnimate makepost" href="#">Make Post</a></li>
+									<li><a class="linkAnimate" href="#">Inbox</a></li>
+									<li><a class="linkAnimate" href="#">Reports</a></li>
+									<li><a class="linkAnimate logout" href="forum.html">Log Out</a></li>
+								</ul>
+							</div>
+
+					</li>
+				</ul>
+				</nav>
+				<div id="headerTitleContainer">
+					<h1 id="headerTitle">FIND A GAME</h1>
+				</div>
+				<div id="loginButtonBG"></div>
+			</div>
+		</div>
+	</header>
+	<nav id="sideNav">
+		<div id="sideNavContents">
+			<strong> Games </strong>
+			<ul>
+				<li class ='sideNavList'>
+
+					<form id="userSearchInput">
+							<input type="text" placeholder="Search a Game">
+							<input type="submit" value="Find Game">
+					</form>
+				</li>
+				<li class ='sideNavList'>
+					<p>Filters</p>
+					<button class="accordion">Game Station</button>
+					<div class="panel">
+						<ul>
+							<li><button class = "accordionButton">XBox One</button></li>
+							<li><button class = "accordionButton">Xbox 360</button></li>
+							<li><button class = "accordionButton">other Xbox</button></li>
+							<li><button class = "accordionButton">PS3</button></li>
+							<li><button class = "accordionButton">PS4</button></li>
+							<li><button class = "accordionButton">PC</button></li>
+							<li><button class = "accordionButton">Wii</button></li>
+							<li><button class = "accordionButton">WiiU</button></li>
+							<li><button class = "accordionButton">Switch</button></li>
+						</ul>
+					</div>
+
+					<button class="accordion">Number of People</button>
+					<div class="panel">
+						<ul>
+							<li><button class = "accordionButton">2</button></li>
+							<li><button class = "accordionButton">3</button></li>
+							<li><button class = "accordionButton">4</button></li>
+							<li><button class = "accordionButton">5</button></li>
+							<li><button class = "accordionButton">6</button></li>
+							<li><button class = "accordionButton">7+</button></li>
+						</ul>
+					</div>
+
+					<button class="accordion">Genre</button>
+					<div class="panel">
+						<ul>
+							<li><button class = "accordionButton">MMRPG</button></li>
+							<li><button class = "accordionButton">FPS</button></li>
+							<li><button class = "accordionButton">Racing</button></li>
+							<li><button class = "accordionButton">Strategy</button></li>
+						</ul>
+					</div>
+				</li>
+				<li class ='sideNavList'>
+					<p>Sort</p>
+					<button class="accordion">Options</button>
+					<div class="panel">
+						<ul>
+							<li><button class = "accordionButton">by Date Posted</button></li>
+							<li><button class = "accordionButton">by Game Name</button></li>
+						</ul>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<nav id="gamePost">
+<anything to do with homepages>
+		<section class="post">
+			<div class="gameImgIcon">
+				<img src="../resources/images/rayman.jpg" class = "gameImg">
+				<span class= "gameTitle">Rayman Origins</span>
+				<span class= "status">Status: <strong>1/2</strong></span>
+				<span class= "postTitle">Looking for players</span>
+			</div>
+			<div class="gameDetails">
+				<button class ="reportButton" type="button" name="Report">Report</button>
+				<button class ="requestInvite" type="button" name="Request">Request Invite</button>
+
+			</div>
+		</section>
+
+	</nav>
+	<div class="dialogContainer" id="userNotFound">
+			<div class="dialogBox">
+					<span class="closeBox">x</span>
+					<br>User not found
+			</div>
+	</div>
+	<script type="text/javascript" src="forum.js"></script>
+	<script src="../scripts/main.js"></script>
+	<script type="text/javascript" src="../scripts/user.js"></script>
+
+
+
+</body>
+</html>
