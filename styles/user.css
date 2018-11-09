@@ -147,6 +147,13 @@ section#commentFormContainer {
 	transform: translateY(4px);
 }
 
+.userProfilePic {
+	vertical-align: middle;
+	height: 3em;
+	border-radius: 50%;
+	border: 2px solid rgba(255,255,255,1);
+}
+
 @media screen and (max-width: 768px) {
 	#navUser {
 		transform: translateX(0);
