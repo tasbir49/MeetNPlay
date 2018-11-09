@@ -7,7 +7,7 @@ EB3E4A
 */
 
 header #headerBG {
-	background-image: url("../../../resources/images/loz.jpg");
+	background-image: url("../resources/images/loz.jpg");
 }
 #loginButtonBG {
 	width: 76px;
@@ -44,7 +44,7 @@ header #headerBG {
 	border-color: #FFD039;
 }
 #navUser.active {
-	background-image: url("../../../resources/images/fortnite.jpg");
+	background-image: url("../resources/images/fortnite.jpg");
 	background-size: 200px 83px;
 	/*border: 5px solid black;*/
 	transform: translateX(-1rem);
