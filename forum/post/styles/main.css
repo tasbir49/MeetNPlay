@@ -127,12 +127,7 @@ i > .time {
 	font-family: "EncodeSans-Regular";
 	margin: 0;
 }
-.userProfilePic {
-	vertical-align: middle;
-	height: 3em;
-	border-radius: 50%;
-	border: 2px solid rgba(255,255,255,1);
-}
+
 .userSection .userProfilePic {
 	margin-right: 10px;
 }
