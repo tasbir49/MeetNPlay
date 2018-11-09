@@ -1,0 +1,152 @@
+/*
+323741
+06858C
+45C48B
+FFD039
+EB3E4A
+*/
+#post-edit hr {
+	margin: 10px 0 20px 0;
+}
+
+.editFormInputLabel {
+	display: inline-block;
+	font-family: "EncodeSans-Light";
+	opacity: 0.75;
+	margin: 0;
+	margin-bottom: 10px;
+	margin-right: 10px;
+}
+.editFormInputLabel.active {
+	opacity: 0.95 !important;
+	color: #45C48B;
+}
+.editFormInput {
+	display: inline-block;
+	box-sizing: border-box;
+	font-family: "EncodeSans-Regular";
+	margin: 0;
+	outline: none;
+	resize: none;
+	border: none;
+	border-radius: 3px;
+	opacity: 0.95;
+	background-color: #DDD;
+	padding: 7px 12px;
+}
+.editFormInput:focus {
+	box-sizing: border-box;
+	opacity: 1 !important;
+	border: 3px solid #45C48B;
+	padding: 4px 9px;
+}
+
+#postTitle-edit {
+	font-family: "EncodeSans-Medium";
+	font-size: 1.5rem;
+	width: 100%;
+}
+#keywords-editContainer {
+	margin-top: 10px;
+}
+#keywords-editLabel {
+	font-size: 0.8rem;
+	opacity: 0.6;
+}
+#keywords-edit {
+	background-color: #CCC;
+	opacity: 0.6;
+	font-family: "EncodeSans-Medium";
+	font-size: 1rem;
+	width: 500px;
+	max-width: 100%;
+}
+#game-edit {
+	overflow: visible;
+}
+#gameTitle-edit {
+	font-size: 1.25rem;
+	width: 300px;
+	max-width: 100%;
+}
+#gameTitle-editDropdown {
+	display: none;
+}
+
+.autocompleteList {
+	position: absolute;
+	left: 0;
+	z-index: 2;
+	width: 100%;
+	margin-top: 10px;
+	max-height: 50vh;
+	overflow: auto;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+.autocompleteItem {
+	font-family: "EncodeSans-Light";
+	background-color: rgba(31, 35, 41, 1);
+	padding: 5px 10px;
+	text-align: left;
+	cursor: pointer;
+	opacity: 0.9;
+	border-left: 3px solid #45C48B;
+	border-right: 3px solid #45C48B;
+	border-top: 1px solid grey;
+}
+.autocompleteItem:hover,
+.autocompleteItem#autocompleteItem-active {
+	background-color: #101316;
+	opacity: 1;
+}
+.autocompleteItem:first-child {
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	border-top: 3px solid #45C48B;
+}
+.autocompleteItem:last-child {
+	border-bottom: 3px solid #45C48B;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+#spaceAvailableNum-edit {
+	font-size: 1.25rem;
+	width: 75px;
+	max-width: 100%;
+}
+#userMessage-edit {
+	position: relative;
+	display: block;
+	font-size: 1em;
+	width: 100%;
+	height: 75vh;
+}
+
+#post-editSubmit {
+	float: right;
+	font-family: "EncodeSans-Regular";
+	margin: 20px;
+	cursor: pointer;
+	border: none;
+	font-size: 1.5rem;
+	padding: 10px;
+	opacity: 0.75;
+	color: black;
+	background-color: #2fbf5d;
+	border: 3px solid rgba(0,0,0,0);
+	border-radius: 3px;
+	transform: translateY(0);
+	transition: transform 50ms;
+}
+#post-editSubmit:hover {
+	background-color: #2fbf5d;
+	border: 3px solid rgba(0,0,0,0.3);
+	color: black;
+	opacity: 1;
+}
+#post-editSubmit:active {
+	opacity: 0.8;
+	transform: translateY(4px);
+}

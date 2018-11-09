@@ -15,6 +15,9 @@ document.addEventListener("click", (e) => {
 });
 
 function hasAncestorID(elem, id) {
+	if (!elem) {
+		return false;
+	}
 	if (elem.tagName === "HTML") {
 		return elem.id === id;
 	} else if (elem.id === id) {
@@ -24,6 +27,9 @@ function hasAncestorID(elem, id) {
 	}
 }
 function hasAncestorClass(elem, elemClass) {
+	if (!elem) {
+		return false;
+	}
 	if (elem.tagName === "HTML") {
 		return elem.classList.contains(elemClass);
 	} else if (elem.classList.contains(elemClass)) {

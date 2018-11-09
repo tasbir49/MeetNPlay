@@ -128,6 +128,8 @@ header #headerContainer {
 	height: 100%;
 	background-color: rgba(0,0,0,0.5);
 	width: 40%;
+}
+header #headerContainer, #topNav {
 	animation: iniEnter 750ms;
 }
 #headerContainerPadding {
@@ -275,7 +277,7 @@ header #headerTitle {
 	}
 }
 @media screen and (max-width: 768px) {
-	header #headerContainer {
+	header #headerContainer, #topNav {
 		width: 100%;
 		animation: iniEnter2 750ms;
 	}

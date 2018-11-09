@@ -14,19 +14,18 @@ for (let i = 0; i < userMessages.length; i++) {
 	}
 }
 
-const userOptionsButtons = document.getElementsByClassName("userSectionSVG");
-for (let i = 0; i < userOptionsButtons.length; i++) {
-	userOptionsButtons[i].addEventListener("click", (e) => {
-		userOptionsButtons[i].classList.toggle("active");
-	});
-}
-
 document.addEventListener("click", (e) => {
-	for (let i = 0; i < userOptionsButtons.length; i++) {
-		if (userOptionsButtons[i].classList.contains("active")){
-			if (!hasAncestorClass(e.target, "userSectionOptionsContainer")) {
+	if (e.target.classList.contains("userOptionsSVG")) {
+		e.target.classList.toggle("active");
+	} else if (e.target.parentNode.classList.contains("userOptionsSVG")) {
+		e.target.parentNode.classList.toggle("active");
+	} else {
+		if (!hasAncestorClass(e.target, "userSectionOptionsContainer")) {
+			const userOptionsButtons = document.getElementsByClassName("userOptionsSVG");
+			for (let i = 0; i < userOptionsButtons.length; i++) {
 				userOptionsButtons[i].classList.remove("active");
 			}
+			
 		}
 	}
 });
