@@ -7,12 +7,15 @@ Users can make posts saying they want to host a meetup.
 User Instructions:
     Go to top right and select make post to create meetup post
     
-    Go to post listing(the first page you see whenn logging in) to request an invite to a meetup
+    Go to post listing to request an invite to a meetup
+    if your invite is accepted, a link to view the post will appear. If you made the post, or are an admin, you can view the post anyways
     You can filter meetup posts on the right side (this does nothing for now).
     You can report inappropriate posts on the page
     
     You can view the detailed page of a meetup post you created or are invited to.
     Users who made a post can edit the info, and invite other users, or delete the post.
+        To edit or delete click on the three vertical dots on the right
+    Click on usernames to view their profile.
     
     The account page on the top navBar lets you view accounts.
     You can edit the info on your own account EXCEPT for the Member Since field
@@ -21,12 +24,13 @@ User Instructions:
     
 
 Admin Instructions:
-    can view the details of a meetup post from homepage immediately
-    can edit all the info on a meetup post page
+    can view the details of a meetup post from homepage immediately. Admins are assumed to join every meetup
+    can edit all the info on a meetup post page (the three vertically placed dots on the right)
     can edit all the information on the account page on any account
-    can ban/unban users
+    can ban/unban users when on their account page
     can change passwords WITHOUT knowing the old password
     reports page shows open reports
+        can click on username to view their profile
         the user on a report is the one reported AGAINST, the reporter on this page is anonymous
         can close reports, removing them from the report page
         
