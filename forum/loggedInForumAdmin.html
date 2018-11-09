@@ -12,6 +12,8 @@
 
 	<link rel="stylesheet" href="../styles/main.css">
 	<link rel="stylesheet" href="forum.css">
+	<link rel="stylesheet" href="post/styles/user.css">
+	<link rel="stylesheet" href="post/styles/main.css">
 </head>
 <body>
 	<header>
@@ -28,16 +30,22 @@
 					<ul id="topNav_links">
 						<li><a class="linkAnimate" href="#">Home</a></li>
 						<li><a class="linkAnimate" href="#">Browse</a></li>
-						<li id="loginButtonContainer"><a id="loginButton" class="linkAnimate" href="#">
-							Name
-						</a>
-						<div class="dropdown-content">
-							<a href="#">Profile</a>
-							<a href="#">Make a Post</a>
-							<a href="#">Link 3</a>
-						</div>
+						<li id="loginButtonContainer">
 
-					</li>					</ul>
+							<div id="navUser">
+								<img id="navUserImg" class="userProfilePic" src="../../resources/images/postRequestProfile.png" alt="adminPic">
+								<ul id="navUserOptionsList">
+									<li id="navUserName">User</li>
+									<li><a class="linkAnimate" href="#">Profile</a></li>
+									<li><a class="linkAnimate makepost" href="#">Make Post</a></li>
+									<li><a class="linkAnimate" href="#">Inbox</a></li>
+									<li><a class="linkAnimate" href="#">Reports</a></li>
+									<li><a class="linkAnimate logout" href="forum.html">Log Out</a></li>
+								</ul>
+							</div>
+
+					</li>
+				</ul>
 				</nav>
 				<div id="headerTitleContainer">
 					<h1 id="headerTitle">FIND A GAME</h1>
@@ -130,12 +138,13 @@
 			<div class="dialogBox">
 					<span class="closeBox">x</span>
 					<br>User not found
-
 			</div>
 	</div>
+	<script type="text/javascript" src="forum.js"></script>
 	<script src="../scripts/main.js"></script>
-	<script type="text/javascript" src="forum.js">
+	<script type="text/javascript" src="post/scripts/user.js"></script>
 
-	</script>
+
+
 </body>
 </html>
