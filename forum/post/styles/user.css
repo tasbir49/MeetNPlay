@@ -1,0 +1,96 @@
+/*
+323741
+06858C
+45C48B
+FFD039
+EB3E4A
+*/
+
+header #headerBG {
+	background-image: url("../../../resources/images/loz.jpg");
+}
+#loginButtonBG {
+	width: 100px;
+	margin-right: 82px;
+	padding: 0 0;
+}
+
+#loginButtonContainer {
+	text-align: center;
+}
+
+#navUser {
+	position: relative;
+	z-index: 2;
+	text-align: center;
+	width: 200px;
+	border-radius: 5px;
+}
+#navUserImg {
+	height: 39px;
+	width: 39px;
+	cursor: pointer;
+	transform: scale(1);
+	transition: transform 200ms;
+}
+#navUser:hover #navUserImg,
+#navUser.active #navUserImg {
+	transform: scale(1.35);
+}
+#navUser.active #navUserImg {
+	transform: scale(1.35) translateY(1rem);
+	border-color: #FFD039;
+}
+#navUser.active {
+	background-image: url("../../../resources/images/fortnite.jpg");
+	background-size: 200px 83px;
+	/*border: 5px solid black;*/
+}
+
+#navUserOptionsList {
+	position: relative;
+	/*top: -50px;*/
+	z-index: -1;
+	width: 200px;
+	display: none;
+	margin: 0;
+	padding: 0;
+	margin-top: 40px;
+	padding-bottom: 20px;
+	list-style: none;
+	background-color: #323741;
+	box-shadow: 0 2px 2px 1px rgba(0,0,0,0.7);
+	/*border-radius: 5px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;*/
+}
+#navUserOptionsList li {
+	text-align: center;
+	display: block;
+	margin: 0;
+}
+
+#navUserOptionsList li a.linkAnimate.logout:before {
+	background-color: #EB3E4A;
+}
+#navUserOptionsList li a.linkAnimate.makepost:hover {
+	color: black;
+}
+#navUserOptionsList li a.linkAnimate.makepost:before {
+	background-color: #FFD039;
+}
+#navUserOptionsList li a {
+	width: 180px;
+	font-family: "EncodeSans-Regular";
+}
+
+#navUserOptionsList.active {
+	display: block;
+}
+
+li#navUserName {
+	font-size: 1.4em;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: #222;
+}
