@@ -27,18 +27,18 @@
 						<div class="bar"></div>
 					</div>
 					<ul id="topNav_links">
-						<li><a class="linkAnimate" href="#">Home</a></li>
-						<li><a class="linkAnimate" href="#">Browse</a></li>
+						<li><a class="linkAnimate" href="../forum/loggedInForumAdmin.html">Home</a></li>
+						<li><a class="linkAnimate" href="#">Back to Top</a></li>
 						<li id="loginButtonContainer">
 
 							<div id="navUser">
 								<img id="navUserImg" class="userProfilePic" src="../resources/images/adminProfile.png" alt="adminPic">
 								<ul id="navUserOptionsList">
 									<li id="navUserName">admin</li>
-									<li><a class="linkAnimate" href="#">Profile</a></li>
+									<li><a class="linkAnimate" href="../Accounts/admin_viewing_own.html">Profile</a></li>
 									<li><a class="linkAnimate makepost" href="#">Make Post</a></li>
-									<li><a class="linkAnimate" href="#">Reports</a></li>
-									<li><a class="linkAnimate logout" href="forum.html">Log Out</a></li>
+									<li><a class="linkAnimate" href="../Reports/reports.html">Reports</a></li>
+									<li><a class="linkAnimate logout" href="../login/index.html">Log Out</a></li>
 								</ul>
 							</div>
 
@@ -59,8 +59,8 @@
 				<li class ='sideNavList'>
 
 					<form id="userSearchInput">
-							<input type="text" placeholder="Search a Game">
-							<input type="submit" value="Find Game">
+							<input type="text" placeholder="Search for a Post">
+							<input type="submit" value="Find Post">
 					</form>
 				</li>
 				<li class ='sideNavList'>
@@ -125,7 +125,7 @@
 				<span class= "postTitle">Looking for players</span>
 			</div>
 			<div class="gameDetails">
-                <button class ="requestInvite" type="button" name="Request">Invited</button>
+                <button class ="requestInvite" type="button" name="Request">Joined</button>
                 <a href="#" id="viewPost">View Post</a>
 				<button class ="reportButton" type="button" name="Report">Report</button>
 
@@ -134,10 +134,10 @@
 		</section>
 
 	</nav>
-	<div class="dialogContainer" id="userNotFound">
+	<div class="dialogContainer" id="postNotFound">
 			<div class="dialogBox">
 					<span class="closeBox">x</span>
-					<br>User not found
+					<br>Post not found
 			</div>
 	</div>
 	<script type="text/javascript" src="forum.js"></script>
