@@ -168,7 +168,7 @@ i > .time {
 }
 .userSectionOptionsList {
 	position: absolute;
-	top: 0;
+	top: -1em;
 	right: 1.5em;
 	display: none;
 	margin: 0;
