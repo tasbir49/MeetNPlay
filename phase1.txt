@@ -14,8 +14,9 @@ User Instructions:
     
     You can view the detailed page of a meetup post you created or are invited to.
     Users who made a post can edit the info, and invite other users, or delete the post.
-        To edit or delete click on the three vertical dots on the right
-    Click on usernames to view their profile.
+        To delete click on the three vertical dots on the right
+        
+    3 dot options also let you view profile
     
     On the top you can go to home page or go to top of page.
     On the top right, clicking the circle brings out a menu that lets you make a post, view your profile or logout
