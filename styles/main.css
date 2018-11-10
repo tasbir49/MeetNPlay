@@ -367,6 +367,58 @@ header #headerTitle {
 }
 
 
+#deleteDialog {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 100;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0,0,0,0.75);
+	color: white;
+}
+#deleteDialog #deleteMessage {
+	position: absolute;
+	text-align: center;
+	width: 300px;
+	height: 400px;
+	margin: -50px 0 0 -150px;
+	top: 50%;
+	left: 50%;
+}
+#deleteDialog #deleteMessage button {
+	font-family: "EncodeSans-Medium";
+	text-align: center;
+	width: 100px;
+	margin: 15px;
+	padding: 10px;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+	font-size: 1.15em;
+
+	opacity: 0.75;
+	color: black;
+	border: 3px solid rgba(0,0,0,0);
+	border-radius: 3px;
+	transform: translateY(0);
+	transition: transform 50ms;
+}
+button#deleteApprove {
+	background-color: #EB3E4A;
+}
+#deleteDialog #deleteMessage button:hover {
+	border: 3px solid rgba(0,0,0,0.3);
+	opacity: 1;
+}
+#deleteDialog #deleteMessage button#deleteApprove:hover {
+	border: 3px solid rgba(255,0,0,0.6);
+}
+#deleteDialog #deleteMessage button:active {
+	opacity: 0.8;
+	transform: translateY(4px);
+}
+
 @keyframes iniEnter {
 	0%, 40% {
 		opacity: 0;
