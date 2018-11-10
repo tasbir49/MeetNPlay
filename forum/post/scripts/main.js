@@ -54,13 +54,18 @@ if (document.getElementById("navUser")) {
 	let invited = false;
 	if (inviteBtn) {
 		inviteBtn.addEventListener("click", (e) => {
-			if (inviteBtn.className !== "active" && !invited) {
+			if (!inviteBtn.classList.contains("active") && !invited) {
 				invited = true;
 
 				// insertLoadingIcon defined in /scripts/main.js
-				const loadingIcon = insertLoadingIcon(inviteBtn, "7px", "2px", "black");
+				let loadingIcon;
+				if (inviteBtn.classList.contains("requestJoin")) {
+					loadingIcon = insertLoadingIcon(inviteBtn, "22px", "2px");
+				} else {
+					loadingIcon = insertLoadingIcon(inviteBtn, "7px", "2px", "black");
+				}
 				setTimeout(() => {
-					inviteBtn.className = "active";
+					inviteBtn.classList.add("active");
 					inviteBtn.removeChild(loadingIcon);
 				}, 2000);
 			}

@@ -32,7 +32,7 @@ div.clearFloat {
 	padding: 20px;
 	background-color: rgba(0,0,0,0.4);
 	box-shadow: 0 3px 3px 2px rgba(0,0,0,0.7);
-	overflow: scroll;
+	/*overflow: scroll;*/
 }
 
 #postTitle {
@@ -254,7 +254,7 @@ h4 {
 }
 .comment {
 	position: relative;
-	overflow: scroll;
+	/*overflow: scroll;*/
 }
 .comment .sectionCard {
 	padding: 15px;
@@ -290,11 +290,17 @@ h4 {
 #requestInvite:before {
 	content: "SEND INVITE";
 }
+#requestInvite.requestJoin:before {
+	content: "REQUEST TO JOIN";
+}
 #requestInvite.active {
 	background-color: #45C48B;
 }
 #requestInvite.active:before {
 	content: "INVITE SENT";
+}
+#requestInvite.requestJoin.active:before {
+	content: "REQUEST SENT";
 }
 .userMessage {
 	position: relative;

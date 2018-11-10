@@ -33,9 +33,9 @@
 						<li><a title="Browse posts" class="linkAnimate" href="../forum.html">Browse</a></li>
 						<li id="loginButtonContainer">
 							<div id="navUser">
-								<img id="navUserImg" class="userProfilePic" src="../../resources/images/postRequestProfile.png" alt="userProfilePic1">
+								<img id="navUserImg" class="userProfilePic" src="../../resources/images/posterProfile.png" alt="userProfilePic1">
 								<ul id="navUserOptionsList">
-									<li id="navUserName">PostRequest</li>
+									<li id="navUserName">Poster</li>
 									<li><a class="linkAnimate" href="#">Profile</a></li>
 									<li><a class="linkAnimate makepost" href="#">Make Post</a></li>
 									<li><a class="linkAnimate" href="#">Inbox</a></li>
@@ -55,8 +55,26 @@
 	<section id="contents">
 		<div id="threadContainer"><section id="thread">
 			<section id="post">
+				<div class="userSectionOptionsContainer modifyOptions"><div class="userSectionOptions modifyOptions">
+					<svg class="userOptionsSVG modifyOptions" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 18c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3zm0-9c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3zm0-9c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3z"/></svg>
+					<ul class="userSectionOptionsList modifyOptions">
+						<li><a class="edit" href="#">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7.127 22.564l-7.126 1.436 1.438-7.125 5.688 5.689zm-4.274-7.104l5.688 5.689 15.46-15.46-5.689-5.689-15.459 15.46z"/></svg>
+							Edit Post
+						</a></li>
+						<li><a class="lock" href="#">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M18 10v-4c0-3.313-2.687-6-6-6s-6 2.687-6 6v4h-3v14h18v-14h-3zm-10 0v-4c0-2.206 1.794-4 4-4s4 1.794 4 4v4h-8z"/></svg>
+							Lock Thread
+						</a></li>
+						<li><a class="delete deleteThread" href="#">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z"/></svg>
+							Delete Thread
+						</a></li>
+					</ul>
+				</div></div>
+
 				<h2 id="postTitle">Looking for a person for 2 player co-op</h2>
-				<span class="keywordLabel">Xbox 360</span><span class="keywordLabel">2-player</span><span class="keywordLabel BYOC">BYOC</span>
+				<span class="keywordLabel">Xbox 360</span><span class="keywordLabel">2-player</span><span class="keywordLabel BYOC" title="Bring Your Own Controller">BYOC</span>
 				<hr>
 				<div id="gameDetailsContainer"><section id="gameDetails">
 					<div id="gameContainer"><section id="game" class="sectionCard">
@@ -66,13 +84,13 @@
 						<span class="keywordLabel gameGenre">Adventure</span><span class="keywordLabel gameGenre">Platform</span><span class="keywordLabel gamePlatform">Xbox 360</span><span class="keywordLabel gamePlatform">Playstation Vita</span><span class="keywordLabel gamePlatform">Nintendo 3DS</span><span class="keywordLabel gamePlatform">PlayStation 3</span><span class="keywordLabel gamePlatform">Wii</span><span class="keywordLabel gamePlatform">Mac</span><span class="keywordLabel gamePlatform">PC</span>
 					</section></div>
 					<div id="spaceAvailableContainer"><section id="spaceAvailable" class="sectionCard">
-						<span id="spaceAvailableTitle">Space Available: </span><span id="spaceAvailableNum">1</span><button id="requestInvite" class="requestJoin"></button>
+						<span id="spaceAvailableTitle">Space Available: </span><span id="spaceAvailableNum">1</span>
 						<div id="spaceAvailableSlots">
 							<div class="spaceAvailableSlotsImg"></div>
 						</div>
 					</section></div>
 				</section></div>
-				<div id="postDetailsContainer"><section id="postDetails" class="sectionCard userMessageSection">
+				<div id="postDetailsContainer"><section id="postDetails" class="sectionCard curUser">
 					<div id="postDetailsUser" class="sectionCard userSection">
 						<img class="userProfilePic" src="../../resources/images/posterProfile.png" alt="userProfilePic1">
 						<div id="postDetailsUserInfo" class="userSectionInfo">
@@ -81,23 +99,6 @@
 							<span class="postDetailsLabel">Location: <i>Toronto, Ontario</i></span>
 						</div>
 					</div>
-					<div class="userSectionOptionsContainer"><div class="userSectionOptions">
-						<svg class="userOptionsSVG" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 18c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3zm0-9c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3zm0-9c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3z"/></svg>
-						<ul class="userSectionOptionsList">
-							<li><a href="#">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm7.753 18.305c-.261-.586-.789-.991-1.871-1.241-2.293-.529-4.428-.993-3.393-2.945 3.145-5.942.833-9.119-2.489-9.119-3.388 0-5.644 3.299-2.489 9.119 1.066 1.964-1.148 2.427-3.393 2.945-1.084.25-1.608.658-1.867 1.246-1.405-1.723-2.251-3.919-2.251-6.31 0-5.514 4.486-10 10-10s10 4.486 10 10c0 2.389-.845 4.583-2.247 6.305z"/></svg>
-								View Profile
-							</a></li>
-							<li><a href="#">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 3h-24v-2h24v2zm-12 3h-12v2h12v-2zm12 5h-24v2h24v-2zm-12 5h-12v2h12v-2zm12 5h-24v2h24v-2z"/></svg>
-								Direct Message
-							</a></li>
-							<li><a class="report" href="#">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M4 24h-2v-24h2v24zm18-22h-16v12h16l-4-5.969 4-6.031z"/></svg>
-								Report
-							</a></li>
-						</ul>
-					</div></div>
 					<div class="userMessage">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Facilisis mauris sit amet massa vitae. Quam adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus. Massa placerat duis ultricies lacus sed turpis tincidunt. Amet venenatis urna cursus eget nunc scelerisque viverra mauris in. Vel orci porta non pulvinar neque laoreet suspendisse interdum. Gravida rutrum quisque non tellus orci ac auctor. Viverra justo nec ultrices dui sapien. Adipiscing at in tellus integer feugiat scelerisque. Quam pellentesque nec nam aliquam sem et tortor consequat id. Tortor posuere ac ut consequat. Neque laoreet suspendisse interdum consectetur libero. Leo a diam sollicitudin tempor id eu. Semper quis lectus nulla at volutpat diam ut.
 
@@ -117,17 +118,43 @@
 			<hr>
 			<br>
 			<section id="commentFormContainer" class="curUser">
-				Comment as <span class="userName">PostRequest</span>
+				Comment as <span class="userName">Poster</span>
 				<form id="commentForm" action="">
 					<textarea placeholder="Enter a comment" name="commentInput" id="commentInput"></textarea>
 					<button id="commentFormSubmit">Add Comment</button>
 				</form>
 			</section>
-<section class="comment curUser"><div class="sectionCard userSection"><img id="" class="userProfilePic" src="../../resources/images/postRequestProfile.png" alt="userProfilePic1"><div class="userSectionInfo"><h4 class="userName">PostRequest</h4><span class="postDetailsLabel">Posted: <i>Sat, 10 Nov 2018<span class="time"> 01:53:40 GMT</span></i></span><span class="postDetailsLabel">Location: <i>Harare, Zimbabwe</i></span></div></div><div class="userSectionOptionsContainer"><div class="userSectionOptions"><svg xmlns="http://www.w3.org/2000/svg" class="userOptionsSVG" width="24" height="24" viewBox="0 0 24 24"><path d="M12 18c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3zm0-9c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3zm0-9c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3z"></path></svg><ul class="userSectionOptionsList"><li><a class="delete deleteComment"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z"></path></svg> Delete Comment</a></li></ul></div></div>
+			<section class="comment">
+				<div class="sectionCard userSection">
+					<img class="userProfilePic" src="../../resources/images/postRequestProfile.png" alt="userProfilePic1">
+					<div class="userSectionInfo">
+						<h4 class="userName">PostRequest</h4>
+						<span class="postDetailsLabel">Posted: <i>November 8, 2018 <span class="time">23:00 EST</span></i></span>
+						<span class="postDetailsLabel">Location: <i>Toronto, Ontario</i></span>
+					</div>
+				</div>
+				<div class="userSectionOptionsContainer"><div class="userSectionOptions">
+					<svg class="userOptionsSVG" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 18c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3zm0-9c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3zm0-9c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3z"/></svg>
+					<ul class="userSectionOptionsList">
+						<li><a href="#">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm7.753 18.305c-.261-.586-.789-.991-1.871-1.241-2.293-.529-4.428-.993-3.393-2.945 3.145-5.942.833-9.119-2.489-9.119-3.388 0-5.644 3.299-2.489 9.119 1.066 1.964-1.148 2.427-3.393 2.945-1.084.25-1.608.658-1.867 1.246-1.405-1.723-2.251-3.919-2.251-6.31 0-5.514 4.486-10 10-10s10 4.486 10 10c0 2.389-.845 4.583-2.247 6.305z"/></svg>
+							View Profile
+						</a></li>
+						<li><a href="#">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 3h-24v-2h24v2zm-12 3h-12v2h12v-2zm12 5h-24v2h24v-2zm-12 5h-12v2h12v-2zm12 5h-24v2h24v-2z"/></svg>
+							Direct Message
+						</a></li>
+						<li><a class="report" href="#">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M4 24h-2v-24h2v24zm18-22h-16v12h16l-4-5.969 4-6.031z"/></svg>
+							Report
+						</a></li>
+					</ul>
+				</div></div>
 				<div class="userMessage">
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Facilisis mauris sit amet massa v
 				</div>
 			</section>
+			
 		</section></div>
 	</section>
 
