@@ -77,7 +77,7 @@ function createLink() {
     
     linkNode = document.createElement("a");
     linkNode.setAttribute("id","viewPost");
-    linkNode.setAttribute("href", "#");
+    linkNode.setAttribute("href", "../forum/post/post-request-view.html");
     linkNode.innerText = "View Post"
     requestInviteButton.parentNode.insertBefore(linkNode, requestInviteButton.nextSibling);
 

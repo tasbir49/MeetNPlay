@@ -1,6 +1,13 @@
 "use strict";
 
 const userMessages = document.getElementsByClassName("userMessage");
+const leaveButton = document.getElementById("requestLeave");
+if(leaveButton){
+    leaveButton.addEventListener("click", goToHome);
+}
+function goToHome(e) {
+    window.location.href = "../../forum/loggedInForumUser.html"
+}
 
 for (let i = 0; i < userMessages.length; i++) {
 	if (isOverflown(userMessages[i])) {
@@ -46,6 +53,8 @@ document.addEventListener("click", (e) => {
 		}
 	}
 });
+
+
 
 
 // This if statement is a hacky check if user is logged in; just for phase 1.

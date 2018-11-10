@@ -17,43 +17,42 @@
 	<link rel="stylesheet" href="styles/edit.css">
 </head>
 <body>
-	<header>
+    <header>
 		<div id="headerBG"></div>
 		<div id="headerContainer">
 			<div id="headerContainerPadding">
 				<nav id="topNav">
-					<a title="logo" id ="topNav_title" href="#"><img id="topNav_titleImg" src="../../resources/images/logo2.png" alt="logo"></a>
+					<a id ="topNav_title" href="#"><img id="topNav_titleImg" src="../../resources/images/logo2.png" alt="logo"></a>
 					<div id="topNav_hamburger" class="hamburger">
 						<div class="bar"></div>
 						<div class="bar"></div>
 						<div class="bar"></div>
 					</div>
 					<ul id="topNav_links">
-						<li><a title="Back to home" class="linkAnimate" href="#">Home</a></li>
-						<li><a title="Browse posts" class="linkAnimate" href="../forum.html">Browse</a></li>
+						<li><a class="linkAnimate" href="../../forum/loggedInForumPoster.html">Home</a></li>
+                        <li><a class="linkAnimate" href="#">Back to Top</a></li>
 						<li id="loginButtonContainer">
+
 							<div id="navUser">
-								<img id="navUserImg" class="userProfilePic" src="../../resources/images/adminProfile.png" alt="adminPic">
+								<img id="navUserImg" class="userProfilePic" src="../../resources/images/posterProfile.png" alt="adminPic">
 								<ul id="navUserOptionsList">
-									<li id="navUserName">Admin</li>
-									<li><a class="linkAnimate" href="#">Profile</a></li>
-									<li><a class="linkAnimate makepost" href="#">Make Post</a></li>
-									<li><a class="linkAnimate" href="#">Inbox</a></li>
-									<li><a class="linkAnimate" href="#">Reports</a></li>
-									<li><a class="linkAnimate logout" href="#">Log Out</a></li>
+									<li id="navUserName">poster</li>
+									<li><a class="linkAnimate" href="../../Accounts/poster_viewing_own.html">Profile</a></li>
+									<li><a class="linkAnimate makepost" href="../../forum/post/poster-make.html">Make Post</a></li>
+									<li><a class="linkAnimate logout" href="../../login/index.html">Log Out</a></li>
 								</ul>
 							</div>
-						</li>
-					</ul>
+
+					</li>
+				</ul>
 				</nav>
 				<div id="headerTitleContainer">
-					<h1 id="headerTitle">FIND A GAME</h1>
+					<h1 id="headerTitle">EDIT POST</h1>
 				</div>
 				<div id="loginButtonBG"></div>
 			</div>
 		</div>
 	</header>
-				
 	<section id="contents">
 		<div id="threadContainer"><section id="thread">
 			<section id="post-editSection"><form id="post-edit" action="">
