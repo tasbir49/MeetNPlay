@@ -70,7 +70,7 @@ function addComment(e) {
 	comment.appendChild(divSection);
 	// == == /added USER SECTION
 
-	if (user.userName.nodeValue === "Admin" || user.userName.nodeValue === "Poster") {
+	if (user.userName.nodeValue.toUpperCase() === "ADMIN" || user.userName.nodeValue.toUpperCase() === "POSTER") {
 		console.log("add!");
 		// == == USER OPTIONS BUTTON
 		divSection = document.createElement("div");
