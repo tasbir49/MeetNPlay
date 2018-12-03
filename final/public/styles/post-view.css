@@ -1,0 +1,50 @@
+/*
+323741
+06858C
+45C48B
+FFD039
+EB3E4A
+*/
+
+.spaceAvailableSlotsImg {
+	position: relative;
+}
+.spaceAvailableSlotsImg:hover {
+	opacity: 1;
+}
+.spaceAvailableSlotsImg:active {
+	opacity: 0.8;
+}
+
+.userSectionOptionsContainer.modifyOptions {
+	position: relative;
+	float: right;
+	top: 0;
+	right: 0;
+}
+.userSectionOptionsList.modifyOptions {
+	top: -0.4em;
+}
+.userSectionOptionsList.modifyOptions li a {
+	width: 140px;
+	padding: 5px;
+	display: inline-block;
+	font-size: 18px;
+}
+.userSectionOptionsList.modifyOptions li a svg {
+	height: 15px;
+	width: 15px;
+}
+.userOptionsSVG.modifyOptions {
+	height: 30px;
+	width: 30px;
+}
+.userOptionsSVG.modifyOptions.active {
+	fill: #FFD039;
+}
+.userSectionOptionsList .edit svg {
+	fill: #45C48B;
+}
+.userSectionOptionsList .lock svg {
+	fill: #FFD039;
+}

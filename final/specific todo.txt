@@ -1,0 +1,125 @@
+# models
+
+# User : {
+# username
+# City,
+# Birthday,
+# about,
+# member-since
+# passowrd
+# profilepic-url
+# isAdmin
+# isbanned
+
+# }
+
+# post: {
+# creator (this is a user)
+# [keywords],
+# [genres],
+# [members (these are users)]
+# game title,
+# game image url,
+# date of event,
+# address,
+# game genres
+# post details
+# players needed
+# post title
+# [invite requests (these are users)]
+# [comments]
+
+# }
+
+# comments {
+    # text,
+    # date posted,
+    # user 
+# }
+
+# reports {
+# date, 
+# closed?
+# perpetrator
+# content
+# }
+
+external api :
+    mongoose pagination(for having a lot of posts)
+        https://www.npmjs.com/package/mongoose-paginate-v2
+        
+        store page num in session
+     
+
+
+    need to adapt igdb stuff to make post
+        https://www.npmjs.com/package/igdb-api-node
+        user searches for game,pagination
+        store page num in session, searech with ajax
+        get list of results
+        picks item in list
+        games should be in the igdb database
+            if not, the post will be barebones, no box art or genre tags,
+    
+    
+    (google maps)<--not sure if doing, prolly not
+
+
+api needed
+    getting a post by its id
+    getting user by username
+    uploading profile pic/ game pic
+    getting a list of post by properties
+    deleting a post
+    updating a post deets
+    posting a comment
+    deleting a comment
+    creating a post
+    making/closing report
+        find user json in mongo,
+        set perpetrator to that
+    changing a users data/password
+
+sessions should store
+        user name
+        page num (for searching  posts, and igdb)
+        
+    
+    
+view list:
+    make post
+    edit post
+    post lists <--- main page, shows creator, shows title, boxart if existent, report button, request invite,num players, and view post link
+    reports <--- admin only
+    user
+    view post deets <--- invited users, creator, and admin only
+                make sure to replace \n with <br> when rendering
+    BANNED page <-- dont need header
+    
+
+front end work
+        need a way to veiw invite requests (im thinking popup of users)
+        need to reuse header and modify for each user
+        
+        searchingg for users
+            use exact username
+            
+        editingg user info
+            use ajax for this
+        closing reports
+            use ajax
+        making comments
+            use ajax
+        deleting comments
+            use ajax
+        editing other parts of post
+            redirect to edit page,
+            check if user is admin or creator
+            if not, redirect to home
+            else allow access
+            make PATCH req, 
+        reports
+            
+        
+            
+        
