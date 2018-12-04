@@ -54,7 +54,18 @@ external api :
         
         store page num in session
      
-
+     
+   
+    when user types a thing in
+        on text change, run a search queary for the terms (limit to like 5 because fuck it)
+        in that querry you should get an
+        
+        front end request search terms
+        when front end picks something, it gets boxart, title, and genre list as strings
+        
+        organize that shit in the backend
+        
+    
 
     need to adapt igdb stuff to make post
         https://www.npmjs.com/package/igdb-api-node
