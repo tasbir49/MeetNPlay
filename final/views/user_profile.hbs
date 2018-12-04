@@ -19,13 +19,14 @@
 <body>
     {{> header_partial }} <!-- Notice that this is the same name as the header_partial.hbs file sans the extension, thats cuz line35 does this for all in a dir -->
     <div id="leftSideAccountPage">
-        <img class="profilePic" src="../resources/images/adminProfile.png"></img>
-        <h2 id="userNameHeading">admin</h2>
+        <img class="profilePic" src={{userDetails.profilePicUrl}}></img>
+        <h2 id="userNameHeading">{{userDetails.name}}</h2>
 
         <form id="userSearchInput">
             <input type="text" placeholder="View a User's Account">
             <input type="submit" value="Find User">
         </form>
+        {{#if user.isJustOwner}}<button type="button" id="changePassButton">Change Password</button>{{/if}}
         {{#if user.isAdmin}}<button type="button" id="changePassButtonAdmin">Change Password</button>
         <button type="button" id="banUser">Revoke Admin Priveleges</button>       
         <button type="button" id="banUser">Ban this user</button>{{/if}}
@@ -41,11 +42,11 @@
                     Location
                 </div>
                 <div class="userInfoSectionContent" id="userLocation">
-                    Toronto
+                    {{userDetails.city}}
                 </div>
-                <button type="button" class="infoEditButton">
+                {{#if user.canEdit}}<button type="button" class="infoEditButton">
                     Edit
-                </button>
+                </button>{{/if}}
             </div>
             
             <div class="userInfoSection">
@@ -55,50 +56,28 @@
                 <div class="userInfoSectionContent" id="userBday">
                     July 25, 1998
                 </div>
-                <button type="button" class="infoEditButton">
+                {{#if user.canEdit}}<button type="button" class="infoEditButton">
                     Edit
-                </button>
+                </button>{{/if}}
             </div>
             <div class="userInfoSection">
                 <div class="userInfoSectionHeading">
                     About Me
                 </div>
                 <div class="userInfoSectionContent" id="userAbout">
-                    I don't like video games. I only joined this
-                    site for the memes.
-                    Video games are for kids with no lives. 
-                    Subscribe to my youtube channel videoGamesRBad.
-                     I don't like video games. I only joined this
-                    site for the memes.
-                    Video games are for kids with no lives. 
-                    Subscribe to my youtube channel videoGamesRBad.
-                     I don't like video games. I only joined this
-                    site for the memes.
-                    Video games are for kids with no lives. 
-                    Subscribe to my youtube channel videoGamesRBad.
-                     I don't like video games. I only joined this
-                    site for the memes.
-                    Video games are for kids with no lives. 
-                    Subscribe to my youtube channel videoGamesRBad.
-                     I don't like video games. I only joined this
-                    site for the memes.
-                    Video games are for kids with no lives. 
-                    Subscribe to my youtube channel videoGamesRBad.
+                {{userDetails.about}}
                 </div>
-                <button type="button" class="infoEditButton">
-                    Edit
+                {{#if user.canEdit}}<button type="button" class="infoEditButton">
+                    Edit{{/if}}
                 </button>
             </div>
             <div class="userInfoSection">
                 <div class="userInfoSectionHeading">
-                    Member Since
+                    Member Since 
                 </div>
                 <div class="userInfoSectionContent" id="userMemberSince">
-                    July 25, 1898
+                    {{formattedMemberSince}}
                 </div>
-                <button type="button" class="infoEditButton">
-                    Edit
-                </button>
             </div>
 
         

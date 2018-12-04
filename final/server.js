@@ -60,9 +60,27 @@ const sessionChecker = (req, res, next) => {
 	}
 }
 
+// Middleware for authentication for resources
+const authenticate = (req, res, next) => {
+	if (req.session.username) {
+		User.find({name: req.session.user}).then((user) => {
+			if (!user) {
+				return Promise.reject()
+			} else {
+				req.user = user
+				next()
+			}
+		}).catch((error) => {
+			res.redirect('/login')
+		})
+	} else {
+		res.redirect('/login')
+	}
+}
+
 // route for root; redirect to login
 app.get('/', sessionChecker, (req, res) => {
-	res.redirect('login')
+	res.redirect('/home')
 })
 
 // route for login
@@ -212,20 +230,22 @@ app.patch('/post/:id', authenticate, (req, res) => {
 
 
 //getting a users page (NOT THE JSON, THE ACTUAL WEBPAGE)
-app.get('/user/:username', authenticate, (req, res) => {
+app.get('/users/:username', authenticate, (req, res) => {
     const username = req.params.username
 
-    User.find({name: username}).then((user) => {
+    User.findOne({name: username}).then((user) => {
         let retObj = {
                 user: {
                         name: req.session.username, 
                         isAdmin: req.session.isAdmin,
                         profilePicUrl: req.session.profilePicUrl,
-                        canEdit: false 
+                        canEdit: false, 
                         isJustOwner: false 
                     },
-                userDetails : user //header uses the "user" field to display profile pic and link to own profile page, so the details for this page are put in this field instead 
+                userDetails : user, //header uses the "user" field to display profile pic and link to own profile page, so the details for this page are put in this field instead 
+                formattedMemberSince: user.memberSince.toISOString().substring(0, 10)
             }
+            
         if(!user) {
             res.status(404).send("404 NOT FOUND SORRY")
         }
@@ -237,7 +257,7 @@ app.get('/user/:username', authenticate, (req, res) => {
             retObj.user.canEdit = true
             retObj.user.isJustOwner = true
         } 
-        res.render("post_view.hbs", retObj)
+        res.render("user_profile.hbs", retObj)
         
     }).catch((error)=> {
         res.status(400).send(error)
@@ -245,7 +265,7 @@ app.get('/user/:username', authenticate, (req, res) => {
     
 })  
 
- 
+//homepage 
 app.get('/home', (req, res) => {
 	// check if we have active session cookie
 	if (req.session.username) {
@@ -264,7 +284,7 @@ app.get('/home', (req, res) => {
 
 // User login and logout routes
 
-app.post('/users/login', (req, res) => {
+app.post('/login/start', (req, res) => {
 	const name = req.body.name
 	const password = req.body.password
 
@@ -290,10 +310,11 @@ app.post('/users/login', (req, res) => {
 	})
 })
 
-app.get('/users/logout', (req, res) => {
+app.get('/logout', (req, res) => {
+
 	req.session.destroy((error) => {
 		if (error) {
-			res.status(500).send(error)
+            res.status(500).send(error)
 		} else {
 			res.redirect('/')
 		}
@@ -301,23 +322,7 @@ app.get('/users/logout', (req, res) => {
 })
 
 
-// Middleware for authentication for resources
-const authenticate = (req, res, next) => {
-	if (req.session.username) {
-		User.find({name: req.session.user}).then((user) => {
-			if (!user) {
-				return Promise.reject()
-			} else {
-				req.user = user
-				next()
-			}
-		}).catch((error) => {
-			res.redirect('/login')
-		})
-	} else {
-		res.redirect('/login')
-	}
-}
+
 
 /// Student routes go below
 
@@ -342,95 +347,12 @@ app.post('/students', authenticate, (req, res) => {
 
 })
 
-// GET all students
-app.get('/students', authenticate, (req, res) => {
-	Student.find({
-		creator: req.user._id // from authenticate middleware
-	}).then((students) => {
-		res.send({ students }) // put in object in case we want to add other properties
-	}, (error) => {
-		res.status(400).send(error)
-	})
-})
-
-// GET student by id
-app.get('/students/:id', (req, res) => {
-	const id = req.params.id // the id is in the req.params object
-
-	// Good practise is to validate the id
-	if (!ObjectID.isValid(id)) {
-		return res.status(404).send()
-	}
-
-	// Otheriwse, findById
-	Student.findById(id).then((student) => {
-		if (!student) {
-			res.status(404).send()
-		} else {
-			res.send({ student })
-		}
-		
-	}).catch((error) => {
-		res.status(400).send(error)
-	})
-})
-
-app.delete('/students/:id', (req, res) => {
-	const id = req.params.id
-
-	// Good practise is to validate the id
-	if (!ObjectID.isValid(id)) {
-		return res.status(404).send()
-	}
-
-	// Otheriwse, findByIdAndRemove
-	Student.findByIdAndRemove(id).then((student) => {
-		if (!student) {
-			res.status(404).send()
-		} else {
-			res.send({ student })
-		}
-	}).catch((error) => {
-		res.status(400).send(error)
-	})
-})
-
-app.patch('/students/:id', (req, res) => {
-	const id = req.params.id
-
-	// Get the new name and year from the request body
-	const { name, year } = req.body
-	const properties = { name, year }
-
-	// Good practise is to validate the id
-	if (!ObjectID.isValid(id)) {
-		return res.status(404).send()
-	}	
-
-	// Update it
-	// $new: true gives back the new document
-	Student.findByIdAndUpdate(id, {$set: properties}, {new: true}).then((student) => {
-		if (!student) {
-			res.status(404).send()
-		} else {
-			res.send({ student })
-		}
-	}).catch((error) => {
-		res.status(400).send(error)
-	})
-
-})
-
 
 /** User routes **/
 app.post('/users', (req, res) => {
 
 	// Create a new user
-	const user = new User({
-		name: req.body.name,
-		password: req.body.password,
-        city: req.body.city
-	})
+	const user = new User(req.body)
 
 	// save user to database
 	user.save().then((result) => {

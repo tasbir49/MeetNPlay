@@ -17,10 +17,10 @@
 								<img id="navUserImg" class="userProfilePic" src="{{user.profilePicUrl}}" alt="profilepic">
 								<ul id="navUserOptionsList">
 									<li id="navUserName">{{user.name}}</li>
-									<li><a class="linkAnimate" href="/user/{{user.name}}">Profile</a></li>
+									<li><a class="linkAnimate" href="/users/{{user.name}}">Profile</a></li>
 									<li><a class="linkAnimate makepost" href="../forum/post/admin-make.html">Make Post</a></li>
 									{{#if user.isAdmin}}<li><a class="linkAnimate" href="/reports">Reports</a></li>{{/if}}									
-                                    <li><a class="linkAnimate logout" href="../login/index.html">Log Out</a></li>
+                                    <li><a class="linkAnimate logout" href="/logout">Log Out</a></li>
 								</ul>
 							</div>
 						</li>

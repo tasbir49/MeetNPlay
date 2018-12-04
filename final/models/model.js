@@ -33,7 +33,6 @@ const UserSchema = new mongoose.Schema({
 		required: true,
 		minlength: 1,
 		trim: true, // trim whitespace
-		unique: true
 	},
     memberSince: {
         type: Date,
