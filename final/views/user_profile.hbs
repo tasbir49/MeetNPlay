@@ -10,48 +10,14 @@
 	<meta name="theme-color" content="#323741">
 	<meta name="viewport" content="width=device-width">
 
-	<link rel="stylesheet" href="../styles/main.css">
-	<link rel="stylesheet" href="user_account_style.css">  
-    <link rel="stylesheet" href="../styles/user.css">
+	<link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/user_header.css">
+	<link rel="stylesheet" href="/styles/user_account_style.css">  
 
   </head>
   
 <body>
-    <header>
-		<div id="headerBG"></div>
-		<div id="headerContainer">
-			<div id="headerContainerPadding">
-				<nav id="topNav">
-					<a title="logo" id ="topNav_title" href="#"><img id="topNav_titleImg" src="../resources/images/logo2.png" alt="logo"></a>
-					<div id="topNav_hamburger" class="hamburger">
-						<div class="bar"></div>
-						<div class="bar"></div>
-						<div class="bar"></div>
-					</div>
-					<ul id="topNav_links">
-						<li><a title="Back to home" class="linkAnimate" href="../forum/loggedInForumAdmin.html">Home</a></li>
-                        <li><a class="linkAnimate" href="#">Back to Top</a></li>
-						<li id="loginButtonContainer">
-							<div id="navUser">
-								<img id="navUserImg" class="userProfilePic" src="../resources/images/adminProfile.png" alt="adminPic">
-								<ul id="navUserOptionsList">
-									<li id="navUserName">Admin</li>
-									<li><a class="linkAnimate" href="admin_viewing_own.html">Profile</a></li>
-									<li><a class="linkAnimate makepost" href="../forum/post/admin-make.html">Make Post</a></li>
-									<li><a class="linkAnimate" href="../Reports/reports.html">Reports</a></li>									
-                                    <li><a class="linkAnimate logout" href="../login/index.html">Log Out</a></li>
-								</ul>
-							</div>
-						</li>
-					</ul>
-				</nav>
-				<div id="headerTitleContainer">
-					<h1 id="headerTitle">ACCOUNT INFO</h1>
-				</div>
-				<div id="loginButtonBG"></div>
-			</div>
-		</div>
-	</header>
+    {{> header_partial }} <!-- Notice that this is the same name as the header_partial.hbs file sans the extension, thats cuz line35 does this for all in a dir -->
     <div id="leftSideAccountPage">
         <img class="profilePic" src="../resources/images/adminProfile.png"></img>
         <h2 id="userNameHeading">admin</h2>
@@ -60,8 +26,10 @@
             <input type="text" placeholder="View a User's Account">
             <input type="submit" value="Find User">
         </form>
-        <button type="button" id="changePassButtonAdmin">Change User's Password</button>
-        <button type="button" id="banUser">Ban this user</button>
+        {{#if user.isAdmin}}<button type="button" id="changePassButtonAdmin">Change Password</button>
+        <button type="button" id="banUser">Revoke Admin Priveleges</button>       
+        <button type="button" id="banUser">Ban this user</button>{{/if}}
+
 
     </div>
     
@@ -173,9 +141,8 @@
             </form>
         </div>
     </div>
-    <script type="text/javascript" src="user_account_scripts.js"></script>
-    <script src="../scripts/main.js"></script>
-    <script src="../scripts/user.js"></script>
+    <script type="text/javascript" src="/js/user_account_scripts.js"></script>
+
 
 
 

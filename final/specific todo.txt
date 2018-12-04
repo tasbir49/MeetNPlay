@@ -44,6 +44,10 @@
 # content
 # }
 
+
+IMPORTANT, WHEN DOING HANDLEBAR TEMPLATES, ASSUME THE ROOT DIRECTORY IS THE "public" FOLDER
+
+
 external api :
     mongoose pagination(for having a lot of posts)
         https://www.npmjs.com/package/mongoose-paginate-v2
@@ -66,15 +70,18 @@ external api :
 
 
 api needed
-    getting a post by its id
-    getting user by username
-    uploading profile pic/ game pic
-    getting a list of post by properties
+    getting a post by its id  -- render api  done, json not neeed
+    getting user by username -- render api done, json not neede
+    uploading profile pic/ game pic -- idk how to do this,tasbir
+    getting a list of post by properties -- for this, im assuming im getting passed in a
+                                    mongodb query, either  huynh or bao, please figure out 
+                                    how to query based on the elements on the home pages side bar NOT DONE
+                       
     deleting a post
-    updating a post deets
+    updating a post deets -- done
     posting a comment
     deleting a comment
-    creating a post
+    creating a post --api call to render page done, api call to modify db done
     making/closing report
         find user json in mongo,
         set perpetrator to that
@@ -82,11 +89,12 @@ api needed
 
 sessions should store
         user name
-        page num (for searching  posts, and igdb)
+        if admin
+        and others are dependent on page to be viewed
         
     
     
-view list:
+view list(need to adapt these to handlebars):
     make post
     edit post
     post lists <--- main page, shows creator, shows title, boxart if existent, report button, request invite,num players, and view post link

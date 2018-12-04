@@ -1,0 +1,40 @@
+    <header>
+		<div id="headerBG"></div>
+		<div id="headerContainer">
+			<div id="headerContainerPadding">
+				<nav id="topNav">
+					<a title="logo" id ="topNav_title" href="#"><img id="topNav_titleImg" src="/resources/images/logo2.png" alt="logo"></a>
+					<div id="topNav_hamburger" class="hamburger">
+						<div class="bar"></div>
+						<div class="bar"></div>
+						<div class="bar"></div>
+					</div>
+					<ul id="topNav_links">
+						<li><a title="Back to home" class="linkAnimate" href="../forum/loggedInForumAdmin.html">Home</a></li>
+                        <li><a class="linkAnimate" href="#">Go to top</a></li>
+						<li id="loginButtonContainer">
+							<div id="navUser">
+								<img id="navUserImg" class="userProfilePic" src="{{user.profilePicUrl}}" alt="profilepic">
+								<ul id="navUserOptionsList">
+									<li id="navUserName">{{user.name}}</li>
+									<li><a class="linkAnimate" href="/user/{{user.name}}">Profile</a></li>
+									<li><a class="linkAnimate makepost" href="../forum/post/admin-make.html">Make Post</a></li>
+									{{#if user.isAdmin}}<li><a class="linkAnimate" href="/reports">Reports</a></li>{{/if}}									
+                                    <li><a class="linkAnimate logout" href="../login/index.html">Log Out</a></li>
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</nav>
+				<div id="headerTitleContainer">
+					<h1 id="headerTitle">{{headerTitle}}</h1>
+				</div>
+				<div id="loginButtonBG"></div>
+			</div>
+		</div>
+        <script src="/js/main.js"></script>
+        <script src="/js/user_header.js"></script>
+	</header>
+
+
+    

@@ -8,23 +8,23 @@ EB3E4A
 
 @font-face {
 	font-family: "EncodeSans";
-	src: url("../resources/fonts/EncodeSans/EncodeSans-Medium.ttf");
+	src: url("/resources/fonts/EncodeSans/EncodeSans-Medium.ttf");
 }
 @font-face {
 	font-family: "EncodeSans-Regular";
-	src: url("../resources/fonts/EncodeSans/EncodeSans-Regular.ttf");
+	src: url("/resources/fonts/EncodeSans/EncodeSans-Regular.ttf");
 }
 @font-face {
 	font-family: "EncodeSans-Light";
-	src: url("../resources/fonts/EncodeSans/EncodeSans-Light.ttf");
+	src: url("/resources/fonts/EncodeSans/EncodeSans-Light.ttf");
 }
 @font-face {
 	font-family: "EncodeSans-Bold";
-	src: url("../resources/fonts/EncodeSans/EncodeSans-Bold.ttf");
+	src: url("/resources/fonts/EncodeSans/EncodeSans-Bold.ttf");
 }
 @font-face {
 	font-family: "EncodeSans-ExtraBold";
-	src: url("../resources/fonts/EncodeSans/EncodeSans-ExtraBold.ttf");
+	src: url("/resources/fonts/EncodeSans/EncodeSans-ExtraBold.ttf");
 }
 
 html, body {

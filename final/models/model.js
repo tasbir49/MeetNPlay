@@ -29,7 +29,7 @@ const UserSchema = new mongoose.Schema({
 	},
     about: {
 		type: String,
-        default: "No info"
+        default: "No info",
 		required: true,
 		minlength: 1,
 		trim: true, // trim whitespace
@@ -42,7 +42,7 @@ const UserSchema = new mongoose.Schema({
     },
     profilePicUrl: {
         type: String,
-        default: "/resources/images/user_avatar.png"
+        default: "/resources/images/user_avatar.png",
         required: true
         
     },
@@ -144,7 +144,7 @@ const PostSchema = new mongoose.Schema({//most of these defaults are for testing
     },
     date: {
         type: Date,
-        default: Date.now().addDays(7), //default is a week from now
+        default: Date.now(), //default is a week from now
         required: true
     },
     meetLocation: {
@@ -161,7 +161,7 @@ const PostSchema = new mongoose.Schema({//most of these defaults are for testing
         type: String,
         default: "Let's have a lot of fun!\nThere will be great food, a friendly atmosphere, and some hardcore gaming.\nThe only rule is to bring your own alcohol :D.",
         required: true 
-    }
+    },
     inviteReqs: [UserSchema],
     comments: [CommentSchema]
     

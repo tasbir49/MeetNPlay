@@ -1,29 +1,36 @@
-<html>
-    <head>
-        <title>Basic Auth</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    </head>
-    <body class="container">
-        <div class="page-header">
-            <h1>Basic Authentication</h1>
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+   <meta charset="utf-8">
+     <title>Meet'N'Play</title>
+     <link rel="stylesheet" type="text/css" href="/styles/login.css">
+     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700" rel="stylesheet">
+     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+  </head>
 
-        <div class="container row">
-            <div class="jumbotron col-sm-4 pull-center">
-                <form action="/users/login" method="post">
-                    <div>
-                        <label>Email:</label>
-                        <input type="text" name="email"/>
-                    </div>
-                    <div>
-                        <label>Password:</label>
-                        <input type="password" name="password"/>
-                    </div>
-                    <div>
-                        <input class="btn btn-primary" type="submit" value="Log In"/>
-                    </div>
-                </form>                  
-            </div>          
-        </div>
-    </body>
+  <body  id = "headerBG">
+    <img src = "../resources/images/logo.png" id = 'mainlogo' >
+
+    <div id="loginField">
+      <form id = 'loginForm' action="/users/login" method="post">
+        <input type="text" name="name" placeholder="Username Here">
+
+        <input type="password" name="password" placeholder="Password Here">
+
+        <input type="submit" value="login">
+
+
+      </form>
+          </div>
+
+
+  </body>
+
+  <footer>
+      Copyright (c) 2018 Copyright Holder All Rights Reserved.
+
+
+  </footer>
+
+
 </html>
