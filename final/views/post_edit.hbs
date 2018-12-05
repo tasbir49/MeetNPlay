@@ -11,59 +11,23 @@
 	<meta name="viewport" content="width=device-width">
 
 	<link rel="icon" type="image/ico" href="../../resources/images/logo2.png">
-	<link rel="stylesheet" href="../../styles/main.css">
-	<link rel="stylesheet" href="styles/main.css">
-	<link rel="stylesheet" href="../../styles/user.css">
-	<link rel="stylesheet" href="styles/edit.css">
+	<link rel="stylesheet" href="/styles/main.css">
+	<link rel="stylesheet" href="/styles/post-main.css">
+	<link rel="stylesheet" href="/styles/user_header.css">
+	<link rel="stylesheet" href="/styles/post-edit.css">
 </head>
 <body>
-<header>
-		<div id="headerBG"></div>
-		<div id="headerContainer">
-			<div id="headerContainerPadding">
-				<nav id="topNav">
-					<a id ="topNav_title" href="#"><img id="topNav_titleImg" src="../../resources/images/logo2.png" alt="logo"></a>
-					<div id="topNav_hamburger" class="hamburger">
-						<div class="bar"></div>
-						<div class="bar"></div>
-						<div class="bar"></div>
-					</div>
-					<ul id="topNav_links">
-						<li><a class="linkAnimate" href="../../forum/loggedInForumAdmin.html">Home</a></li>
-						<li><a class="linkAnimate" href="#">Back to Top</a></li>
-						<li id="loginButtonContainer">
-
-							<div id="navUser">
-								<img id="navUserImg" class="userProfilePic" src="../../resources/images/adminProfile.png" alt="adminPic">
-								<ul id="navUserOptionsList">
-									<li id="navUserName">admin</li>
-									<li><a class="linkAnimate" href="../../Accounts/admin_viewing_own.html">Profile</a></li>
-									<li><a class="linkAnimate makepost" href="../../forum/post/admin-make.html">Make Post</a></li>
-									<li><a class="linkAnimate" href="../../Reports/reports.html">Reports</a></li>
-									<li><a class="linkAnimate logout" href="../../login/index.html">Log Out</a></li>
-								</ul>
-							</div>
-
-					</li>
-				</ul>
-				</nav>
-				<div id="headerTitleContainer">
-					<h1 id="headerTitle">EDIT POST</h1>
-				</div>
-				<div id="loginButtonBG"></div>
-			</div>
-		</div>
-	</header>
+    {{> header_partial }} 
 				
 	<section id="contents">
 		<div id="threadContainer"><section id="thread">
 			<section id="post-editSection"><form id="post-edit" action="">
-				<div id="postTitle-editContainer"><span id="postTitle-editLabel" class="editFormInputLabel">Title: </span><input id="postTitle-edit" class="editFormInput" value="Looking for a person for 2 player co-op"></div>
-				<div id="keywords-editContainer"><span id="keywords-editLabel" class="editFormInputLabel">Keywords: </span><input id="keywords-edit" class="editFormInput" value="Xbox 360, 2-player, BYOC"></div>
+				<div id="postTitle-editContainer"><span id="postTitle-editLabel" class="editFormInputLabel">Title: </span><input id="postTitle-edit" class="editFormInput" value="{{#if isEdit}} {{post.title}} {{/if}}"></div>
+				<div id="keywords-editContainer"><span id="keywords-editLabel" class="editFormInputLabel">Keywords: </span><input id="keywords-edit" class="editFormInput" value="{{#each post.keywords}}{{this}} {{/each}}"></div>
 				<hr>
 				<div id="gameDetailsContainer"><section id="gameDetails">
 					<div id="gameContainer"><section id="game-edit" class="sectionCard">
-						<span id="gameTitle-editLabel" class="editFormInputLabel">Game to Play: </span><input id="gameTitle-edit" class="editFormInput" name="game" value="Rayman Origins">
+						<span id="gameTitle-editLabel" class="editFormInputLabel">Game to Play: </span><input id="gameTitle-edit" class="editFormInput" name="game" value="{{#if isEdit}}{{post.gameTitle}}{{/if}}">
 						<div id="gameTitle-editDropdownContainer">
 							
 						</div>
@@ -74,16 +38,7 @@
 				</section></div>
 				<div id="postDetailsContainer"><section id="postDetails" class="sectionCard">
 					<h4 class="editFormInputLabel">Edit Post Details</h4>
-					<textarea id="userMessage-edit" class="editFormInput">
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Facilisis mauris sit amet massa vitae. Quam adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus. Massa placerat duis ultricies lacus sed turpis tincidunt. Amet venenatis urna cursus eget nunc scelerisque viverra mauris in. Vel orci porta non pulvinar neque laoreet suspendisse interdum. Gravida rutrum quisque non tellus orci ac auctor. Viverra justo nec ultrices dui sapien. Adipiscing at in tellus integer feugiat scelerisque. Quam pellentesque nec nam aliquam sem et tortor consequat id. Tortor posuere ac ut consequat. Neque laoreet suspendisse interdum consectetur libero. Leo a diam sollicitudin tempor id eu. Semper quis lectus nulla at volutpat diam ut.
-
-Lorem mollis aliquam ut porttitor. Vulputate dignissim suspendisse in est ante in nibh mauris. Non odio euismod lacinia at quis risus sed vulputate odio. Ridiculus mus mauris vitae ultricies leo integer. Ut ornare lectus sit amet. Massa ultricies mi quis hendrerit dolor. Non arcu risus quis varius quam quisque id diam vel. Egestas fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate. Aliquet lectus proin nibh nisl condimentum id venenatis a condimentum. Vulputate ut pharetra sit amet aliquam id diam maecenas ultricies.
-
-Varius sit amet mattis vulputate enim nulla aliquet porttitor. Sit amet volutpat consequat mauris nunc congue nisi vitae suscipit. Bibendum arcu vitae elementum curabitur vitae. At erat pellentesque adipiscing commodo. Nullam eget felis eget nunc lobortis mattis aliquam faucibus purus. Mauris a diam maecenas sed enim ut sem. Proin sagittis nisl rhoncus mattis rhoncus urna neque. Nunc eget lorem dolor sed viverra ipsum nunc. Purus semper eget duis at tellus at urna condimentum. Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo. Vulputate eu scelerisque felis imperdiet proin fermentum leo vel orci. Euismod quis viverra nibh cras pulvinar mattis nunc sed blandit. Ultricies mi eget mauris pharetra et ultrices neque ornare. Massa tempor nec feugiat nisl pretium fusce id velit. In egestas erat imperdiet sed euismod nisi. Sed libero enim sed faucibus turpis in.
-
-Habitant morbi tristique senectus et netus et malesuada fames. Sit amet volutpat consequat mauris nunc congue. Quam adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus urna. Diam sollicitudin tempor id eu nisl nunc mi ipsum faucibus. Aliquam vestibulum morbi blandit cursus risus. Ultricies tristique nulla aliquet enim tortor. Diam maecenas sed enim ut sem viverra. Sem fringilla ut morbi tincidunt augue interdum velit. Felis imperdiet proin fermentum leo vel orci. Consequat semper viverra nam libero. Velit dignissim sodales ut eu sem integer vitae justo eget. Ornare arcu odio ut sem nulla pharetra. Montes nascetur ridiculus mus mauris vitae ultricies leo integer. Velit dignissim sodales ut eu sem integer vitae justo eget.
-
-Mollis aliquam ut porttitor leo a diam. Faucibus a pellentesque sit amet porttitor eget. Et netus et malesuada fames ac turpis egestas integer. Aliquet risus feugiat in ante metus dictum at tempor. Penatibus et magnis dis parturient. Sit amet mattis vulputate enim nulla aliquet porttitor. Nibh sit amet commodo nulla. Lobortis scelerisque fermentum dui faucibus in ornare quam viverra orci. Non enim praesent elementum facilisis leo vel fringilla est. Pretium nibh ipsum consequat nisl vel. Dignissim enim sit amet venenatis. Nibh praesent tristique magna sit amet purus gravida quis blandit. Eget nunc scelerisque viverra mauris in. Nisi quis eleifend quam adipiscing vitae proin. Turpis nunc eget lorem dolor sed viverra ipsum nunc aliquet. Lectus arcu bibendum at varius vel pharetra vel turpis nunc. Integer malesuada nunc vel risus commodo viverra. Porttitor lacus luctus accumsan tortor posuere ac. Semper eget duis at tellus.
+					<textarea id="userMessage-edit" class="editFormInput">{{#if isEdit}}{{post.details}}{{/if}}
 					</textarea>
 				</section></div>
 				<div class="clearFloat"></div>
@@ -93,9 +48,7 @@ Mollis aliquam ut porttitor leo a diam. Faucibus a pellentesque sit amet porttit
 		</section></div>
 	</section>
 
-	<script src="../../scripts/main.js"></script>
-	<script src="scripts/main.js"></script>
-	<script src="../../scripts/user.js"></script>
-	<script src="scripts/edit.js"></script>
+	<script src="/js/post-main.js"></script>
+	<script src="/js/post-edit.js"></script>
 </body>
 </html>

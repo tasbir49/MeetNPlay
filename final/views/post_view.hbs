@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>MNP - Looking for a person for 2 player co-op</title>
+	<title>{{post.title}}</title>
 
 	<meta charset="UTF-8">
 	<meta name="author" content="">
@@ -11,57 +11,21 @@
 	<meta name="viewport" content="width=device-width">
 
 	<link rel="icon" type="image/ico" href="../../resources/images/logo2.png">
-	<link rel="stylesheet" href="../../styles/main.css">
-	<link rel="stylesheet" href="styles/main.css">
-	<link rel="stylesheet" href="../../styles/user.css">
-	<link rel="stylesheet" href="styles/post.css">
+	<link rel="stylesheet" href="/styles/main.css">
+	<link rel="stylesheet" href="/styles/post-main.css">
+	<link rel="stylesheet" href="/styles/user_header.css">
+	<link rel="stylesheet" href="/styles/post-view.css">
 </head>
 <body>
-	<header>
-		<div id="headerBG"></div>
-		<div id="headerContainer">
-			<div id="headerContainerPadding">
-				<nav id="topNav">
-					<a id ="topNav_title" href="#"><img id="topNav_titleImg" src="../../resources/images/logo2.png" alt="logo"></a>
-					<div id="topNav_hamburger" class="hamburger">
-						<div class="bar"></div>
-						<div class="bar"></div>
-						<div class="bar"></div>
-					</div>
-					<ul id="topNav_links">
-						<li><a class="linkAnimate" href="../../forum/loggedInForumAdmin.html">Home</a></li>
-						<li><a class="linkAnimate" href="#">Back to Top</a></li>
-						<li id="loginButtonContainer">
-
-							<div id="navUser">
-								<img id="navUserImg" class="userProfilePic" src="../../resources/images/adminProfile.png" alt="adminPic">
-								<ul id="navUserOptionsList">
-									<li id="navUserName">admin</li>
-									<li><a class="linkAnimate" href="../../Accounts/admin_viewing_own.html">Profile</a></li>
-									<li><a class="linkAnimate makepost" href="../../forum/post/admin-make.html">Make Post</a></li>
-									<li><a class="linkAnimate" href="../../Reports/reports.html">Reports</a></li>
-									<li><a class="linkAnimate logout" href="../../login/index.html">Log Out</a></li>
-								</ul>
-							</div>
-
-					</li>
-				</ul>
-				</nav>
-				<div id="headerTitleContainer">
-					<h1 id="headerTitle">POST</h1>
-				</div>
-				<div id="loginButtonBG"></div>
-			</div>
-		</div>
-	</header>
+    {{> header_partial }} 
 				
 	<section id="contents">
 		<div id="threadContainer"><section id="thread">
 			<section id="post">
-				<div class="userSectionOptionsContainer modifyOptions"><div class="userSectionOptions modifyOptions">
+				{{#if user.canEdit}}<div class="userSectionOptionsContainer modifyOptions"><div class="userSectionOptions modifyOptions">
 					<svg class="userOptionsSVG modifyOptions" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 18c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3zm0-9c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3zm0-9c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3z"/></svg>
 					<ul class="userSectionOptionsList modifyOptions">
-						<li><a class="edit" href="admin-edit.html">
+						<li><a class="edit" href="/post/edit/{{post._id}}">
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7.127 22.564l-7.126 1.436 1.438-7.125 5.688 5.689zm-4.274-7.104l5.688 5.689 15.46-15.46-5.689-5.689-15.459 15.46z"/></svg>
 							Edit Post
 						</a></li>
@@ -70,17 +34,24 @@
 							Delete Thread
 						</a></li>
 					</ul>
-				</div></div>
+				</div></div>{{/if}}
 
-				<h2 id="postTitle">Looking for a person for 2 player co-op</h2>
-				<span class="keywordLabel">Xbox 360</span><span class="keywordLabel">2-player</span><span class="keywordLabel BYOC" title="Bring Your Own Controller">BYOC</span>
+				<h2 id="postTitle">{{post.title}}</h2>
+                {{#each post.keywords}}
+				<span class="keywordLabel">{{this}}</span>
+                {{/each}}
 				<hr>
 				<div id="gameDetailsContainer"><section id="gameDetails">
 					<div id="gameContainer"><section id="game" class="sectionCard">
-						<div id="gameImgContainer"><img id="gameImg" src="../../resources/images/rayman.jpg" alt="Rayman Origins box art"></div>
-						<h2 id="gameTitle">Rayman Origins</h2>
-						<h3>Ubisoft Montpellier</h3>
-						<span class="keywordLabel gameGenre">Adventure</span><span class="keywordLabel gameGenre">Platform</span><span class="keywordLabel gamePlatform">Xbox 360</span><span class="keywordLabel gamePlatform">Playstation Vita</span><span class="keywordLabel gamePlatform">Nintendo 3DS</span><span class="keywordLabel gamePlatform">PlayStation 3</span><span class="keywordLabel gamePlatform">Wii</span><span class="keywordLabel gamePlatform">Mac</span><span class="keywordLabel gamePlatform">PC</span>
+						<div id="gameImgContainer"><img id="gameImg" src="{{post.gamePicUrl}}" alt="Rayman Origins box art"></div>
+						<h2 id="gameTitle">{{post.gameTitle}}</h2>
+                        {{#each post.gameGenres}}
+						<span class="keywordLabel gameGenre">{{this}}</span>
+                        {{/each}}                        
+                        <br>Meeting on:<br>
+                        <h3>{{post.date}}</h3>
+                        at:
+                        <h3><a href="https://www.google.com/maps/search/?api=1&query={{{postUrlLocation}}}">{{post.meetLocation}}</a></h3>
 					</section></div>
 					<div id="spaceAvailableContainer"><section id="spaceAvailable" class="sectionCard">
 						<span id="spaceAvailableTitle">Space Available: </span><span id="spaceAvailableNum">1</span><button id="requestInvite"></button>
@@ -91,11 +62,10 @@
 				</section></div>
 				<div id="postDetailsContainer"><section id="postDetails" class="sectionCard">
 					<div id="postDetailsUser" class="sectionCard userSection">
-						<img class="userProfilePic" src="../../resources/images/posterProfile.png" alt="userProfilePic1">
+						<img class="userProfilePic" src="{{post.creatorPicUrl}}" alt="userProfilePic1">
 						<div id="postDetailsUserInfo" class="userSectionInfo">
-							<h4 class="userName">poster</h4>
-							<span class="postDetailsLabel">Posted: <i>November 8, 2018 <span class="time">23:00 EST</span></i></span>
-							<span class="postDetailsLabel">Location: <i>Toronto, Ontario</i></span>
+							<h4 class="userName">{{post.creator}}</h4>
+							<span class="postDetailsLabel">Posted: <i>{{post.dateMade}}</i></span>
 						</div>
 					</div>
 					<div class="userSectionOptionsContainer"><div class="userSectionOptions">
@@ -112,15 +82,7 @@
 						</ul>
 					</div></div>
 					<div class="userMessage">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Facilisis mauris sit amet massa vitae. Quam adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus. Massa placerat duis ultricies lacus sed turpis tincidunt. Amet venenatis urna cursus eget nunc scelerisque viverra mauris in. Vel orci porta non pulvinar neque laoreet suspendisse interdum. Gravida rutrum quisque non tellus orci ac auctor. Viverra justo nec ultrices dui sapien. Adipiscing at in tellus integer feugiat scelerisque. Quam pellentesque nec nam aliquam sem et tortor consequat id. Tortor posuere ac ut consequat. Neque laoreet suspendisse interdum consectetur libero. Leo a diam sollicitudin tempor id eu. Semper quis lectus nulla at volutpat diam ut.
-
-						<p>Lorem mollis aliquam ut porttitor. Vulputate dignissim suspendisse in est ante in nibh mauris. Non odio euismod lacinia at quis risus sed vulputate odio. Ridiculus mus mauris vitae ultricies leo integer. Ut ornare lectus sit amet. Massa ultricies mi quis hendrerit dolor. Non arcu risus quis varius quam quisque id diam vel. Egestas fringilla phasellus faucibus scelerisque eleifend donec pretium vulputate. Aliquet lectus proin nibh nisl condimentum id venenatis a condimentum. Vulputate ut pharetra sit amet aliquam id diam maecenas ultricies.</p>
-
-						<p>Varius sit amet mattis vulputate enim nulla aliquet porttitor. Sit amet volutpat consequat mauris nunc congue nisi vitae suscipit. Bibendum arcu vitae elementum curabitur vitae. At erat pellentesque adipiscing commodo. Nullam eget felis eget nunc lobortis mattis aliquam faucibus purus. Mauris a diam maecenas sed enim ut sem. Proin sagittis nisl rhoncus mattis rhoncus urna neque. Nunc eget lorem dolor sed viverra ipsum nunc. Purus semper eget duis at tellus at urna condimentum. Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo. Vulputate eu scelerisque felis imperdiet proin fermentum leo vel orci. Euismod quis viverra nibh cras pulvinar mattis nunc sed blandit. Ultricies mi eget mauris pharetra et ultrices neque ornare. Massa tempor nec feugiat nisl pretium fusce id velit. In egestas erat imperdiet sed euismod nisi. Sed libero enim sed faucibus turpis in.</p>
-
-						<p>Habitant morbi tristique senectus et netus et malesuada fames. Sit amet volutpat consequat mauris nunc congue. Quam adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus urna. Diam sollicitudin tempor id eu nisl nunc mi ipsum faucibus. Aliquam vestibulum morbi blandit cursus risus. Ultricies tristique nulla aliquet enim tortor. Diam maecenas sed enim ut sem viverra. Sem fringilla ut morbi tincidunt augue interdum velit. Felis imperdiet proin fermentum leo vel orci. Consequat semper viverra nam libero. Velit dignissim sodales ut eu sem integer vitae justo eget. Ornare arcu odio ut sem nulla pharetra. Montes nascetur ridiculus mus mauris vitae ultricies leo integer. Velit dignissim sodales ut eu sem integer vitae justo eget.</p>
-
-						<p>Mollis aliquam ut porttitor leo a diam. Faucibus a pellentesque sit amet porttitor eget. Et netus et malesuada fames ac turpis egestas integer. Aliquet risus feugiat in ante metus dictum at tempor. Penatibus et magnis dis parturient. Sit amet mattis vulputate enim nulla aliquet porttitor. Nibh sit amet commodo nulla. Lobortis scelerisque fermentum dui faucibus in ornare quam viverra orci. Non enim praesent elementum facilisis leo vel fringilla est. Pretium nibh ipsum consequat nisl vel. Dignissim enim sit amet venenatis. Nibh praesent tristique magna sit amet purus gravida quis blandit. Eget nunc scelerisque viverra mauris in. Nisi quis eleifend quam adipiscing vitae proin. Turpis nunc eget lorem dolor sed viverra ipsum nunc aliquet. Lectus arcu bibendum at varius vel pharetra vel turpis nunc. Integer malesuada nunc vel risus commodo viverra. Porttitor lacus luctus accumsan tortor posuere ac. Semper eget duis at tellus.</p>
+                    {{{post.details}}}
 					</div>
 				</section></div>
 				<div class="clearFloat"></div>
@@ -130,7 +92,7 @@
 			<hr>
 			<br>
 			<section id="commentFormContainer" class="curUser">
-				Comment as <span class="userName">admin</span>
+				Comment as <span class="userName">{{user.name}}</span>
 				<form id="commentForm" action="">
 					<textarea placeholder="Enter a comment" name="commentInput" id="commentInput"></textarea>
 					<button id="commentFormSubmit">Add Comment</button>
@@ -170,9 +132,7 @@
 		</section></div>
 	</section>
 
-	<script src="../../scripts/main.js"></script>
-	<script src="scripts/main.js"></script>
-	<script src="../../scripts/user.js"></script>
-	<script src="scripts/post.js"></script>
+	<script src="/js/post-main.js"></script>
+	<script src="/js/post-view.js"></script>
 </body>
 </html>

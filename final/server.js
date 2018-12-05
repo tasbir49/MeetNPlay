@@ -7,7 +7,7 @@ const port = process.env.PORT || 3000
 const bodyParser = require('body-parser') // middleware for parsing HTTP body from client
 const session = require('express-session')
 const hbs = require('hbs')
-
+//const moment = require('moment')
 
 const { ObjectID } = require('mongodb')
 
@@ -20,7 +20,7 @@ const { User } = require('./models/user') */
 const Models  = require('./models/model')
 const User = Models.User
 const Post = Models.Post
-
+const Report = Models.Report
 
 // express
 const app = express();
@@ -90,7 +90,7 @@ app.route('/login')
 	})
     
 //getting a post page (NOT THE JSON, THE ACTUAL WEB PAGE)
-app.get('/post/:id', authenticate, (req, res) => {
+app.get('/post/view/:id', authenticate, (req, res) => {
     const id = req.params.id
     if(!ObjectID.isValid(id)) {
         return res.status(404).send("404 NOT FOUND SORRY")
@@ -102,7 +102,10 @@ app.get('/post/:id', authenticate, (req, res) => {
         if(!post) {
             res.status(404).send("404 NOT FOUND SORRY")
         }
-        
+        //fixing line breaks
+        post.details = post.details.replace(/(?:\r\n|\r|\n)/g, '<br>');
+        console.log(post.details.replace(/(?:\r\n|\r|\n)/g, '<br>'));
+        const formattedLocation = encodeURI(post.meetLocation); //for google map search
         let retObj = {
             user: {
                     name: req.session.username, 
@@ -110,16 +113,15 @@ app.get('/post/:id', authenticate, (req, res) => {
                     profilePicUrl: req.session.profilePicUrl,
                     canEdit: false
             },
-            post: post
+            post: post,
+            postUrlLocation: formattedLocation
         }
-        
-        if(req.session.username == post.creator.name || req.session.isAdmin) {//these guys can edit parts of the post and add user
+        console.log()
+        if(req.session.username == post.creator || req.session.isAdmin) {//these guys can edit parts of the post and add user
             retObj.user.canEdit = true
             res.render("post_view.hbs", retObj)
             
-        } else if(post.members.map((member)=> {//only members of post can view
-            return member.name
-        }).includes(req.session.username)) {
+        } else if(post.members.includes(req.session.username)) {//only members of post can view
             res.render("post_view.hbs", retObj)
             
         } else {
@@ -151,10 +153,11 @@ app.get('/post/edit/:id', authenticate, (req, res) => {
                     isAdmin: req.session.isAdmin,
                     profilePicUrl: req.session.profilePicUrl,
             },
-            isNew: false //so we can recycle the post-edit page as a make-post page
+            isEdit: true, //so we can recycle the post-edit page as a make-post page
+            post: post
         }
         
-        if(req.session.username == post.creator.name || req.session.isAdmin) {//these guys can edit parts of the post and add user
+        if(req.session.username == post.creator || req.session.isAdmin) {//these guys can edit parts of the post and add user
             res.render("post_edit.hbs", retObj)
             
         } else {
@@ -175,29 +178,38 @@ app.get('/post/make', authenticate, (req, res) => {
                     isAdmin: req.session.isAdmin,
                     profilePicUrl: req.session.profilePicUrl,
             },
-            isNew: false
+            isEdit: false
         }
         res.render("post_edit.hbs", retObj)  
 })   
 
-//creates a new post, assuming a json body that matches the schema 
-app.post('/post', authenticate, (req, res)=> {
-    const post = new Post(req.body)
+//creates a new post, assuming a json body 
+//that matches the schema , 
+//using req.sessionuser for crearor
+//This means creator SHOULD NOT be in the request body
+app.post('/post/api/create', authenticate, (req, res)=> {
+    let templatePost = req.body
+    templatePost.creator = req.session.username
+    templatePost.profilePicUrl = req.session.profilePicUrl 
+    const post = new Post(templatePost)
     post.save().then((result)=> {
-        res.redirect('/post/' + result.id.toString())
-    }).catch((error)=> {
-        res.status(404).send(error)
+        res.redirect('/post/view/' + result.id.toString())
+    
+    }).catch((error)=>{
+        res.status(400).send(error)
     })
+
+    
 })
 
-//editing a post, assuming json body has all field
-app.patch('/post/:id', authenticate, (req, res) => {
+//editing a post, assuming json body has all fields
+//EXCEPT CREATOR, AND DATE MADE (you can change these, but why would you)
+app.patch('/post/api/edit/:id', authenticate, (req, res) => {
     const id = req.params.id
     if(!ObjectID.isValid(id)) {
         return res.status(404).send("404 NOT FOUND SORRY")
     }
 
-    
     Post.findById(id).then((post) => {
 
         if(!post) {
@@ -260,10 +272,74 @@ app.get('/users/:username', authenticate, (req, res) => {
         res.render("user_profile.hbs", retObj)
         
     }).catch((error)=> {
-        res.status(400).send(error)
+        res.status(404).send("404 NOT FOUND SORRY")
     })
     
 })  
+
+
+
+//creates a report, assuming a json body that matches the schema
+//expects only  the perpetrator and content, other fields will be overwritten
+//sends a json of the report
+//remind me to authenticate
+app.post('/reports/api/create', (req, res)=> {
+    User.findOne({name: req.body.perpetrator}
+    ).then((user)=>{
+        let templateReport = req.body
+        templateReport.perpetratorPicUrl = user.profilePicUrl
+        return templateReport
+    }).then((reportTemplate)=>{
+        reportTemplate.date = Date.now()
+        reportTemplate.isClosed = false
+        const report = new Report(reportTemplate)
+        return report.save()
+    }).then((report)=>{
+        res.send(report)
+    }).catch((error)=>{
+        res.status(400).send(error)
+    })
+    
+})
+
+
+//closes report with id
+//expects only  the id, other fields are ignored
+//sends a json of the report
+//remind me to authenticate
+app.post('/reports/api/close/:id', (req, res)=> {
+    const id = req.params.id
+    Report.findById(id).then((report)=>{
+       report.set({isClosed:true})
+       return report.save()
+    }).then((report)=>{
+       res.send(report)
+    }).catch((error)=>{
+        res.status(400).send(error)
+    })
+    
+})
+
+//need to implement pagination with this
+app.get('/reports', authenticate, (req,res)=> {
+    if(req.session.isAdmin){
+        Report.find({isClosed:false}).sort({date: -1}).then((reports)=>{
+            res.render("reports.hbs", {
+                user: {
+                        name: req.session.username, 
+                        profilePicUrl: req.session.profilePicUrl
+                },
+                reports: reports
+                    
+            })
+            
+        }).catch((error)=>{
+            res.status(403).send(error)
+        })
+    } else {
+        res.status(403).send("YOU DONT HAVE PERMISSION")
+    }
+})
 
 //homepage 
 app.get('/home', (req, res) => {
@@ -282,7 +358,7 @@ app.get('/home', (req, res) => {
 	}
 })
 
-// User login and logout routes
+// User login and logout and creation routes
 
 app.post('/login/start', (req, res) => {
 	const name = req.body.name
@@ -324,31 +400,8 @@ app.get('/logout', (req, res) => {
 
 
 
-/// Student routes go below
-
-// Set up a POST route to create a student
-app.post('/students', authenticate, (req, res) => {
-	log(req.body)
-
-	// Create a new student
-	const student = new Student({
-		name: req.body.name,
-		year: req.body.year,
-		creator: req.user._id // from the authenticate middleware
-	})
-
-	// save student to database
-	student.save().then((result) => {
-		// Save and send object that was saved
-		res.send(result)
-	}, (error) => {
-		res.status(400).send(error) // 400 for bad request
-	})
-
-})
 
 
-/** User routes **/
 app.post('/users', (req, res) => {
 
 	// Create a new user

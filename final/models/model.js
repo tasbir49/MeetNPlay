@@ -104,12 +104,17 @@ UserSchema.pre('save', function(next) {
 const CommentSchema = new mongoose.Schema({
     content: String,
     date: Date,
-    user: UserSchema
+    name: String,
+    profilePicUrl: String
 })
 
 const PostSchema = new mongoose.Schema({//most of these defaults are for testing purposes
 	creator : {
-        type: UserSchema,
+        type: String,
+        required: true
+    },
+    creatorPicUrl : {
+        type: String,
         required: true
     },
     title: {
@@ -146,6 +151,11 @@ const PostSchema = new mongoose.Schema({//most of these defaults are for testing
         default: Date.now(), //default is a week from now
         required: true
     },
+    dateMade: {
+        type: Date,
+        default: Date.now(), //default is a week from now
+        required: true
+    }, 
     meetLocation: {
         type: String,
         default: "27 King's College Cir, Toronto, ON M5S", //uoft
@@ -161,7 +171,7 @@ const PostSchema = new mongoose.Schema({//most of these defaults are for testing
         default: "Let's have a lot of fun!\nThere will be great food, a friendly atmosphere, and some hardcore gaming.\nThe only rule is to bring your own alcohol :D.",
         required: true 
     },
-    inviteReqs: [UserSchema],
+    inviteReqs: [String],
     comments: [CommentSchema]
     
 })
@@ -175,7 +185,11 @@ const ReportSchema= new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    perpetrator: UserSchema,
+    perpetrator: {
+        type: String,
+        required: true
+    },
+    perpetratorPicUrl: String,
     content: String
     
 })

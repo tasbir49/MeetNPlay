@@ -10,7 +10,8 @@
 }
 
 #leftSideAccountPage img {
-    width: 70%;
+    width: 15em;
+    height: 15em;
     min-width: 32px;
     display: block;
     margin-top: 5%;

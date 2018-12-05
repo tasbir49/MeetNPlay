@@ -28,8 +28,8 @@
         </form>
         {{#if user.isJustOwner}}<button type="button" id="changePassButton">Change Password</button>{{/if}}
         {{#if user.isAdmin}}<button type="button" id="changePassButtonAdmin">Change Password</button>
-        <button type="button" id="banUser">Revoke Admin Priveleges</button>       
-        <button type="button" id="banUser">Ban this user</button>{{/if}}
+        <button type="button" id="revokeAdmin">{{#if userDetails.isAdmin}}Revoke Admin Priveleges{{else}}Make This User Admin{{/if}}</button>       
+        <button type="button" id="banUser">{{#if userDetails.isBanned}}Unban this user{{else}}Ban this user{{/if}}</button>{{/if}}
 
 
     </div>
