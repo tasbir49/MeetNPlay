@@ -11,17 +11,21 @@ for (let i = 0; i < editFormInputs.length; i++) {
 	});
 }
 
+
 const searchOptions = {
-	"game" : ["Dota 2", "Counter-Strike: Global Offensive", "PLAYERUNKNOWN'S BATTLEGROUNDS", "Warframe", "ARK: Survival Evolved", "Team Fortress 2", "Tom Clancy's Rainbow Six Siege", "Rocket League", "Football Manager 2019", "Rust", "Grand Theft Auto V", "Total War: WARHAMMER II", "Garry's Mod", "Sid Meier's Civilization V", "Fallout 4", "Euro Truck Simulator 2", "Sid Meier's Civilization VI", "Dead by Daylight", "MONSTER HUNTER: WORLD", "Arma 3", "Paladins", "Path of Exile", "Hearts of Iron IV", "Football Manager 2018", "PAYDAY 2", "Rayman Origins"]
+	"game" : searchOptionsNameId
 };
-searchOptions.game.sort();
 
 const gameInp = document.getElementById("gameTitle-edit");
 addAutocomplete(gameInp);
 
 
 function addAutocomplete(inp) {
+	//make this call into api?
+	//call first 10 that matches the input?
 	const optionList = searchOptions[inp.name];
+	optionsList = 
+	console.log(optionList);
 	if (!optionList) {
 		return;
 	}
@@ -41,13 +45,13 @@ function addAutocomplete(inp) {
 		const value = (!inp.value) ? "" : inp.value;
 
 		curItem = -1;
-		
+
 		const itemsContainer = document.createElement("div");
 		itemsContainer.id = inp.name + "_autocompleteList";
 		itemsContainer.className = "autocompleteList";
-		
-		inp.parentElement.appendChild(itemsContainer);
 
+		inp.parentElement.appendChild(itemsContainer);
+		//optionlist.name
 		for (let i = 0; i < optionList.length; i++) {
 			let match = optionList[i].substring(0, value.length);
 			if (match.toUpperCase() === value.toUpperCase()) {
@@ -58,7 +62,7 @@ function addAutocomplete(inp) {
 				let elem = document.createElement("strong");
 				elem.appendChild(textNode);
 				item.appendChild(elem);
-
+				//textnode.data_id = optionList.name
 				textNode = document.createTextNode(optionList[i].substring(value.length));
 				item.appendChild(textNode);
 
@@ -81,7 +85,7 @@ function addAutocomplete(inp) {
 			}
 		}
 	}
-	
+
 	function selectAutocompleteItem(e) {
 		// Tab key
 		if (e.keyCode == 9) {
@@ -105,7 +109,7 @@ function addAutocomplete(inp) {
 			curItem--;
 			highlightAutocompleteItem(items);
 		}
-		// Enter key 
+		// Enter key
 		else if (e.keyCode == 13) {
 			if (curItem > -1) {
 				if (items) {
@@ -134,7 +138,7 @@ function addAutocomplete(inp) {
 
 		items[curItem].id = "autocompleteItem-active";
 	}
-	
+
 	// This is used as an event listener and can be used manually by another function.
 	function closeAutocomplete(e) {
 		if (!e) {
