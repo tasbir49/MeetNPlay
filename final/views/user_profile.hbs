@@ -19,7 +19,12 @@
 <body>
     {{> header_partial }} <!-- Notice that this is the same name as the header_partial.hbs file sans the extension, thats cuz line35 does this for all in a dir -->
     <div id="leftSideAccountPage">
-        <img class="profilePic" src={{userDetails.profilePicUrl}}></img>
+        <div id="profilePicContainer">
+            <img id="profilePic" class="profilePic" src={{userDetails.profilePicUrl}}></img>
+            <div id="profilePicOverlay">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7.127 22.564l-7.126 1.436 1.438-7.125 5.688 5.689zm-4.274-7.104l5.688 5.689 15.46-15.46-5.689-5.689-15.459 15.46z"/></svg>
+            </div>
+        </div>
         <h2 id="userNameHeading">{{userDetails.name}}</h2>
 
         <form id="userSearchInput">
@@ -120,6 +125,19 @@
             </form>
         </div>
     </div>
+
+
+    <div id="editProfilePicContainer"><div id="editProfilePicDialog">
+        <button id="editProfilePicDialogClose" class="closeDialog"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"/></svg></button>
+        <h2>Edit profile picture</h2>
+        <hr>
+        <div>
+            <input type='file' id="editProfilePicButtonInput" name="update-profile-pic" accept="image/*"/>
+            <label for="editProfilePicButtonInput" id="editProfilePicButton">Upload image</label>
+            <button id="editProfilePicButtonSubmit">Update!</button>
+        </div>
+        <div id="editProfilePicSampleContainer"><div id="editProfilePicSample"></div></div>
+    </div></div>
     <script type="text/javascript" src="/js/user_account_scripts.js"></script>
 
 

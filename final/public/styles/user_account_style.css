@@ -183,4 +183,155 @@ button:hover {
     padding: 1%;
 }
 
+#editProfilePicContainer {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.3);
+    z-index: 10;
+}
+#editProfilePicDialog {
+    position: relative;
+    left: 15%;
+    top: 15%;
+    box-sizing: border-box;
+    padding: 20px;
+    width: 70%;
+    height: 70%;
+    background-color: rgba(50, 55, 65, 0.95);
+    border-radius: 10px;
+    overflow: scroll;
+}
+#editProfilePicDialog h2 {
+    margin-top: 0;
+}
+#editProfilePicButtonInput {
+    display: none;
+}
+#editProfilePicButton,
+#editProfilePicButtonSubmit {
+    z-index: 1;
+    position: relative;
+    display: inline-block;
+    top: 15px;
+    cursor: pointer;
+    border: none;
+    font-size: 13px;
+    padding: 10px;
+    opacity: 1;
+    color: black;
+    background-color: #FFD039;
+    border-radius: 3px;
+    transform: translateY(0);
+    transition: transform 50ms;
+}
+#editProfilePicButtonInput:focus ~ #editProfilePicButton,
+#editProfilePicButton:hover {
+    background-color: #f2bb0c;
+}
+#editProfilePicButtonSubmit:active,
+#editProfilePicButton:active {
+    opacity: 0.8;
+    transform: translateY(2px);
+}
 
+#editProfilePicButtonSubmit {
+    display: none;
+    background-color: #45C48B;
+}
+#editProfilePicButtonSubmit:hover {
+    background-color: #1ae087;
+}
+#editProfilePicSampleContainer {
+    position: relative;
+    top: 60px;
+    text-align: center;
+}
+#editProfilePicSample {
+    position: relative;
+    display: inline-block;
+    background-color: rgba(0,0,0,0.25);
+    height: 30vh;
+    width: 30vh;
+    min-width: 200px;
+    min-height: 200px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-bottom: 20px;
+}
+
+#profilePic {
+}
+
+#profilePicContainer {
+    position: relative;
+    cursor: pointer;
+    width: 15em;
+    height: 15em;
+    min-width: 32px;
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid rgba(0,0,0,0);
+}
+#profilePicOverlay {
+    position: absolute;
+    display: none;
+    top: 5%;
+    left: 0;
+    opacity: 0.5;
+    background-color: black;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    border: 2px solid rgba(0,0,0,0);
+}
+#profilePicContainer:hover #profilePicOverlay {
+    display: block;
+}
+#profilePicOverlay svg {
+    position: absolute;
+    fill: white;
+    top: 50%;
+    height: 30%;
+    width: 30%;
+    margin-top: -15%;
+    margin-left: -15%;
+}
+
+.closeDialog {
+    z-index: 1;
+    position: absolute;
+    display: inline-block;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    border: none;
+    font-size: 13px;
+    padding: 0px;
+    opacity: 1;
+    color: white;
+    background: none;
+    border-radius: 3px;
+}
+.closeDialog:hover {
+    background: none;
+}
+.closeDialog svg {
+    fill: white;
+    opacity: 0.75;
+}
+.closeDialog:hover svg {
+    fill: #EB3E4A;
+    opacity: 1;
+}
+
+@media screen and (max-height: 500px) {
+    #editProfilePicDialog {
+        height: 80%;
+    }
+}

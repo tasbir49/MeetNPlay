@@ -10,6 +10,19 @@ const hbs = require('hbs')
 const igdb = require('igdb-api-node').default;
 //const moment = require('moment')
 
+// ==== Multer - image upload setup ====
+const multer = require('multer');
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, __dirname + '/public/resources/images/profile-pictures/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, req.session.user.name + '.png')
+  }
+})
+const upload = multer({storage: storage})
+// ==== done Multer - image upload setup ====
+
 const { ObjectID } = require('mongodb')
 
 // Import our mongoose connection
@@ -533,6 +546,11 @@ app.post('/users', (req, res) => {
 	})
 
 })
+
+app.post('/update-profile-pic', upload.single('update-profile-pic'), (req, res) => {
+    res.send(req.file);
+})
+
 
 app.listen(port, () => {
 	log(`Listening on port ${port}...`)

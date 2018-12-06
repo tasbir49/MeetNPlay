@@ -265,3 +265,78 @@ function reportUserCallback(e) {
     e.preventDefault();
     cleanReportUserPrompt();
 }
+
+const editProfile = document.getElementById("editProfilePicContainer");
+const profilePic = document.getElementById("profilePicContainer");
+const profilePicUpload = document.getElementById('editProfilePicButtonInput')
+const profilePicSubmit = document.getElementById("editProfilePicButtonSubmit");
+const profilePicOverlay = document.getElementById("profilePicOverlay");
+const closeDialog = document.getElementById("editProfilePicDialogClose");
+
+closeDialog.addEventListener("click", e => {
+    editProfile.style.display = '';
+    profilePicOverlay.style.display = '';
+});
+
+editProfile.addEventListener("click", e => {
+    if (e.target === editProfile) {
+        editProfile.style.display = '';
+        profilePicOverlay.style.display = '';
+    }
+})
+
+profilePic.addEventListener("click", e => {
+    editProfile.style.display = 'block';
+    profilePicOverlay.style.display = 'block';
+})
+
+profilePicUpload.addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) {
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+        document.getElementById("editProfilePicSample").style.backgroundImage = "url(" + reader.result + ")";        
+    }
+    reader.readAsDataURL(file);
+
+    profilePicSubmit.style.display = "inline-block";
+});
+
+profilePicSubmit.addEventListener("click", e => {
+    const file = profilePicUpload.files[0];
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "/update-profile-pic");
+    const formData = new FormData();
+    formData.append("update-profile-pic", file);
+
+    xhr.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            location.reload();
+        } else if (this.readyState === 4) {
+
+        }
+    }
+
+    xhr.send(formData);
+
+    e.preventDefault();
+});
+
+document.addEventListener("keydown", e => {
+    if (e.key !== undefined) {
+        code = e.key;
+    } else if (e.keyIdentifier !== undefined) {
+        code = e.keyIdentifier;
+    } else if (e.keyCode !== undefined) {
+        code = e.keyCode;
+    }
+
+    if (code === "Escape") {
+        editProfile.style.display = 'none';
+        profilePicOverlay.style.display = 'none';
+    }
+});
