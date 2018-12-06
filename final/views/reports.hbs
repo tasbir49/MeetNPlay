@@ -19,8 +19,8 @@
         {{> header_partial }} 
     {{#each reports}}
     <div class="reportItem">
-        <img class="profilePic" src="{{this.perpetratorPicUrl}}">
-        <div class="userName"><a href="/users/{{this.perpetrator}}">{{this.perpetrator}}</a></div>
+        <img class="profilePic" src="{{this.perpetrator.profilePicUrl}}">
+        <div class="userName"><a href="/users/{{this.perpetrator.name}}">{{this.perpetrator.name}}</a></div>
         <div class="reportDate">
             {{this.date}}
         </div>
