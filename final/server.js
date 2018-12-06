@@ -7,6 +7,7 @@ const port = process.env.PORT || 3000
 const bodyParser = require('body-parser') // middleware for parsing HTTP body from client
 const session = require('express-session')
 const hbs = require('hbs')
+const igdb = require('igdb-api-node').default;
 //const moment = require('moment')
 
 const { ObjectID } = require('mongodb')
@@ -21,6 +22,7 @@ const Models  = require('./models/model')
 const User = Models.User
 const Post = Models.Post
 const Report = Models.Report
+const igdb_client = igdb('e5ca32669192cb320e449d73603725d6');
 
 // express
 const app = express();
@@ -397,38 +399,95 @@ app.get('/logout', (req, res) => {
 	})
 })
 
-app.get('/igdb/',(req,res)=> {
- igdb_client.games({
-	 fields: "name,id",
-	 limit:10
-  }).then(response=>{
-	 console.log(response.body.length);
-	 res.send(response.body.sort((a,b)=>{
-		 let x = a.name.toLowerCase()
-		 let y = b.name.toLowerCase()
-		 if(x<y) {return -1}
-		 if(x>y) {return 1}
-	 }));
- }).catch(error=>{
-	 res.status(400).send(error)
- })
-})
 
-app.get('/igdb/:name',(req,res)=>{
+app.get('/igdb',(req,res)=>{
 
 	igdb_client.games({
-		fields:"name",
+		fields:"id,name,cover",
 		limit:10,
-		filters: {"name-prefix": req.params.name,
-							"version_parent-not_exists":1}
+		filters: {"version_parent-not_exists":1}
 	}).then(response=>{
-		console.log(req.params.name);
-		res.send(response.body)
+		response.body.sort((a,b)=>{
+			let x = a.name.toLowerCase()
+			let y = b.name.toLowerCase()
+			if(x<y) {return -1}
+			if(x>y) {return 1}
+		});
+		let names =[];
+		let ids =[];
+		let covers = [];
+		response.body.forEach(a=>{
+			names.push(a.name);
+			console.log(a.name);
+			console.log(a.id);
+			ids.push(a.id);
+			console.log("just pring");
+			console.log(a.cover);
+			let coverURL = "/resources/images/logo.png";
+			if (a.cover != null){ //change to big logo if exists
+				const cloud_id = a.cover.cloudinary_id
+				coverURL = igdb_client.image({cloudinary_id:cloud_id},"cover_big","jpg")
+			}
+			covers.push(coverURL);
+			console.log("what");
+		})
+		res.send({names:names,ids:ids,covers:covers});
+
 	}).catch(error=>{
 		res.status(400).send(error)
 	})
 })
 
+
+
+app.get('/igdb/:name',(req,res)=>{
+
+	igdb_client.games({
+		fields:"id,name,cover",
+		limit:10,
+		filters: {"name-prefix": req.params.name,
+							"version_parent-not_exists":1}
+	}).then(response=>{
+		console.log(req.params.name);
+		//res.send(response.body)
+		response.body.sort((a,b)=>{
+			let x = a.name.toLowerCase()
+			let y = b.name.toLowerCase()
+			if(x<y) {return -1}
+			if(x>y) {return 1}
+		});
+		let names =[];
+		let ids =[];
+		let covers = [];
+		response.body.forEach(a=>{
+			names.push(a.name);
+			console.log(a.name);
+			console.log(a.id);
+			ids.push(a.id);
+			console.log("just pring");
+			console.log(a.cover);
+			let coverURL = "/resources/images/logo.png";
+			if (a.cover != null){ //change to big logo if exists
+				const cloud_id = a.cover.cloudinary_id
+				coverURL = igdb_client.image({cloudinary_id:cloud_id},"cover_big","jpg")
+			}
+			covers.push(coverURL);
+			console.log("what");
+		})
+		res.send({names:names,ids:ids,covers:covers});
+
+	}).catch(error=>{
+		res.status(400).send(error)
+	})
+})
+
+app.get('/igdball',(req,res)=>{
+	igdb_client.scroll('/games/?fields=name&filter[genre][eq]=7&limit=50').then(response => {
+		res.send(response.body);
+	}).catch(error=>{
+		res.status(400).send("error that didnt work")
+	});
+})
 
 
 
