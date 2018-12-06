@@ -1,6 +1,11 @@
 "use-strict";
 
 const editFormInputs = document.getElementsByClassName("editFormInput");
+const apiUrl = "/";
+
+let timerDone = 0;
+let prevInp = "";
+
 
 for (let i = 0; i < editFormInputs.length; i++) {
 	editFormInputs[i].addEventListener("focus", (e) => {
@@ -10,18 +15,37 @@ for (let i = 0; i < editFormInputs.length; i++) {
 		e.target.parentNode.getElementsByClassName("editFormInputLabel")[0].classList.remove("active");
 	});
 }
-
+/**
 const searchOptions = {
-	"game" : ["Dota 2", "Counter-Strike: Global Offensive", "PLAYERUNKNOWN'S BATTLEGROUNDS", "Warframe", "ARK: Survival Evolved", "Team Fortress 2", "Tom Clancy's Rainbow Six Siege", "Rocket League", "Football Manager 2019", "Rust", "Grand Theft Auto V", "Total War: WARHAMMER II", "Garry's Mod", "Sid Meier's Civilization V", "Fallout 4", "Euro Truck Simulator 2", "Sid Meier's Civilization VI", "Dead by Daylight", "MONSTER HUNTER: WORLD", "Arma 3", "Paladins", "Path of Exile", "Hearts of Iron IV", "Football Manager 2018", "PAYDAY 2", "Rayman Origins"]
+	"game" : ["Dota 2", "Counter-Strike: Global Offensive", "PLAYERUNKNOWN'S BATTLEGROUNDS", "Warframe", "ARK: Survival Evolved", "Team Fortress 2", "Tom Clancy's Rainbow Six Siege", "Rocket League", "Football Manager 2019", "Rust", "Grand Theft Auto V", "Total War: WARHAMMER II", "Garry's Mod", "Sid Meier's Civilization V", "Fallout 4", "Euro Truck Simulator 2", "Sid Meier's Civilization VI", "Dead by Daylight", "MONSTER HUNTER: WORLD", "Arma 3", "Paladins", "Path of Exile", "Hearts of Iron IV", "Football Manager 2018", "PAYDAY 2", "Rayman Origins"],
+	"id": [0,10,20,3,4,5,6,6,7,7]
 };
 searchOptions.game.sort();
 
-const gameInp = document.getElementById("gameTitle-edit");
-addAutocomplete(gameInp);
+**/
+
+let gameInfo;
+let xhttp = new XMLHttpRequest();
+xhttp.open("GET", "/igdb/");
+xhttp.send();
+xhttp.onreadystatechange = function() {
+	if (this.readyState == 4 && this.status == 200) {
+		gameInfo = JSON.parse(this.response);
+		const gameInp = document.getElementById("gameTitle-edit");
+		addAutocomplete(gameInp);
+	}
+}
+
 
 
 function addAutocomplete(inp) {
-	const optionList = searchOptions[inp.name];
+	resetTimer();
+	let optionListInfo = gameInfo;
+	let optionList  = "";
+	if (gameInfo !=null){
+		optionList = gameInfo.names;
+	}
+
 	if (!optionList) {
 		return;
 	}
@@ -39,13 +63,28 @@ function addAutocomplete(inp) {
 	function showAutocomplete() {
 		closeAutocomplete();
 		const value = (!inp.value) ? "" : inp.value;
-
+		if (inp.value == ""){
+			optionList = gameInfo.names;
+		} else if(prevInp != inp.value && timerDone==1){
+			timerDone = 0;
+			prevInp = inp.value;
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					optionListInfo = JSON.parse(this.response);
+					optionList = optionListInfo.names;
+					console.log(optionList);
+					resetTimer();
+				}
+			}
+			xhttp.open("GET", "/igdb/"+inp.value);
+			xhttp.send();
+		}
 		curItem = -1;
-		
+
 		const itemsContainer = document.createElement("div");
 		itemsContainer.id = inp.name + "_autocompleteList";
 		itemsContainer.className = "autocompleteList";
-		
+
 		inp.parentElement.appendChild(itemsContainer);
 
 		for (let i = 0; i < optionList.length; i++) {
@@ -81,7 +120,7 @@ function addAutocomplete(inp) {
 			}
 		}
 	}
-	
+
 	function selectAutocompleteItem(e) {
 		// Tab key
 		if (e.keyCode == 9) {
@@ -105,7 +144,7 @@ function addAutocomplete(inp) {
 			curItem--;
 			highlightAutocompleteItem(items);
 		}
-		// Enter key 
+		// Enter key
 		else if (e.keyCode == 13) {
 			if (curItem > -1) {
 				if (items) {
@@ -131,10 +170,11 @@ function addAutocomplete(inp) {
 		} else if (curItem < 0) {
 			curItem = (items.length - 1);
 		}
-
+		console.log("item: "+items[curItem]);
+		console.log(items[curItem]);
 		items[curItem].id = "autocompleteItem-active";
 	}
-	
+
 	// This is used as an event listener and can be used manually by another function.
 	function closeAutocomplete(e) {
 		if (!e) {
@@ -165,4 +205,11 @@ function removeFromArray(arr, value) {
 
 function hasClass(element, className) {
 	return (' ' + element.className + ' ').indexOf(' ' + className+ ' ') > -1;
+}
+
+//resets the timer on API call
+function resetTimer(){
+	setTimeout(function(){
+		timerDone =1;
+	},3000)
 }

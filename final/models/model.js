@@ -32,7 +32,7 @@ const UserSchema = new mongoose.Schema({
         default: "No info",
 		required: true,
 		minlength: 1,
-		trim: true, // trim whitespace
+		trim: true // trim whitespace
 	},
     memberSince: {
         type: Date,
@@ -63,11 +63,11 @@ const UserSchema = new mongoose.Schema({
 	}
 })
 
-// Our own student finding function 
+//user finding function taken from lecture
 UserSchema.statics.findByNamePassword = function(name, password) {
 	const User = this
 
-	return User.findOne({name: name}).then((user) => {
+	return User.findOne({name: name.toLowerCase()}).then((user) => {
 		if (!user) {
 			return Promise.reject()
 		}
@@ -104,17 +104,14 @@ UserSchema.pre('save', function(next) {
 const CommentSchema = new mongoose.Schema({
     content: String,
     date: Date,
-    name: String,
-    profilePicUrl: String
+    user: {
+        type: mongoose.Schema.Types.ObjectId, ref: "User"
+    }
 })
 
 const PostSchema = new mongoose.Schema({//most of these defaults are for testing purposes
 	creator : {
-        type: String,
-        required: true
-    },
-    creatorPicUrl : {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId, ref: "User",
         required: true
     },
     title: {
@@ -132,7 +129,7 @@ const PostSchema = new mongoose.Schema({//most of these defaults are for testing
         required: true
     },
     members: {
-        type: [UserSchema],
+        type: [{type: mongoose.Schema.Types.ObjectId, ref: "User"}],
         default: [],
         required: true
     },
@@ -171,8 +168,22 @@ const PostSchema = new mongoose.Schema({//most of these defaults are for testing
         default: "Let's have a lot of fun!\nThere will be great food, a friendly atmosphere, and some hardcore gaming.\nThe only rule is to bring your own alcohol :D.",
         required: true 
     },
-    inviteReqs: [String],
-    comments: [CommentSchema]
+    inviteReqs: {
+        type: [{type: mongoose.Schema.Types.ObjectId, ref: "User"}],
+        default: [],
+        required: true
+    },
+    comments: {
+        type: [CommentSchema],
+        default: [],
+        required: true
+    },
+    
+    isDeleted: {
+        type: Boolean,
+        default: false,
+        required: true
+    }
     
 })
 
@@ -186,10 +197,9 @@ const ReportSchema= new mongoose.Schema({
         default: false
     },
     perpetrator: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId, ref: "User",
         required: true
     },
-    perpetratorPicUrl: String,
     content: String
     
 })
