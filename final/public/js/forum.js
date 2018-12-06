@@ -1,6 +1,10 @@
-allPosts = ["Kirby","Legend of Zelda","Game of Thrones","Super Smash Brothers Brawl","Bull","Shiiiit"]
-//allPosts = ["hi","fail"]
+"use strict";
+
+const allPosts = ["Kirby","Legend of Zelda","Game of Thrones","Super Smash Brothers Brawl","Bull","Page2","stuff page2","more page 3"]
+//displayPosts = ["hi","fail"]
 //the dialog boxes
+
+let displayPosts = allPosts;
 
 const postNotFound = document.querySelector("#postNotFound");
 const postsOnPage = document.getElementsByClassName("post");
@@ -8,19 +12,34 @@ const reportButton = document.getElementsByClassName("reportButton")[0]
 const requestInviteButton = document.getElementsByClassName("requestInvite")[0]
 const usrSearchForm = document.querySelector("#userSearchInput");
 let pageNumber = 0;
-const postPerPage = 4
-const maxPage = Math.ceil(allPosts.length/postPerPage)
+const postPerPage = 3;
+let maxPage = Math.ceil(displayPosts.length/postPerPage)
 
-
-console.log("hi: "+postPerPage);
-//requestInviteButton.addEventListener("click",processRequest);
-//reportButton.addEventListener("click",reportPrompt);
 postNotFound.addEventListener("click", bringDownUserPrompt);
 
 usrSearchForm.addEventListener("submit", searchUser);
 
 console.log(postsOnPage);
-initPage();
+loadPage();
+let acc = document.getElementsByClassName("accordion");
+
+for (let i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    }
+  });
+}
+
+let filters = document.getElementsByClassName("accordionButton")
+for (let i =0 ;i<filters.length;i++){
+  filters[i].addEventListener("click",applyFilter)
+}
+
 //normally this function would search a database of users in back end
 //but for front end, itll just not find anything
 function searchUser(e) {
@@ -35,32 +54,16 @@ function bringUpUserPrompt(e) {
 function bringDownUserPrompt(e) {
     postNotFound.style.display = "none";
 }
-let acc = document.getElementsByClassName("accordion");
-let i;
-for (i = 0; i < acc.length; i++) {
-  acc[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var panel = this.nextElementSibling;
-    if (panel.style.maxHeight){
-      panel.style.maxHeight = null;
-    } else {
-      panel.style.maxHeight = panel.scrollHeight + "px";
-    }
-  });
-}
 
-function initPage(){
+function loadPage(){
 
   const middle = document.getElementById("gamePost")
   const start = postPerPage*pageNumber;
-  const end = Math.min(((pageNumber+1)*postPerPage),allPosts.length)
-  for (let i =start;i<postPerPage;++i){
-    console.log("hi");
-    middle.appendChild(makeDefaultPost(allPosts[i]));
+  const end = Math.min(((pageNumber+1)*postPerPage),displayPosts.length)
+  for (let i =start;i<end;++i){
+    middle.appendChild(makeDefaultPost(displayPosts[i]));
   }
   middle.append(pageNav(maxPage))
-
-  console.log(middle);
 }
 
 function pageNav(max){
@@ -73,6 +76,7 @@ function pageNav(max){
     but.className = "pageNumber"
     but.name="Page"+(i)
     but.addEventListener("click",loadNewPage);
+
     but.appendChild(document.createTextNode(i))
     pageNumWrapper.append(but)
   }
@@ -80,9 +84,22 @@ function pageNav(max){
 }
 
 function loadNewPage(e){
-  //e.target.parentElement
+  if(pageNumber +1 != e.target.innerText){
+    pageNumber = e.target.innerText-1;
+    clearPage();
+    loadPage();
+  }
 }
 
+function clearPage(){
+  const page = document.getElementsByClassName("post");
+  const length = page.length
+  for (let i=0;i<length;++i){
+    page[0].remove()
+  }
+  const numbers = document.getElementsByClassName("pageNumberWrapper");
+  numbers[0].remove()
+}
 function makeDefaultPost(post){
   const postSection = document.createElement("section");
   postSection.className = "post";
@@ -121,7 +138,7 @@ function makeDefaultPost(post){
   reportBut.className = "reportButton";
   reportBut.type = "button"
   reportBut.name = "Report"
-  reportBut.appendChild(document.createTextNode("default"))
+  reportBut.appendChild(document.createTextNode("Report"))
   reportBut.addEventListener("click",reportPrompt);
 
   gameDet.appendChild(inviteBut)
@@ -177,4 +194,30 @@ function createLink() {
     linkNode.innerText = "View Post"
     requestInviteButton.parentNode.insertBefore(linkNode, requestInviteButton.nextSibling);
 
+}
+
+
+function applyFilter(e){
+  const value = e.target.value;
+  const compare =e.target.innerText;
+  if(value =="people"){
+    displayPosts.filter(function(a){
+      return compare == a.people;
+    })
+  } else if(value =="platform") {
+    displayPosts.filter(function(a){
+      return compare == a.platform;
+    })
+  } else if(value == "genre"){
+      displayPosts.filter(function(a){
+        return compare == a.genre;
+      })
+  } else if (value == "sort"){
+    displayPost.sort(function(a,b){
+      if (a.name<b.name) {return} 1;
+      if (a.name>b.name) {return} -1;
+    })
+  } else{
+    displayPost = allPosts;
+  }
 }
