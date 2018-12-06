@@ -7,6 +7,7 @@ const port = process.env.PORT || 3000
 const bodyParser = require('body-parser') // middleware for parsing HTTP body from client
 const session = require('express-session')
 const hbs = require('hbs')
+const igdb = require('igdb-api-node').default;
 //const moment = require('moment')
 
 const { ObjectID } = require('mongodb')
@@ -21,6 +22,7 @@ const Models  = require('./models/model')
 const User = Models.User
 const Post = Models.Post
 const Report = Models.Report
+const igdb_client = igdb('e5ca32669192cb320e449d73603725d6');
 
 // express
 const app = express();
@@ -78,7 +80,7 @@ const authenticate = (req, res, next) => {
 	}
 }
 
-// route for root; redirect to login
+// route for root; redirect to home
 app.get('/', sessionChecker, (req, res) => {
 	res.redirect('/home')
 })
@@ -88,7 +90,7 @@ app.route('/login')
 	.get(sessionChecker, (req, res) => {
 		res.sendFile(__dirname + '/public/login.html')
 	})
-    
+
 //getting a post page (NOT THE JSON, THE ACTUAL WEB PAGE)
 app.get('/post/view/:id', authenticate, (req, res) => {
     const id = req.params.id
@@ -117,20 +119,22 @@ app.get('/post/view/:id', authenticate, (req, res) => {
             postUrlLocation: formattedLocation
         }
         console.log()
+
         if(req.session.user.name == post.creator.name || req.session.user.isAdmin) {//these guys can edit parts of the post and add user
             retObj.canEdit = true
             res.render("post_view.hbs", retObj)            
         } else if(post.members.includes(req.session.user._id)) {//only members of post can view
+
             res.render("post_view.hbs", retObj)
-            
+
         } else {
             return res.status(403).send("YOU DONT HAVE PERMISSION TO ACCESS THIS RESOURCE")
         }
     }).catch((error)=> {
         res.status(400).send(error)
     })
-    
-})   
+
+})
 
 //getting a post's edit page
 app.get('/post/edit/:id', authenticate, (req, res) => {
@@ -142,10 +146,11 @@ app.get('/post/edit/:id', authenticate, (req, res) => {
     
     Post.findById(id).populate('creator').then((post) => {
 
+
         if(!post) {
             res.status(404).send("404 NOT FOUND SORRY")
         }
-        
+
         let retObj = {
             user: req.session.user,
             isEdit: true, //so we can recycle the post-edit page as a make-post page
@@ -154,15 +159,15 @@ app.get('/post/edit/:id', authenticate, (req, res) => {
         
         if(req.session.user.name === post.creator.name || req.session.user.isAdmin) {//these guys can edit parts of the post and add user
             res.render("post_edit.hbs", retObj)
-            
+
         } else {
             return res.status(403).send("YOU DONT HAVE PERMISSION TO ACCESS THIS RESOURCE")
         }
     }).catch((error)=> {
         res.status(400).send(error)
     })
-    
-})   
+
+})
 
 
 //getting a page to make post
@@ -171,11 +176,11 @@ app.get('/post/make', authenticate, (req, res) => {
             user: req.session.user,
             isEdit: false
         }
-        res.render("post_edit.hbs", retObj)  
-})   
+        res.render("post_edit.hbs", retObj)
+})
 
-//creates a new post, assuming a json body 
-//that matches the schema , 
+//creates a new post, assuming a json body
+//that matches the schema ,
 //using req.sessionuser for crearor
 //This means creator SHOULD NOT be in the request body
 app.post('/api/post/create', authenticate, (req, res)=> {
@@ -189,7 +194,7 @@ app.post('/api/post/create', authenticate, (req, res)=> {
         res.status(400).send(error)
     })
 
-    
+
 })
 
 //editing a post, assuming json body has all fields
@@ -206,7 +211,7 @@ app.patch('/api/post/edit/:id', authenticate, (req, res) => {
         if(!post) {
             res.status(404).send("404 NOT FOUND SORRY")
         }
-        
+
         let retObj = {
             user: req.session.user
         }
@@ -215,15 +220,15 @@ app.patch('/api/post/edit/:id', authenticate, (req, res) => {
             post.set(req.body)
             post.save().then( (post) => {res.redirect("/post/view/" + post.id.toString())}
             ).catch((error) => {return res.status(400).send(error)})
-            
+
         } else {
             return res.status(403).send("YOU DONT HAVE PERMISSION TO ACCESS THIS RESOURCE")
         }
     }).catch((error)=> {
         res.status(400).send(error)
     })
-    
-})   
+
+})
 
 
 
@@ -251,14 +256,14 @@ app.get('/users/:username', authenticate, (req, res) => {
         else if(req.session.user.name == username) {//these guys can edit parts of the post and add user
             retObj.user.canEdit = true
             retObj.user.isJustOwner = true
-        } 
+        }
         res.render("user_profile.hbs", retObj)
-        
+
     }).catch((error)=> {
         res.status(404).send("404 NOT FOUND SORRY")
     })
-    
-})  
+
+})
 
 //changes user info , isBanned, password, isAdmin must be done by an admin
 //expects JSON body, returns editted json of user
@@ -327,7 +332,7 @@ app.post('/reports/api/create', authenticate, (req, res)=> {
     }).catch((error)=>{
         res.status(400).send(error)
     })
-    
+
 })
 
 
@@ -361,9 +366,9 @@ app.get('/reports', authenticate, (req,res)=> {
                 user: req.session.user,
                 headerTitle: "REPORTS",
                 reports: reports
-                    
+
             })
-            
+
         }).catch((error)=>{
             res.status(403).send(error)
         })
@@ -372,7 +377,7 @@ app.get('/reports', authenticate, (req,res)=> {
     }
 })
 
-//homepage 
+//homepage
 app.get('/home', (req, res) => {
 	// check if we have active session cookie
 	if (req.session.user) {
@@ -424,7 +429,94 @@ app.get('/logout', (req, res) => {
 })
 
 
+app.get('/igdb',(req,res)=>{
 
+	igdb_client.games({
+		fields:"id,name,cover",
+		limit:10,
+		filters: {"version_parent-not_exists":1}
+	}).then(response=>{
+		response.body.sort((a,b)=>{
+			let x = a.name.toLowerCase()
+			let y = b.name.toLowerCase()
+			if(x<y) {return -1}
+			if(x>y) {return 1}
+		});
+		let names =[];
+		let ids =[];
+		let covers = [];
+		response.body.forEach(a=>{
+			names.push(a.name);
+			console.log(a.name);
+			console.log(a.id);
+			ids.push(a.id);
+			console.log("just pring");
+			console.log(a.cover);
+			let coverURL = "/resources/images/logo.png";
+			if (a.cover != null){ //change to big logo if exists
+				const cloud_id = a.cover.cloudinary_id
+				coverURL = igdb_client.image({cloudinary_id:cloud_id},"cover_big","jpg")
+			}
+			covers.push(coverURL);
+			console.log("what");
+		})
+		res.send({names:names,ids:ids,covers:covers});
+
+	}).catch(error=>{
+		res.status(400).send(error)
+	})
+})
+
+
+
+app.get('/igdb/:name',(req,res)=>{
+
+	igdb_client.games({
+		fields:"id,name,cover",
+		limit:10,
+		filters: {"name-prefix": req.params.name,
+							"version_parent-not_exists":1}
+	}).then(response=>{
+		console.log(req.params.name);
+		//res.send(response.body)
+		response.body.sort((a,b)=>{
+			let x = a.name.toLowerCase()
+			let y = b.name.toLowerCase()
+			if(x<y) {return -1}
+			if(x>y) {return 1}
+		});
+		let names =[];
+		let ids =[];
+		let covers = [];
+		response.body.forEach(a=>{
+			names.push(a.name);
+			console.log(a.name);
+			console.log(a.id);
+			ids.push(a.id);
+			console.log("just pring");
+			console.log(a.cover);
+			let coverURL = "/resources/images/logo.png";
+			if (a.cover != null){ //change to big logo if exists
+				const cloud_id = a.cover.cloudinary_id
+				coverURL = igdb_client.image({cloudinary_id:cloud_id},"cover_big","jpg")
+			}
+			covers.push(coverURL);
+			console.log("what");
+		})
+		res.send({names:names,ids:ids,covers:covers});
+
+	}).catch(error=>{
+		res.status(400).send(error)
+	})
+})
+
+app.get('/igdball',(req,res)=>{
+	igdb_client.scroll('/games/?fields=name&filter[genre][eq]=7&limit=50').then(response => {
+		res.send(response.body);
+	}).catch(error=>{
+		res.status(400).send("error that didnt work")
+	});
+})
 
 
 
@@ -445,5 +537,3 @@ app.post('/users', (req, res) => {
 app.listen(port, () => {
 	log(`Listening on port ${port}...`)
 });
-
-
