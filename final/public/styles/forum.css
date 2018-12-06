@@ -92,7 +92,7 @@ li.sideNavGames:hover{
 	width: 65%;
 	padding: 2% 2% 2% 2%;
 	display: inline-block;
-	height: 400px;
+	height: 100%;
 }
 
 .post {
@@ -346,10 +346,17 @@ button:hover {
 }
 
 .accordion {
-    background-color: #eee;
-    color: #444;
+/**  323741
+  06858C
+  45C48B
+  FFD039
+  EB3E4A
+  **/
+    background-color: #06858C;
+    color: black;
     cursor: pointer;
     padding: 18px;
+    margin-top: 10px;
     width: 100%;
     border: none;
     text-align: left;
@@ -368,4 +375,13 @@ button:hover {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
+}
+
+.pageNumberWrapper {
+  display: inline;
+  width: 100%;
+}
+
+.pageNumber{
+  margin-right: 10px;
 }

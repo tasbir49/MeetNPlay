@@ -48,10 +48,11 @@ const nav = {
 	"loginButtonContainer" : document.getElementById("loginButtonContainer")
 }
 
+
 window.onscroll = () => {
 	const greater = val => {
-		return window.pageYOffset > val || 
-		document.body.scrollTop > val || 
+		return window.pageYOffset > val ||
+		document.body.scrollTop > val ||
 		document.documentElement.scrollTop > val;
 	};
 	if (greater(75)) {
@@ -76,7 +77,7 @@ window.onscroll = () => {
 };
 
 
-function insertLoadingIcon(elem, relativeX="0px", relativeY="0px", 
+function insertLoadingIcon(elem, relativeX="0px", relativeY="0px",
 	color="white", width="16px", height="16px") {
 	const loadingIcon = document.createElement("div");
 	loadingIcon.className = "loadingIcon";
