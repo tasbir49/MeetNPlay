@@ -145,7 +145,7 @@ app.get('/post/view/:id', authenticate, (req, res) => {
             } else {
                 return res.status(403).send("YOU DONT HAVE PERMISSION TO ACCESS THIS RESOURCE")
             }
-        } 
+        }
     }).catch((error)=> {
         res.status(400).send(error)
     })
@@ -195,7 +195,7 @@ app.get('/posts', (req,res)=>{
     .populate("creator")
     .then((posts)=>{//return only relevant homepage data
         return posts.map((post)=> {
- 
+
             let relevantHomepagePerPostData = {
                 _id: post._id,
                 creatorName: post.creator.name,
@@ -239,7 +239,7 @@ app.post('/api/invitereq/:post_id/', authenticate,  (req, res)=> {
             res.status(403).send("post is full")
         } else if(post.members.includes(req.session.user._id)) {
             res.status(403).send("already in")
-            
+
         } else if(post.inviteReqs.incudes(req.session.user._id)) {
             res.status(403).send("already requested")
         }
@@ -631,7 +631,42 @@ app.get('/igdball',(req,res)=>{
 	});
 })
 
+//add authenticate
+app.post('/api/comments/:post_id',authenticate,(req,res) =>{
+  const user = req.session.user._id;
+  const content = req.body
+  const id = req.params.post_id
+  Post.findByIdAndUpdate(id, {$push:{"comments":{date: new Date(),user:user,content:content}}},{new:true}).then((post)=>{
+    if(!post){
+      res.status(404).send()
+    } else{
+      res.send({post})
+    }
+  }).catch((error)=>{
+    res.status(400).send(error)
+  })
+})
 
+app.delete('/api/comments/:post_id/:comment_id',authenticate,(req,res)=>{
+  const post_id = req.params.post_id;
+  const comment_id = req.params.comment_id;
+
+  Post.findById(post_id).then((post)=>{
+    if(!post){
+      res.status(404).send()
+    } else{
+      post.comments = post.comments.filter(function(a){
+        return a._id != comment_id
+      })
+
+      post.save().then((results)=>{
+        res.send({results})
+      })
+    }
+  }).catch((error)=>{
+    res.status(400).send(error)
+  })
+})
 
 app.post('/users', (req, res) => {
 

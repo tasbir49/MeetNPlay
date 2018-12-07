@@ -191,7 +191,7 @@ function createInviteButton(post){
   console.log(post);
   if(allPosts.isSessionUserAdmin || post.isSessionUserMember || (post.creatorName == post.sessionUserName)){
     inviteBut.className = "requestGranted";
-    inviteBut.appendChild(document.createTextNode("Invited"))
+    inviteBut.appendChild(document.createTextNode("Go to Details"))
     inviteBut.setAttribute("data_id",post._id);
     inviteBut.addEventListener("click",goToPost);
   } else if(post.totalPlayers == post.playersCurrentlyIn){
@@ -214,11 +214,12 @@ function goToPost(e){
   console.log(id);
 
   let xhttp = new XMLHttpRequest();
-  xhttp.open("GET", "post/edit/:id");
+  xhttp.open("GET", "post/view/"+id);
   xhttp.send();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-        }
+      window.location = "post/view/"+id
+    }
   }
 }
 
