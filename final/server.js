@@ -82,7 +82,10 @@ const authenticate = (req, res, next) => {
 		User.findById({_id: req.session.user._id}).then((user) => {
 			if (!user) {
 				return Promise.reject()
-			} else {
+			} else if(user.isBanned) {
+                res.redirect('/login')
+            } 
+            else {
 				req.user = user
 				next()
 			}
@@ -380,14 +383,15 @@ app.get('/users/:username', authenticate, (req, res) => {
 //expects JSON body, returns editted json of user
 app.patch('/api/users/changeInfo/:username', authenticate, (req,res)=> {
         const username = req.params.username
-        if(req.sesssion.user.name === username || req.session.user.isAdmin) {
+
+        if(req.session.user.name === username || req.session.user.isAdmin) {
             if((req.hasOwnProperty('isAdmin') ||
             req.hasOwnProperty('isBanned') ||
             req.hasOwnProperty('password')) && !req.session.user.isAdmin) { //ONLY AN ADMIN CAN CHANGE THESE FIELDS with this route
             res.status.send(403).send("NO PERMISSION")
             } else {
-
-                User.findOne({name: req.session.user.name}).then((user)=> {
+                User.findOne({name: username}).then((user)=> {
+                console.log(req.body)
                 user.set(req.body)
                 return user.save()
                }).then((user)=>{
