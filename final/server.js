@@ -135,7 +135,7 @@ app.get('/post/view/:id', authenticate, (req, res) => {
         if(req.session.user.name == post.creator.name || req.session.user.isAdmin) {//these guys can edit parts of the post and add user
             retObj.canEdit = true
             res.render("post_view.hbs", retObj)
-        } else if(post.members.includes(req.session.user._id)) {//only members of post can view
+        } else if(post.members.includes(req.session.user)) {//only members of post can view
 
             res.render("post_view.hbs", retObj)
 
@@ -181,13 +181,40 @@ app.get('/post/edit/:id', authenticate, (req, res) => {
 
 })
 
-//get all posts
+//get all posts as json array with items relevant for home page as well as user session info
+//changes the creator field of each post their username and their
+//profile pic url is added as a field. 
+//the json 
 app.get('/posts',(req,res)=>{
-	Post.find().then((posts)=>{
-		res.send(posts)
-	}, (error)=>{
-		res.status(400).send(error)
-	})
+	Post.find({isDeleted: false})
+    .populate("creator")
+    .then((posts)=>{//return only relevant homepage data
+        return posts.map((post)=> {
+            let relevantHomepagePerPostData = {
+                _id: post._id,
+                creatorName: post.creator.name,
+                creatorProfilePicUrl: post.creator.profilePicUrl,
+                date: post.date,
+                gameTitle: post.gameTitle,
+                gamePicUrl: post.gamePicUrl,
+                totalPlayers: post.playersNeeded,
+                platform: post.plaform,
+                playersCurrentlyIn: post.members.length,
+                title: post.title,
+                isSessionUserMember: post.members.includes(req.session.user._id)
+            }
+            return relevantHomepagePerPostData
+        })
+    }).then((posts) => {
+        res.send({
+            sessionUserName: req.session.user.name,
+            isSessionUserAdmin: false,
+            posts: posts
+        })
+    }).catch((error)=>{
+        res.status(400).send("internal server error?")
+    })
+
 })
 
 //getting a page to make post
