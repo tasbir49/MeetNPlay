@@ -622,7 +622,7 @@ app.get('/igdball',(req,res)=>{
 	});
 })
 
-//adds a new comment to a post, only expects the post id in the body
+//adds a new comment to a post, only expects the comment content in the body
 app.post('/api/comments/:post_id',authenticate,(req,res) =>{
   const user = req.session.user._id;
   const content = req.body

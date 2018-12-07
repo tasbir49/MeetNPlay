@@ -67,18 +67,7 @@ password: superman
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+Routes
 
 
 
@@ -98,8 +87,8 @@ app.get('/post/view/:id', authenticate, (req, res)
 app.get('/post/edit/:id', authenticate, (req, res)
 
 //get all posts as json array with items relevant for home page as well as user session info
-//changes the creator field of each post their username and their
-//profile pic url is added as a field.
+//adds fields for creatorname, if the session user is a member, or requeested invite, and isadmin
+// in
 //the json
 app.get('/posts', (req,res)
 
@@ -161,7 +150,7 @@ app.get('/igdb',(req,res)
 //get igdb given a name
 app.get('/igdb/:name',(req,res)
 
-//adds a new comment to a post, only expects the post id in the body
+//adds a new comment to a post, only expects the content of comment in the body
 app.post('/api/comments/:post_id',authenticate,(req,res)
 
 //route to delete comments from posts.,
