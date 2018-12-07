@@ -38,21 +38,23 @@
         <h2 id="userNameHeading">{{userDetails.name}}</h2>
 
         <form id="userSearchInput">
-            <input type="text" placeholder="View a User's Account">
+            <input type="text" id="userSearchQuery" placeholder="View a User's Account">
             <input type="submit" value="Find User">
         </form>
         {{#if isJustOwner}}<button type="button" id="changePassButton">Change Password</button>{{/if}}
         {{#if user.isAdmin}}<button type="button" id="changePassButtonAdmin">Change Password</button>
         <button type="button" id="revokeAdmin">{{#if userDetails.isAdmin}}Revoke Admin Priveleges{{else}}Make This User Admin{{/if}}</button>       
         <button type="button" id="banUser">{{#if userDetails.isBanned}}Unban this user{{else}}Ban this user{{/if}}</button>{{/if}}
+        
 
+        <button type="button" id="reportUserButton">Report this User</button>
 
     </div>
     
     <div id="accountPageMainContent">
         
 
-            <div class="userInfoSection">
+            <div class="userInfoSection" data-property="city">
                 <div class="userInfoSectionHeading">
                     Location
                 </div>
@@ -64,18 +66,8 @@
                 </button>{{/if}}
             </div>
             
-            <div class="userInfoSection">
-                <div class="userInfoSectionHeading">
-                    Birthday
-                </div>
-                <div class="userInfoSectionContent" id="userBday">
-                    July 25, 1998
-                </div>
-                {{#if canEdit}}<button type="button" class="infoEditButton">
-                    Edit
-                </button>{{/if}}
-            </div>
-            <div class="userInfoSection">
+
+            <div class="userInfoSection" data-property="about">
                 <div class="userInfoSectionHeading">
                     About Me
                 </div>
@@ -97,13 +89,22 @@
 
         
     </div>
+    <div class="dialogContainer" id="reportUser">
+        <div class="dialogBox">
+            <span class="closeBox">x</span>
+            <form>
+                <input type="text" id="reportUserContent" placeholder="Give report reason">
+                <input type="submit" value="Report">
+            </form>
+        </div>
+    </div>
     <div class="dialogContainer" id="passChange">
         <div class="dialogBox">
             <span class="closeBox">x</span>
             <form>
-                <input type="text" id="oldPass" placeholder="Your old password">
-                <input type="text" id="newPass" placeholder="Your new password">
-                <input type="text" id="confirmPass" placeholder="Confirm new password">
+                <input type="password" id="oldPass" placeholder="Your old password">
+                <input type="password" id="newPass" placeholder="Your new password">
+                <input type="password" id="confirmPass" placeholder="Confirm new password">
                 <input type="submit" value="Change Password">
             </form>
         </div>
@@ -130,7 +131,7 @@
         <div class="dialogBox">
             <span class="closeBox">x</span>
             <form>
-                <input type="text" id="newPass" placeholder="Set new password">
+                <input type="password" id="newPassAdmin" placeholder="Set new password">
                 <input type="submit" value="Change Password">
             </form>
         </div>

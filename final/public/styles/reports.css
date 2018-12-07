@@ -11,7 +11,8 @@
 
 .reportItem .profilePic {
     float: left;
-    width: 15%;
+    width: 10em;
+    height:10em;
     margin: 1%;
     display: inline-block;
     border-radius: 50%;

@@ -29,7 +29,9 @@ function loadReports(){
 
   const body = document.getElementsByTagName("BODY")[0];
   for (let i=pageNumber*reportsPerPage;i<(pageNumber+1)*reportsPerPage;i++){
-    body.append(allReports[i])
+    if(allReports[i]) {
+        body.append(allReports[i])
+    }
   }
   body.appendChild(pageNav(maxPage))
 

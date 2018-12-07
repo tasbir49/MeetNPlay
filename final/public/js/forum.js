@@ -56,8 +56,9 @@ xhttp.onreadystatechange = function() {
 function searchUser(e) {
     e.preventDefault();
     const searchParam = document.querySelector("#searchParam").value
+    displayPosts= allPosts.posts
     displayPosts = displayPosts.filter(function(a){
-      return a.gameTitle.includes(searchParam)
+      return checkKeyWords(a,searchParam)
     })
     if(displayPosts.length ==0){
       displayPosts = allPosts.posts;
@@ -67,7 +68,27 @@ function searchUser(e) {
       clearPage();
       loadPage();
     }
+}
 
+function checkKeyWords(post,search){
+  console.log(post);
+  const gameTitle =checkValid(post.gameTitle,search)
+
+  const title =checkValid(post.title,search)
+
+  const genre = checkValid(post.gameGenres,search)
+
+  const creator = checkValid(post.creatorName,search)
+  const platform = checkValid(post.platform,search)
+  return  gameTitle||title || genre||creator||platform
+}
+
+function checkValid(input,search){
+  if (input == null){
+    return false
+  } else{
+    return input.includes(search)
+  }
 }
 
 function bringUpUserPrompt(e) {
@@ -168,6 +189,7 @@ function makeDefaultPost(post){
   reportBut.className = "reportButton";
   reportBut.type = "button"
   reportBut.name = "Report"
+  reportBut.setAttribute("data_id",post.creatorName);
   reportBut.appendChild(document.createTextNode("Report"))
   reportBut.addEventListener("click",reportPrompt);
 
@@ -191,7 +213,7 @@ function createInviteButton(post){
     inviteBut.appendChild(document.createTextNode("Go to Details"))
     inviteBut.setAttribute("data_id",post._id);
     inviteBut.addEventListener("click",goToPost);
-  } else if(post.totalPlayers == post.playersCurrentlyIn){
+  } else if(post.totalPlayers == post.playersCurrentlyIn+1){
     inviteBut.className = "requestInvite";
     inviteBut.appendChild(document.createTextNode("Full"))
   } else if(post.waitingForInvite){
@@ -222,8 +244,25 @@ function goToPost(e){
 
 function reportPrompt(e){
   const reportIssue = prompt("Reason for Reporting","");
-  alert("Issue Reported. Thanks")
-  //api call for reporting issue
+  if(reportIssue != null){
+    const perpName = e.target.getAttribute("data_id")
+    xhttp.open("POST", "/reports/api/create");
+    xhttp.setRequestHeader("Content-Type", "application/json");
+
+    xhttp.send(JSON.stringify({perpetrator: perpName,content: reportIssue}));
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        alert("Report Sent")
+      }
+      if(this.status ==400){
+        alert("Something went wrong")
+      }
+    }
+  } else{
+    alert("Report Canceled")
+  }
+
+
 }
 function processRequest(e){
   const id =e.target.getAttribute("data_id");
@@ -278,6 +317,21 @@ function applyFilter(e){
           return b == compare;
         }) != -1;
       })
+  } else if(value == "posts"){
+    displayPosts = allPosts.posts;
+    if (compare == "Joined") {
+      displayPosts = displayPosts.filter(function(a){
+        return a.isSessionUserMember;
+      })
+    }else if(compare == "Waiting"){
+      displayPosts = displayPosts.filter(function(a){
+        return a.waitingForInvite;
+      })
+    } else if(compare == "Created"){
+      displayPosts = displayPosts.filter(function(a){
+        return a.creatorName == a.sessionUserName;
+      })
+    }
   } else if (value == "sort"){
     if (compare == "by Game Name"){
       displayPosts = displayPosts.sort(function(a,b){
@@ -286,12 +340,12 @@ function applyFilter(e){
       })
     } else if (compare == "by Date Posted"){
       displayPosts = displayPosts.sort(function(a,b){
-        if (a.date<b.date) {return -1};
-        if (a.date>b.date) {return 1};
+        if (a.date<b.date) {return 1};
+        if (a.date>b.date) {return -1};
       })
     }
   } else{
-    displayPost = allPosts;
+    displayPosts = allPosts.posts;
   }
   maxPage = Math.ceil(displayPosts.length/postPerPage);
   clearPage();

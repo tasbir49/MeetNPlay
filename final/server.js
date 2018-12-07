@@ -82,7 +82,10 @@ const authenticate = (req, res, next) => {
 		User.findById({_id: req.session.user._id}).then((user) => {
 			if (!user) {
 				return Promise.reject()
-			} else {
+			} else if(user.isBanned) {
+                res.redirect('/login')
+            }
+            else {
 				req.user = user
 				next()
 			}
@@ -104,6 +107,10 @@ app.route('/login')
 	.get(sessionChecker, (req, res) => {
 		res.sendFile(__dirname + '/public/login.html')
 	})
+
+app.route('/signup').get(sessionChecker,(req,res)=>{
+  res.sendFile(__dirname+'/public/createNewUser.html')
+})
 
 //getting a post page (NOT THE JSON, THE ACTUAL WEB PAGE)
 app.get('/post/view/:id', authenticate, (req, res) => {
@@ -214,14 +221,12 @@ app.get('/posts', (req,res)=>{
                 waitingForInvite: String(post.inviteReqs).includes(req.session.user._id),
                 isSessionUserMember: String(post.members).includes(req.session.user._id)
             }
-            console.log(post.inviteReqs);
-            console.log(String(post.inviteReqs).includes(String(req.session.user._id)));
-            console.log(req.session.user._id);
+
             return relevantHomepagePerPostData
         })
     }).then((posts) => {
         res.send({
-            isSessionUserAdmin: false,
+            isSessionUserAdmin: req.session.user.isAdmin,
             posts: posts
         })
     }).catch((error)=>{
@@ -232,28 +237,20 @@ app.get('/posts', (req,res)=>{
 
 //creates an invite request by the logged in user to the post
 //and returns "success" or "failure" or "post is full"
-app.post('/api/invitereq/:post_id/', authenticate,  (req, res)=> {
+app.post('/api/invitereq/:post_id', authenticate,  (req, res)=> {
     const id = req.params.post_id
-    Post.findById(id).then((post)=> {
-        if(post.members.length >= post.playersNeeded-1) {
-            res.status(403).send("post is full")
-        } else if(post.members.includes(req.session.user._id)) {
-            res.status(403).send("already in")
 
-        } else if(post.inviteReqs.incudes(req.session.user._id)) {
-            res.status(403).send("already requested")
-        }
-        else {
+
+    Post.findById(id).then((post)=> {
             let inviteReqs = post.inviteReqs
             inviteReqs.push(req.session.user._id)
             post.set({inviteReqs: inviteReqs})
             return post.save()
-        }
-    }).then((whatevere)=> {
-        res.send("success")
-    }).catch((error)=> {
-        res.status(404).send("failure")
+    }).then(res.status(200).send("success")
+    ).catch((error)=> {
+        res.status(400).send("failure")
     })
+
 })
 
 //getting a page to make post
@@ -283,7 +280,6 @@ app.post('/api/post/create', authenticate, (req, res)=> {
 
 //this is for postman
 app.post('/api/post/createnoauth', (req, res)=> {
-    console.log(req.body);
     let templatePost = req.body
     const post = new Post(templatePost)
     post.save().then((result)=> {
@@ -354,7 +350,6 @@ app.get('/users/:username', authenticate, (req, res) => {
             retObj.isJustOwner = true
         }
         req.session.viewingUser = retObj.userDetails.name// for admin profile pic updating
-        console.log(retObj)
         res.render("user_profile.hbs", retObj)
 
     }).catch((error)=> {
@@ -367,14 +362,15 @@ app.get('/users/:username', authenticate, (req, res) => {
 //expects JSON body, returns editted json of user
 app.patch('/api/users/changeInfo/:username', authenticate, (req,res)=> {
         const username = req.params.username
-        if(req.sesssion.user.name === username || req.session.user.isAdmin) {
+
+        if(req.session.user.name === username || req.session.user.isAdmin) {
             if((req.hasOwnProperty('isAdmin') ||
             req.hasOwnProperty('isBanned') ||
             req.hasOwnProperty('password')) && !req.session.user.isAdmin) { //ONLY AN ADMIN CAN CHANGE THESE FIELDS with this route
             res.status.send(403).send("NO PERMISSION")
             } else {
-
-                User.findOne({name: req.session.user.name}).then((user)=> {
+                User.findOne({name: username}).then((user)=> {
+                console.log(req.body)
                 user.set(req.body)
                 return user.save()
                }).then((user)=>{
@@ -388,12 +384,12 @@ app.patch('/api/users/changeInfo/:username', authenticate, (req,res)=> {
         }
 })
 
-//just expects a password, returns json of user, ignores other fields
+//just expects a password,, oldPassword returns json of user, ignores other fields
 //returns user json
 app.patch('/api/users/changePassword/:username', authenticate,  (req,res)=> {
     const username = req.params.username
-    if(req.sesssion.user.name === username || req.session.user.isAdmin) {
-        User.findByNamePassword(username, req.body.password).then((user)=>{
+    if(req.session.user.name === username || req.session.user.isAdmin) {
+        User.findByNamePassword(username, req.body.oldPassword).then((user)=>{
             user.password = req.body.password
             return user.save()
         },
@@ -563,17 +559,13 @@ app.get('/igdb',(req,res)=>{
 		let covers = [];
 		response.body.forEach(a=>{
 			names.push(a.name);
-			console.log(a.name);
-			console.log(a.id);
 			ids.push(a.id);
-			console.log(a.cover);
 			let coverURL = "/resources/images/logo.png";
 			if (a.cover != null){ //change to big logo if exists
 				const cloud_id = a.cover.cloudinary_id
 				coverURL = igdb_client.image({cloudinary_id:cloud_id},"cover_big","jpg")
 			}
 			covers.push(coverURL);
-			console.log("what");
 		})
 		res.send({names:names,ids:ids,covers:covers});
 
@@ -594,7 +586,6 @@ app.get('/igdb/:name',(req,res)=>{
 		// filters: {"name-prefix": req.params.name,
 							// "version_parent-not_exists":1}
 	}).then(response=>{
-		console.log(req.params.name);
 		//res.send(response.body)
 		response.body.sort((a,b)=>{
 			let x = a.name.toLowerCase()
@@ -614,7 +605,6 @@ app.get('/igdb/:name',(req,res)=>{
 				coverURL = igdb_client.image({cloudinary_id:cloud_id},"cover_big","jpg")
 			}
 			covers.push(coverURL);
-			console.log("what");
 		})
 		res.send({names:names,ids:ids,covers:covers});
 
@@ -632,7 +622,7 @@ app.get('/igdball',(req,res)=>{
 	});
 })
 
-//adds a new comment to a post, only expects the post id in the body
+//adds a new comment to a post, only expects the comment content in the body
 app.post('/api/comments/:post_id',authenticate,(req,res) =>{
   const user = req.session.user._id;
   const content = req.body
@@ -674,8 +664,10 @@ app.delete('/api/comments/:post_id/:comment_id',authenticate,(req,res)=>{
 app.post('/users', (req, res) => {
 
 	// Create a new user
+  console.log(req.body);
 	let user = new User(req.body)
-    user.name = user.name.toLowerCase()
+  user.name = user.name.toLowerCase()
+  console.log(user);
 	// save user to database
 	user.save().then((result) => {
 		res.send(user)

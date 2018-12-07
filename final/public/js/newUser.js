@@ -11,16 +11,19 @@ function create(e){
 
   let xhttp = new XMLHttpRequest();
   xhttp.open("POST", "/users");
-  const user = document.getElementById("user")
-  const pass = document.getElementById("password")
-  const city = document.getElementById("city")
-  const desc = document.getElementById("description")
-  xhttp.send({user:user,pass:pass,city:city,description:desc});
+  xhttp.setRequestHeader("Content-Type", "application/json");
+
+  const user = document.getElementById("user").value
+  const pass = document.getElementById("password").value
+  const city = document.getElementById("city").value
+  const desc = document.getElementById("description").value
+  xhttp.send(JSON.stringify({name:user,password:pass,city:city,about:desc}));
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       window.location = "/"
-    } else{
-      alert("error please try again")
+    }
+    if(this.status ==400){
+      alert("Something went wrong")
     }
   }
 }
