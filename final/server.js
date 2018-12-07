@@ -98,12 +98,22 @@ app.get('/', sessionChecker, (req, res) => {
 	res.redirect('/home')
 })
 
+
 // route for login
 app.route('/login')
 	.get(sessionChecker, (req, res) => {
 		res.sendFile(__dirname + '/public/login.html')
 	})
 
+
+//get all posts
+app.get('/posts',(req,res)=>{
+	Post.find().then((posts)=>{
+		res.send(post)
+	}, (error)=>{
+		res.status(400).send(error)
+	})
+})
 //getting a post page (NOT THE JSON, THE ACTUAL WEB PAGE)
 app.get('/post/view/:id', authenticate, (req, res) => {
     const id = req.params.id
@@ -111,7 +121,7 @@ app.get('/post/view/:id', authenticate, (req, res) => {
         return res.status(404).send("404 NOT FOUND SORRY")
     }
 
-    
+
     Post.findById(id)
         .populate('creator')
         .populate('members')
@@ -120,7 +130,7 @@ app.get('/post/view/:id', authenticate, (req, res) => {
         if(!post) {
             res.status(404).send("404 NOT FOUND SORRY")
         }
-        
+
         //fixing line breaks
         post.details = post.details.replace(/(?:\r\n|\r|\n)/g, '<br>');
 
@@ -134,7 +144,7 @@ app.get('/post/view/:id', authenticate, (req, res) => {
 
         if(req.session.user.name == post.creator.name || req.session.user.isAdmin) {//these guys can edit parts of the post and add user
             retObj.canEdit = true
-            res.render("post_view.hbs", retObj)            
+            res.render("post_view.hbs", retObj)
         } else if(post.members.includes(req.session.user._id)) {//only members of post can view
 
             res.render("post_view.hbs", retObj)
@@ -155,7 +165,7 @@ app.get('/post/edit/:id', authenticate, (req, res) => {
         return res.status(404).send("404 NOT FOUND SORRY")
     }
 
-    
+
     Post.findById(id).populate('creator').then((post) => {
 
 
@@ -168,7 +178,7 @@ app.get('/post/edit/:id', authenticate, (req, res) => {
             isEdit: true, //so we can recycle the post-edit page as a make-post page
             post: post
         }
-        
+
         if(req.session.user.name === post.creator.name || req.session.user.isAdmin) {//these guys can edit parts of the post and add user
             res.render("post_edit.hbs", retObj)
 
@@ -201,7 +211,7 @@ app.post('/api/post/create', authenticate, (req, res)=> {
     const post = new Post(templatePost)
     post.save().then((result)=> {
         res.redirect('/post/view/' + result._id.toString())
-    
+
     }).catch((error)=>{
         res.status(400).send(error)
     })
@@ -227,7 +237,7 @@ app.patch('/api/post/edit/:id', authenticate, (req, res) => {
         let retObj = {
             user: req.session.user
         }
-        
+
         if(req.session.user.name === post.creator || req.session.user.isAdmin) {//these guys can edit parts of the post and add user
             post.set(req.body)
             post.save().then( (post) => {res.redirect("/post/view/" + post.id.toString())}
@@ -243,7 +253,16 @@ app.patch('/api/post/edit/:id', authenticate, (req, res) => {
 })
 
 
-
+//this is for postman, shouldnt be used anywhere else
+app.post('/api/post/createnoauth', (req, res)=> {
+    let templatePost = req.body
+    const post = new Post(templatePost)
+    post.save().then((result)=> {
+        res.redirect('/post/view/' + result._id.toString())
+    }).catch((error)=>{
+        res.status(400).send(error)
+    })
+})
 
 //getting a users page (NOT THE JSON, THE ACTUAL WEBPAGE)
 app.get('/users/:username', authenticate, (req, res) => {
@@ -252,12 +271,12 @@ app.get('/users/:username', authenticate, (req, res) => {
     User.findOne({name: username.toLowerCase()}).then((user) => {
         let retObj = {
                 user: req.session.user,
-                canEdit: false, 
+                canEdit: false,
                 isJustOwner: false ,
-                userDetails : user, //header uses the "user" field to display profile pic and link to own profile page, so the details for this page are put in this field instead 
+                userDetails : user, //header uses the "user" field to display profile pic and link to own profile page, so the details for this page are put in this field instead
                 formattedMemberSince: user.memberSince.toISOString().substring(0, 10)
         }
-            
+
         if(!user) {
             res.status(404).send("404 NOT FOUND SORRY")
         }
@@ -282,12 +301,12 @@ app.get('/users/:username', authenticate, (req, res) => {
 app.patch('/api/users/changeInfo/:username', authenticate, (req,res)=> {
         const username = req.params.username
         if(req.sesssion.user.name === username || req.session.user.isAdmin) {
-            if((req.hasOwnProperty('isAdmin') || 
-            req.hasOwnProperty('isBanned') || 
+            if((req.hasOwnProperty('isAdmin') ||
+            req.hasOwnProperty('isBanned') ||
             req.hasOwnProperty('password')) && !req.session.user.isAdmin) { //ONLY AN ADMIN CAN CHANGE THESE FIELDS with this route
             res.status.send(403).send("NO PERMISSION")
             } else {
-          
+
                 User.findOne({name: req.session.user.name}).then((user)=> {
                 user.set(req.body)
                 return user.save()
@@ -316,10 +335,10 @@ app.patch('/api/users/changePassword/:username', authenticate,  (req,res)=> {
         }).then((user)=> {
             res.send(user)
         }, (error)=>{
-            res.status(400).send("problem with DB")            
+            res.status(400).send("problem with DB")
         })
-    
-      
+
+
     } else {
         res.status(403).send("NO PERMISSION")
     }
@@ -365,7 +384,7 @@ app.post('/reports/api/close/:id', authenticate, (req, res)=> {
     } else {
         res.status(403).send("NO PERMISSION")
     }
-        
+
 })
 
 //need to implement pagination with this
