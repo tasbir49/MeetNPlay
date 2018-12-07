@@ -224,12 +224,18 @@ app.get('/posts',authenticate, (req,res)=>{
 
 //creates an invite request by the logged in user to the post
 //and returns "success" or "failure" or "post is full"
-app.post('/api/invitereq/:post_id/',  (req, res)=> {
+app.post('/api/invitereq/:post_id/', authenticate,  (req, res)=> {
     const id = req.params.post_id
     Post.findById(id).then((post)=> {
         if(post.members.length >= post.playersNeeded-1) {
             res.status(403).send("post is full")
-        } else {
+        } else if(post.members.includes(req.session.user._id)) {
+            res.status(403).send("already in")
+            
+        } else if(post.inviteReqs.incudes(req.session.user._id)) {
+            res.status(403).send("already requested")
+        }
+        else {
             let inviteReqs = post.inviteReqs
             inviteReqs.push(req.session.user._id)
             post.set({inviteReqs: inviteReqs})
