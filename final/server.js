@@ -35,6 +35,7 @@ const Models  = require('./models/model')
 const User = Models.User
 const Post = Models.Post
 const Report = Models.Report
+const Platform = Models.Platform
 const igdb_client = igdb('e5ca32669192cb320e449d73603725d6');
 
 // express
@@ -226,12 +227,18 @@ app.get('/posts',authenticate, (req,res)=>{
 
 //creates an invite request by the logged in user to the post
 //and returns "success" or "failure" or "post is full"
-app.post('/api/invitereq/:post_id/',  (req, res)=> {
+app.post('/api/invitereq/:post_id/', authenticate,  (req, res)=> {
     const id = req.params.post_id
     Post.findById(id).then((post)=> {
-        if(post.members.length >= post.playersNeeded) {
+        if(post.members.length >= post.playersNeeded-1) {
             res.status(403).send("post is full")
-        } else {
+        } else if(post.members.includes(req.session.user._id)) {
+            res.status(403).send("already in")
+            
+        } else if(post.inviteReqs.incudes(req.session.user._id)) {
+            res.status(403).send("already requested")
+        }
+        else {
             let inviteReqs = post.inviteReqs
             inviteReqs.push(req.session.user._id)
             post.set({inviteReqs: inviteReqs})
@@ -482,6 +489,7 @@ app.get('/reports', authenticate, (req,res)=> {
 
 //homepage
 app.get('/home', (req, res) => {
+
 	// check if we have active session cookie
 	if (req.session.user) {
 		//res.sendFile(__dirname + '/public/dashboard.html')
