@@ -632,7 +632,7 @@ app.get('/igdball',(req,res)=>{
 	});
 })
 
-//add authenticate
+//adds a new comment to a post, only expects the post id in the body
 app.post('/api/comments/:post_id',authenticate,(req,res) =>{
   const user = req.session.user._id;
   const content = req.body
@@ -670,7 +670,7 @@ app.delete('/api/comments/:post_id/:comment_id',authenticate,(req,res)=>{
   })
 })
 
-//route to add a comment to a post
+//create new User
 app.post('/users', (req, res) => {
 
 	// Create a new user

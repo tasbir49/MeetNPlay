@@ -1,0 +1,104 @@
+/ route for root; redirect to home
+app.get('/', sessionChecker, (req, res)
+// route for login
+'/login'
+
+// route for login
+app.route('/login')
+
+//getting a post page (NOT THE JSON, THE ACTUAL WEB PAGE)
+app.get('/post/view/:id', authenticate, (req, res)
+
+//getting a post's edit page
+app.get('/post/edit/:id', authenticate, (req, res)
+
+//get all posts as json array with items relevant for home page as well as user session info
+//changes the creator field of each post their username and their
+//profile pic url is added as a field.
+//the json
+app.get('/posts', (req,res)
+
+//creates an invite request by the logged in user to the post
+//and returns "success" or "failure" or "post is full"
+app.post('/api/invitereq/:post_id/', authenticate,  (req, res)
+
+//getting a page to make post
+app.get('/post/make', authenticate, (req, res)
+
+//creates a new post, assuming a json body
+//that matches the schema ,
+//using req.sessionuser for crearor
+//This means creator SHOULD NOT be in the request body
+app.post('/api/post/create', authenticate, (req, res)
+
+//editing a post, assuming json body has all fields
+//the ref fields should be OBJECT IDs, use this for editing any part of post
+//EXCEPT CREATOR, AND DATE MADE (you can change these, but why would you)
+app.patch('/api/post/edit/:id', authenticate, (req, res)
+
+//getting a users page (NOT THE JSON, THE ACTUAL WEBPAGE)
+app.get('/users/:username', authenticate, (req, res)
+
+//changes user info , isBanned, password, isAdmin must be done by an admin
+//expects JSON body, returns editted json of user
+app.patch('/api/users/changeInfo/:username', authenticate, (req,res)
+
+//just expects a password, returns json of user, ignores other fields
+//returns user json
+app.patch('/api/users/changePassword/:username', authenticate,  (req,res)
+
+//creates a report, assuming a json body that matches the schema
+//expects only  the perpetrator's name  and content, other fields will be overwritten
+//sends a json of the report
+app.post('/reports/api/create', authenticate, (req, res)
+
+//closes report with id
+//expects only  the id, other fields are ignored
+//sends a json of the report
+app.post('/reports/api/close/:id', authenticate, (req, res)
+
+//Route to get all teh active  reports if you are admin
+app.get('/reports', authenticate, (req,res)
+
+//homepage
+app.get('/home', (req, res)
+
+// User login and logout and creation routes
+app.post('/login/start', (req, res)
+
+//logout route
+app.get('/logout', (req, res)
+
+//get 10 game id and cover from igdb
+app.get('/igdb',(req,res)
+
+
+//get igdb given a name
+app.get('/igdb/:name',(req,res)
+
+//adds a new comment to a post, only expects the post id in the body
+app.post('/api/comments/:post_id',authenticate,(req,res)
+
+//route to delete comments from posts.,
+app.delete('/api/comments/:post_id/:comment_id',authenticate,(req,res)
+
+//route to add a comment to a post
+app.post('/users', (req, res)
+
+//update a profile picure
+app.post('/update-profile-pic', upload.single('update-profile-pic'), (req, res)
+
+
+
+
+Login Credentials:
+
+user: tasbir
+pass: password
+
+user: tasbir49
+pass: password
+
+ADMIN:
+user: superman
+pass: 123456
