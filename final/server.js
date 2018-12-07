@@ -105,6 +105,10 @@ app.route('/login')
 		res.sendFile(__dirname + '/public/login.html')
 	})
 
+app.route('/signup').get(sessionChecker,(req,res)=>{
+  res.sendFile(__dirname+'/public/createNewUser.html')
+})
+
 //getting a post page (NOT THE JSON, THE ACTUAL WEB PAGE)
 app.get('/post/view/:id', authenticate, (req, res) => {
     const id = req.params.id
@@ -214,9 +218,7 @@ app.get('/posts', (req,res)=>{
                 waitingForInvite: String(post.inviteReqs).includes(req.session.user._id),
                 isSessionUserMember: String(post.members).includes(req.session.user._id)
             }
-            console.log(post.inviteReqs);
-            console.log(String(post.inviteReqs).includes(String(req.session.user._id)));
-            console.log(req.session.user._id);
+
             return relevantHomepagePerPostData
         })
     }).then((posts) => {
@@ -254,7 +256,7 @@ app.post('/api/invitereq/:post_id', authenticate,  (req, res)=> {
     }).then((whatevere)=> {
         res.send("success")
     }).catch((error)=> {
-        res.status(404).send("failure")
+        res.status(404).send(error)
     })
     
     Post.findById(id).then((post)=> {
@@ -293,7 +295,6 @@ app.post('/api/post/create', authenticate, (req, res)=> {
 
 //this is for postman
 app.post('/api/post/createnoauth', (req, res)=> {
-    console.log(req.body);
     let templatePost = req.body
     const post = new Post(templatePost)
     post.save().then((result)=> {
@@ -364,7 +365,6 @@ app.get('/users/:username', authenticate, (req, res) => {
             retObj.isJustOwner = true
         }
         req.session.viewingUser = retObj.userDetails.name// for admin profile pic updating
-        console.log(retObj)
         res.render("user_profile.hbs", retObj)
 
     }).catch((error)=> {
@@ -573,17 +573,13 @@ app.get('/igdb',(req,res)=>{
 		let covers = [];
 		response.body.forEach(a=>{
 			names.push(a.name);
-			console.log(a.name);
-			console.log(a.id);
 			ids.push(a.id);
-			console.log(a.cover);
 			let coverURL = "/resources/images/logo.png";
 			if (a.cover != null){ //change to big logo if exists
 				const cloud_id = a.cover.cloudinary_id
 				coverURL = igdb_client.image({cloudinary_id:cloud_id},"cover_big","jpg")
 			}
 			covers.push(coverURL);
-			console.log("what");
 		})
 		res.send({names:names,ids:ids,covers:covers});
 
@@ -604,7 +600,6 @@ app.get('/igdb/:name',(req,res)=>{
 		// filters: {"name-prefix": req.params.name,
 							// "version_parent-not_exists":1}
 	}).then(response=>{
-		console.log(req.params.name);
 		//res.send(response.body)
 		response.body.sort((a,b)=>{
 			let x = a.name.toLowerCase()
@@ -624,7 +619,6 @@ app.get('/igdb/:name',(req,res)=>{
 				coverURL = igdb_client.image({cloudinary_id:cloud_id},"cover_big","jpg")
 			}
 			covers.push(coverURL);
-			console.log("what");
 		})
 		res.send({names:names,ids:ids,covers:covers});
 
@@ -684,8 +678,10 @@ app.delete('/api/comments/:post_id/:comment_id',authenticate,(req,res)=>{
 app.post('/users', (req, res) => {
 
 	// Create a new user
+  console.log(req.body);
 	let user = new User(req.body)
-    user.name = user.name.toLowerCase()
+  user.name = user.name.toLowerCase()
+  console.log(user);
 	// save user to database
 	user.save().then((result) => {
 		res.send(user)
