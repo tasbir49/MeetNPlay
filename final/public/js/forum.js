@@ -191,7 +191,7 @@ function createInviteButton(post){
     inviteBut.appendChild(document.createTextNode("Go to Details"))
     inviteBut.setAttribute("data_id",post._id);
     inviteBut.addEventListener("click",goToPost);
-  } else if(post.totalPlayers == post.playersCurrentlyIn){
+  } else if(post.totalPlayers == post.playersCurrentlyIn+1){
     inviteBut.className = "requestInvite";
     inviteBut.appendChild(document.createTextNode("Full"))
   } else if(post.waitingForInvite){
