@@ -17,7 +17,6 @@ function create(e){
   const pass = document.getElementById("password").value
   const city = document.getElementById("city").value
   const desc = document.getElementById("description").value
-  console.log({name:user,pass:pass,city:city,description:desc});
   xhttp.send(JSON.stringify({name:user,password:pass,city:city,about:desc}));
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {

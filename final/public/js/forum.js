@@ -168,6 +168,7 @@ function makeDefaultPost(post){
   reportBut.className = "reportButton";
   reportBut.type = "button"
   reportBut.name = "Report"
+  reportBut.setAttribute("data_id",post.creatorName);
   reportBut.appendChild(document.createTextNode("Report"))
   reportBut.addEventListener("click",reportPrompt);
 
@@ -222,8 +223,25 @@ function goToPost(e){
 
 function reportPrompt(e){
   const reportIssue = prompt("Reason for Reporting","");
-  alert("Issue Reported. Thanks")
-  //api call for reporting issue
+  if(reportIssue != null){
+    const perpName = e.target.getAttribute("data_id")
+    xhttp.open("POST", "/reports/api/create");
+    xhttp.setRequestHeader("Content-Type", "application/json");
+
+    xhttp.send(JSON.stringify({perpetrator: perpName,content: reportIssue}));
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        alert("Report Sent")
+      }
+      if(this.status ==400){
+        alert("Something went wrong")
+      }
+    }
+  } else{
+    alert("Report Canceled")
+  }
+
+
 }
 function processRequest(e){
   const id =e.target.getAttribute("data_id");
