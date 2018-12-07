@@ -11,14 +11,14 @@
 	<meta name="viewport" content="width=device-width">
 
 	<link rel="stylesheet" href="/styles/main.css">
-	<link rel="stylesheet" href="/styles/reports.css">  
+	<link rel="stylesheet" href="/styles/reports.css">
     <link rel="stylesheet" href="/styles/user_header.css">
 
   </head>
   <body>
-        {{> header_partial }} 
+        {{> header_partial }}
     {{#each reports}}
-    <div class="reportItem">
+    <div class="reportItem" data_id ={{this._id}}>
         <img class="profilePic" src="{{this.perpetrator.profilePicUrl}}">
         <div class="userName"><a href="/users/{{this.perpetrator.name}}">{{this.perpetrator.name}}</a></div>
         <div class="reportDate">
@@ -32,11 +32,11 @@
         </button>
     </div>
     {{/each}}
-    
+
     <script src="/js/reportScript.js"></script>
 
-    
-    
+
+
 
 </body>
 </html>

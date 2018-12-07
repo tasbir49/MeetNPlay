@@ -183,9 +183,9 @@ app.get('/post/edit/:id', authenticate, (req, res) => {
 
 //get all posts as json array with items relevant for home page as well as user session info
 //changes the creator field of each post their username and their
-//profile pic url is added as a field. 
-//the json 
-app.get('/posts',(req,res)=>{
+//profile pic url is added as a field.
+//the json
+app.get('/posts',authenticate, (req,res)=>{
 	Post.find({isDeleted: false})
     .populate("creator")
     .then((posts)=>{//return only relevant homepage data
@@ -207,7 +207,6 @@ app.get('/posts',(req,res)=>{
         })
     }).then((posts) => {
         res.send({
-            sessionUserName: req.session.user.name,
             isSessionUserAdmin: false,
             posts: posts
         })
