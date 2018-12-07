@@ -232,7 +232,7 @@ app.get('/posts', (req,res)=>{
 
 //creates an invite request by the logged in user to the post
 //and returns "success" or "failure" or "post is full"
-app.post('/api/invitereq/:post_id/', authenticate,  (req, res)=> {
+app.post('/api/invitereq/:post_id', authenticate,  (req, res)=> {
     const id = req.params.post_id
     Post.findById(id).then((post)=> {
         if(post.members.length >= post.playersNeeded-1) {
