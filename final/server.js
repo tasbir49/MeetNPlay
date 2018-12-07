@@ -35,6 +35,7 @@ const Models  = require('./models/model')
 const User = Models.User
 const Post = Models.Post
 const Report = Models.Report
+const Platform = Models.Platform
 const igdb_client = igdb('e5ca32669192cb320e449d73603725d6');
 
 // express
@@ -200,7 +201,7 @@ app.get('/posts',authenticate, (req,res)=>{
                 gameTitle: post.gameTitle,
                 gamePicUrl: post.gamePicUrl,
                 totalPlayers: post.playersNeeded,
-                platform: post.plaform,
+                platform: post.plaforms,
                 gameGenres: post.gameGenres,
                 playersCurrentlyIn: post.members.length,
                 title: post.title,
@@ -224,7 +225,7 @@ app.get('/posts',authenticate, (req,res)=>{
 app.post('/api/invitereq/:post_id/',  (req, res)=> {
     const id = req.params.post_id
     Post.findById(id).then((post)=> {
-        if(post.members.length >= post.playersNeeded) {
+        if(post.members.length >= post.playersNeeded-1) {
             res.status(403).send("post is full")
         } else {
             let inviteReqs = post.inviteReqs
@@ -477,6 +478,7 @@ app.get('/reports', authenticate, (req,res)=> {
 
 //homepage
 app.get('/home', (req, res) => {
+
 	// check if we have active session cookie
 	if (req.session.user) {
 		//res.sendFile(__dirname + '/public/dashboard.html')

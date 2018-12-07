@@ -10,8 +10,17 @@ Date.prototype.addDays = function(days) {
     date.setDate(date.getDate() + days);
     return date;
 }
-
-
+//hardcoded cache of igdb platforms and ids 
+const PlatformSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    igdb_id: {
+        type: Number,
+        required: true
+    }
+})
 
 // We'll make this model in a different way
 const UserSchema = new mongoose.Schema({
@@ -87,7 +96,9 @@ UserSchema.statics.findByNamePassword = function(name, password) {
 // This function runs before saving user to database
 UserSchema.pre('save', function(next) {
 	const user = this
-
+    user.profilePicUrl = "/resources/images/profile-pictures/" + user.name + ".png"
+    
+    //hashes pass
 	if (user.isModified('password')) {
 		bcrypt.genSalt(10, (error, salt) => {
 			bcrypt.hash(user.password, salt, (error, hash) => {
@@ -209,8 +220,9 @@ const ReportSchema= new mongoose.Schema({
 
 })
 
+const Platform = mongoose.model('Platform', PlatformSchema)
 const Report = mongoose.model('Report', ReportSchema)
 const User = mongoose.model('User', UserSchema)
 const Post = mongoose.model('Post', PostSchema)
 
-module.exports = { User:User, Post:Post, Report:Report}
+module.exports = { User:User, Post:Post, Report:Report, Platform:Platform}
