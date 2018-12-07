@@ -272,6 +272,7 @@ const profilePicUpload = document.getElementById('editProfilePicButtonInput')
 const profilePicSubmit = document.getElementById("editProfilePicButtonSubmit");
 const profilePicOverlay = document.getElementById("profilePicOverlay");
 const closeDialog = document.getElementById("editProfilePicDialogClose");
+const profilePicSample = document.getElementById("editProfilePicSample");
 
 closeDialog.addEventListener("click", e => {
     editProfile.style.display = '';
@@ -317,7 +318,12 @@ if(profilePicEditable) {
             if (this.readyState === 4 && this.status === 200) {
                 location.reload();
             } else if (this.readyState === 4) {
-
+                if (!document.getElementById("editProfilePicError")) {
+                    const errorText = document.createElement("span");
+                    errorText.id = "editProfilePicError";
+                    errorText.append(document.createTextNode("Cannot update profile picture."))
+                    profilePicSample.parentElement.insertBefore(errorText, profilePicSample);
+                }
             }
         }
 
