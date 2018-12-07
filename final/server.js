@@ -184,7 +184,7 @@ app.get('/post/edit/:id', authenticate, (req, res) => {
 //get all posts
 app.get('/posts',(req,res)=>{
 	Post.find().then((posts)=>{
-		res.send(post)
+		res.send(posts)
 	}, (error)=>{
 		res.status(400).send(error)
 	})
@@ -217,6 +217,7 @@ app.post('/api/post/create', authenticate, (req, res)=> {
 
 //this is for postman
 app.post('/api/post/createnoauth', (req, res)=> {
+    console.log(req.body);
     let templatePost = req.body
     const post = new Post(templatePost)
     post.save().then((result)=> {
@@ -361,7 +362,6 @@ app.post('/reports/api/create', authenticate, (req, res)=> {
     }).catch((error)=>{
         res.status(400).send(error)
     })
-
 })
 
 

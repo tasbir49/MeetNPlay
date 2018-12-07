@@ -1,6 +1,6 @@
 "use strict";
 
-const allPosts = ["Kirby","Legend of Zelda","Game of Thrones","Super Smash Brothers Brawl","Bull","Page2","stuff page2","more page 3"]
+let allPosts = ["Kirby","Legend of Zelda","Game of Thrones","Super Smash Brothers Brawl","Bull","Page2","stuff page2","more page 3"]
 //displayPosts = ["hi","fail"]
 //the dialog boxes
 
@@ -13,14 +13,14 @@ const requestInviteButton = document.getElementsByClassName("requestInvite")[0]
 const usrSearchForm = document.querySelector("#userSearchInput");
 let pageNumber = 0;
 const postPerPage = 3;
-let maxPage = Math.ceil(displayPosts.length/postPerPage)
+let maxPage;
 
 postNotFound.addEventListener("click", bringDownUserPrompt);
 
 usrSearchForm.addEventListener("submit", searchUser);
 
-console.log(postsOnPage);
-loadPage();
+
+
 let acc = document.getElementsByClassName("accordion");
 
 for (let i = 0; i < acc.length; i++) {
@@ -39,6 +39,20 @@ let filters = document.getElementsByClassName("accordionButton")
 for (let i =0 ;i<filters.length;i++){
   filters[i].addEventListener("click",applyFilter)
 }
+
+
+let xhttp = new XMLHttpRequest();
+xhttp.open("GET", "/posts/");
+xhttp.send();
+xhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    allPosts = JSON.parse(this.response);
+    displayPosts = allPosts;
+    maxPage = Math.ceil(displayPosts.length/postPerPage)
+    loadPage();
+  }
+}
+
 
 //normally this function would search a database of users in back end
 //but for front end, itll just not find anything
@@ -109,16 +123,16 @@ function makeDefaultPost(post){
 
   const img = document.createElement("img");
   img.className = "gameImg"
-  img.setAttribute("src","../resources/images/logo.png")
+  img.setAttribute("src",post.gamePicUrl)
   const gameTitle = document.createElement("span")
   gameTitle.className = "gameTitle";
-  gameTitle.appendChild(document.createTextNode(post))
+  gameTitle.appendChild(document.createTextNode(post.gameTitle))
   const status = document.createElement("span")
   status.className = "status";
-  status.appendChild(document.createTextNode("Default"))
+  status.appendChild(document.createTextNode(post.members.length+1 + "/"+post.playersNeeded))
   const postTitle = document.createElement("span")
   postTitle.className = "postTitle";
-  postTitle.appendChild(document.createTextNode("Default"))
+  postTitle.appendChild(document.createTextNode(post.title))
 
   divGameImg.appendChild(img)
   divGameImg.appendChild(gameTitle)
@@ -132,7 +146,7 @@ function makeDefaultPost(post){
   inviteBut.className = "requestInvite";
   inviteBut.type = "button"
   inviteBut.name = "Request"
-  inviteBut.appendChild(document.createTextNode("default"))
+  inviteBut.appendChild(document.createTextNode("Requst Invite"))
   inviteBut.addEventListener("click",processRequest)
   const reportBut = document.createElement("button")
   reportBut.className = "reportButton";
@@ -200,24 +214,40 @@ function createLink() {
 function applyFilter(e){
   const value = e.target.value;
   const compare =e.target.innerText;
+  displayPosts = allPosts;
   if(value =="people"){
-    displayPosts.filter(function(a){
-      return compare == a.people;
+    displayPosts = displayPosts.filter(function(a){
+      return compare == a.members.length+1;
     })
   } else if(value =="platform") {
-    displayPosts.filter(function(a){
-      return compare == a.platform;
+    displayPosts =displayPosts.filter(function(a){
+      return compare == a.platforms;
     })
   } else if(value == "genre"){
-      displayPosts.filter(function(a){
-        return compare == a.genre;
+      displayPosts = displayPosts.filter(function(a){
+        return a.gameGenres.findIndex(function(b){
+
+          return b == compare;
+        }) != -1;
       })
   } else if (value == "sort"){
-    displayPost.sort(function(a,b){
-      if (a.name<b.name) {return} 1;
-      if (a.name>b.name) {return} -1;
-    })
+    if (compare == "by Game Name"){
+      console.log("name");
+      displayPosts = displayPosts.sort(function(a,b){
+        if (a.gameTitle<b.gameTitle) {return -1};
+        if (a.gameTitle>b.gameTitle) {return 1};
+      })
+    } else if (compare == "by Date Posted"){
+      console.log("date");
+      displayPosts = displayPosts.sort(function(a,b){
+        if (a.dateMade<b.dateMade) {return 1};
+        if (a.dateMade>b.dateMade) {return -1};
+      })
+    }
   } else{
     displayPost = allPosts;
   }
+  maxPage = Math.ceil(displayPosts.length/postPerPage);
+  clearPage();
+  loadPage();
 }
