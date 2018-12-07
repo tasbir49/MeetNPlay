@@ -136,14 +136,17 @@ app.get('/post/view/:id', authenticate, (req, res) => {
         if(req.session.user.name == post.creator.name || req.session.user.isAdmin) {//these guys can edit parts of the post and add user
             retObj.canEdit = true
             res.render("post_view.hbs", retObj)
-        } else if(post.members.includes(req.session.user)) {//only members of post can view
-            console.log(req.session.user)
-            console.log(post.members)
-            res.render("post_view.hbs", retObj)
-
-        } else {
-            return res.status(403).send("YOU DONT HAVE PERMISSION TO ACCESS THIS RESOURCE")
-        }
+        } else {//only members of post can view
+            let memNames = post.members.map((member)=>{
+                return member.name
+            })
+            if(memNames.includes(req.session.user.name)) {
+                console.log("poyo")
+                res.render("post_view.hbs", retObj)
+            } else {
+                return res.status(403).send("YOU DONT HAVE PERMISSION TO ACCESS THIS RESOURCE")
+            }
+        } 
     }).catch((error)=> {
         res.status(400).send(error)
     })
