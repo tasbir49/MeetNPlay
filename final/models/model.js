@@ -123,11 +123,11 @@ const CommentSchema = new mongoose.Schema({
 const PostSchema = new mongoose.Schema({//most of these defaults are for testing purposes
 	creator : {
         type: mongoose.Schema.Types.ObjectId, ref: "User",
-        default: "MeetNPlay Meet"
         required: true
     },
     title: {
         type: String,
+        default: "MeetNPlay Meet"
         required: true
     },
     keywords : {
