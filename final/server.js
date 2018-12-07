@@ -204,10 +204,13 @@ app.get('/posts',authenticate, (req,res)=>{
                 gameGenres: post.gameGenres,
                 playersCurrentlyIn: post.members.length,
                 title: post.title,
-                sessionUserName: req.session.user._id,
-                waitingForInvite: post.inviteReqs.includes(req.session.user._id),
-                isSessionUserMember: post.members.includes(req.session.user._id)
+                sessionUserName: req.session.user.name,
+                waitingForInvite: String(post.inviteReqs).includes(req.session.user._id),
+                isSessionUserMember: String(post.members).includes(req.session.user._id)
             }
+            console.log(post.inviteReqs);
+            console.log(String(post.inviteReqs).includes(String(req.session.user._id)));
+            console.log(req.session.user._id);
             return relevantHomepagePerPostData
         })
     }).then((posts) => {
