@@ -226,7 +226,7 @@ app.get('/posts', (req,res)=>{
         })
     }).then((posts) => {
         res.send({
-            isSessionUserAdmin: false,
+            isSessionUserAdmin: req.session.user.isAdmin,
             posts: posts
         })
     }).catch((error)=>{

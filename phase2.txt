@@ -37,10 +37,13 @@ Admin Instructions:
         or not.
         They can shut down any users by banning on the soon-to-be banned user's
         profile page
-        They can view all the reports submitted by going to the top right corner
+        They can view all the open reports submitted by going to the top right corner
         on their page and clicking the profile picture, they can see an extra field
         called reports.
 
+        They can change anyones password without knowing their original password on their profile page
+        They can edit users info and profile picture, and revoke or give admin rights while on their page
+        They have the same priveleges as the creator of 
 
 
 
@@ -60,7 +63,7 @@ password: password
 
 ADMIN:
 username: superman
-password: 123456
+password: superman
 
 
 
