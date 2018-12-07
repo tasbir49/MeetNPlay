@@ -84,7 +84,7 @@ const authenticate = (req, res, next) => {
 				return Promise.reject()
 			} else if(user.isBanned) {
                 res.redirect('/login')
-            } 
+            }
             else {
 				req.user = user
 				next()
