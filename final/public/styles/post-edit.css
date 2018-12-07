@@ -95,6 +95,9 @@ EB3E4A
 	border-right: 3px solid #45C48B;
 	border-top: 1px solid grey;
 }
+.autocompleteItem strong {
+	color: #45C48B;
+}
 .autocompleteItem:hover,
 .autocompleteItem#autocompleteItem-active {
 	background-color: #101316;

@@ -131,7 +131,6 @@ app.get('/post/view/:id', authenticate, (req, res) => {
             post: post,
             postUrlLocation: formattedLocation
         }
-        console.log()
 
         if(req.session.user.name == post.creator.name || req.session.user.isAdmin) {//these guys can edit parts of the post and add user
             retObj.canEdit = true
@@ -463,7 +462,6 @@ app.get('/igdb',(req,res)=>{
 			console.log(a.name);
 			console.log(a.id);
 			ids.push(a.id);
-			console.log("just pring");
 			console.log(a.cover);
 			let coverURL = "/resources/images/logo.png";
 			if (a.cover != null){ //change to big logo if exists
@@ -486,9 +484,11 @@ app.get('/igdb/:name',(req,res)=>{
 
 	igdb_client.games({
 		fields:"id,name,cover",
-		limit:10,
-		filters: {"name-prefix": req.params.name,
-							"version_parent-not_exists":1}
+		limit:30,
+        order: "popularity:desc",
+        search: req.params.name
+		// filters: {"name-prefix": req.params.name,
+							// "version_parent-not_exists":1}
 	}).then(response=>{
 		console.log(req.params.name);
 		//res.send(response.body)
@@ -503,11 +503,7 @@ app.get('/igdb/:name',(req,res)=>{
 		let covers = [];
 		response.body.forEach(a=>{
 			names.push(a.name);
-			console.log(a.name);
-			console.log(a.id);
 			ids.push(a.id);
-			console.log("just pring");
-			console.log(a.cover);
 			let coverURL = "/resources/images/logo.png";
 			if (a.cover != null){ //change to big logo if exists
 				const cloud_id = a.cover.cloudinary_id

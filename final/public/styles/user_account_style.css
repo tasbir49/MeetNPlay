@@ -209,7 +209,9 @@ button:hover {
     margin-top: 0;
 }
 #editProfilePicButtonInput {
-    display: none;
+    position: absolute;
+    z-index: -10;
+    opacity: 0;
 }
 #editProfilePicButton,
 #editProfilePicButtonSubmit {
@@ -225,11 +227,14 @@ button:hover {
     color: black;
     background-color: #FFD039;
     border-radius: 3px;
+    border: 3px solid rgba(0,0,0,0);
     transform: translateY(0);
     transition: transform 50ms;
 }
 #editProfilePicButtonInput:focus ~ #editProfilePicButton,
-#editProfilePicButton:hover {
+#editProfilePicButton:hover,
+#editProfilePicButtonSubmit:hover {
+    border: 3px solid rgba(0,0,0,0.3);
     background-color: #f2bb0c;
 }
 #editProfilePicButtonSubmit:active,

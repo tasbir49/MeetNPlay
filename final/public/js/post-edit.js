@@ -3,7 +3,10 @@
 const editFormInputs = document.getElementsByClassName("editFormInput");
 const apiUrl = "/";
 
-let timerDone = 0;
+const gameLabel = document.getElementById("gameTitle-editLabel");
+let apiTimer;
+let loadingIcon = insertLoadingIcon(gameLabel, "102px", "-1.125rem");
+loadingIcon.style.display = 'none';
 let prevInp = "";
 
 
@@ -36,10 +39,7 @@ xhttp.onreadystatechange = function() {
 	}
 }
 
-
-
 function addAutocomplete(inp) {
-	resetTimer();
 	let optionListInfo = gameInfo;
 	let optionList  = "";
 	if (gameInfo !=null){
@@ -52,7 +52,7 @@ function addAutocomplete(inp) {
 
 	let curItem;
 
-	inp.addEventListener("input", showAutocomplete);
+	inp.addEventListener("input", triggerAutocomplete);
 	inp.addEventListener("focus", showAutocomplete);
 	inp.addEventListener("keydown", selectAutocompleteItem);
 	inp.addEventListener("submit", () => {
@@ -60,25 +60,47 @@ function addAutocomplete(inp) {
 	});
 	document.addEventListener("click", closeAutocomplete);
 
-	function showAutocomplete() {
-		closeAutocomplete();
-		const value = (!inp.value) ? "" : inp.value;
-		if (inp.value == ""){
-			optionList = gameInfo.names;
-		} else if(prevInp != inp.value && timerDone==1){
-			timerDone = 0;
-			prevInp = inp.value;
+	function triggerAutocomplete() {
+		showAutocomplete();
+		clearTimeout(apiTimer);
+
+		loadingIcon.style.display = 'block';
+		
+		apiTimer = setTimeout(() => {
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
+					console.log("Show new");
 					optionListInfo = JSON.parse(this.response);
 					optionList = optionListInfo.names;
-					console.log(optionList);
-					resetTimer();
+					loadingIcon.style.display = 'none';
+					showAutocomplete();
 				}
 			}
 			xhttp.open("GET", "/igdb/"+inp.value);
 			xhttp.send();
-		}
+		}, 2500)
+	}
+
+	function showAutocomplete() {
+		closeAutocomplete();
+		const value = (!inp.value) ? "" : inp.value;
+		// console.log(gameInfo.names)
+		// if (inp.value == ""){
+		// 	optionList = gameInfo.names;
+		// } else if(prevInp != inp.value && timerDone==1){
+		// 	console.log("Timer done")
+		// 	timerDone = 0;
+		// 	prevInp = inp.value;
+		// 	xhttp.onreadystatechange = function() {
+		// 		if (this.readyState == 4 && this.status == 200) {
+		// 			optionListInfo = JSON.parse(this.response);
+		// 			optionList = optionListInfo.names;
+		// 			resetTimer();
+		// 		}
+		// 	}
+		// 	xhttp.open("GET", "/igdb/"+inp.value);
+		// 	xhttp.send();
+		// }
 		curItem = -1;
 
 		const itemsContainer = document.createElement("div");
@@ -88,35 +110,42 @@ function addAutocomplete(inp) {
 		inp.parentElement.appendChild(itemsContainer);
 
 		for (let i = 0; i < optionList.length; i++) {
-			let match = optionList[i].substring(0, value.length);
-			if (match.toUpperCase() === value.toUpperCase()) {
-				const item = document.createElement("div");
-				item.className = "autocompleteItem";
+			let option = optionList[i];
+			for (let j = 0; j < option.length - value.length + 1; j++) {
+				let match = option.substring(j, value.length + j);
+				if (match.toUpperCase() === value.toUpperCase()) {
+					const item = document.createElement("div");
+					item.className = "autocompleteItem";
 
-				let textNode = document.createTextNode(match);
-				let elem = document.createElement("strong");
-				elem.appendChild(textNode);
-				item.appendChild(elem);
+					let textNode = document.createTextNode(option.substring(0, j));
+					item.appendChild(textNode);
 
-				textNode = document.createTextNode(optionList[i].substring(value.length));
-				item.appendChild(textNode);
+					textNode = document.createTextNode(match);
+					let elem = document.createElement("strong");
+					elem.appendChild(textNode);
+					item.appendChild(elem);
 
-				// Hidden tag to hold item value
-				elem = document.createElement("input");
-				elem.type = "hidden";
-				elem.value = optionList[i];
-				item.appendChild(elem);
+					textNode = document.createTextNode(option.substring(value.length + j, option.length));
+					item.appendChild(textNode);
 
-				item.addEventListener("click", () => {
-					inp.focus();
-					const itemVal = item.getElementsByTagName("input")[0].value;
-					inp.value = itemVal;
+					// Hidden tag to hold item value
+					elem = document.createElement("input");
+					elem.type = "hidden";
+					elem.value = option;
+					item.appendChild(elem);
 
-					closeAutocomplete();
-					showAutocomplete();
-				});
+					item.addEventListener("click", () => {
+						inp.focus();
+						const itemVal = item.getElementsByTagName("input")[0].value;
+						inp.value = itemVal;
 
-				itemsContainer.appendChild(item);
+						closeAutocomplete();
+						showAutocomplete();
+					});
+
+					itemsContainer.appendChild(item);
+					break;
+				}
 			}
 		}
 	}
@@ -170,8 +199,7 @@ function addAutocomplete(inp) {
 		} else if (curItem < 0) {
 			curItem = (items.length - 1);
 		}
-		console.log("item: "+items[curItem]);
-		console.log(items[curItem]);
+
 		items[curItem].id = "autocompleteItem-active";
 	}
 
@@ -205,11 +233,4 @@ function removeFromArray(arr, value) {
 
 function hasClass(element, className) {
 	return (' ' + element.className + ' ').indexOf(' ' + className+ ' ') > -1;
-}
-
-//resets the timer on API call
-function resetTimer(){
-	setTimeout(function(){
-		timerDone =1;
-	},3000)
 }

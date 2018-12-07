@@ -336,7 +336,7 @@ document.addEventListener("keydown", e => {
     }
 
     if (code === "Escape") {
-        editProfile.style.display = 'none';
-        profilePicOverlay.style.display = 'none';
+        editProfile.style.display = '';
+        profilePicOverlay.style.display = '';
     }
 });
