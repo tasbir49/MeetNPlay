@@ -58,7 +58,19 @@ xhttp.onreadystatechange = function() {
 //but for front end, itll just not find anything
 function searchUser(e) {
     e.preventDefault();
-    bringUpUserPrompt(e);
+    const searchParam = document.querySelector("#searchParam").value
+    displayPosts = displayPosts.filter(function(a){
+      return a.gameTitle.includes(searchParam)
+    })
+    if(displayPosts.length ==0){
+      displayPosts = allPosts;
+      bringUpUserPrompt(e);
+    } else{
+      maxPage = Math.ceil(displayPosts.length/postPerPage);
+      clearPage();
+      loadPage();
+    }
+
 }
 
 function bringUpUserPrompt(e) {
@@ -232,16 +244,14 @@ function applyFilter(e){
       })
   } else if (value == "sort"){
     if (compare == "by Game Name"){
-      console.log("name");
       displayPosts = displayPosts.sort(function(a,b){
         if (a.gameTitle<b.gameTitle) {return -1};
         if (a.gameTitle>b.gameTitle) {return 1};
       })
     } else if (compare == "by Date Posted"){
-      console.log("date");
       displayPosts = displayPosts.sort(function(a,b){
-        if (a.dateMade<b.dateMade) {return 1};
-        if (a.dateMade>b.dateMade) {return -1};
+        if (a.dateMade<b.dateMade) {return -1};
+        if (a.dateMade>b.dateMade) {return 1};
       })
     }
   } else{
