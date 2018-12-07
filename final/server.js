@@ -187,11 +187,12 @@ app.get('/post/edit/:id', authenticate, (req, res) => {
 
 //profile pic url is added as a field.
 //the json
-app.get('/posts',authenticate, (req,res)=>{
+app.get('/posts', (req,res)=>{
 	Post.find({isDeleted: false})
     .populate("creator")
     .then((posts)=>{//return only relevant homepage data
         return posts.map((post)=> {
+ 
             let relevantHomepagePerPostData = {
                 _id: post._id,
                 creatorName: post.creator.name,
@@ -205,7 +206,7 @@ app.get('/posts',authenticate, (req,res)=>{
                 gameGenres: post.gameGenres,
                 playersCurrentlyIn: post.members.length,
                 title: post.title,
-                sessionUserName: req.session.user._id,
+                sessionUserName: req.session.user.name,
                 waitingForInvite: post.inviteReqs.includes(req.session.user._id),
                 isSessionUserMember: post.members.includes(req.session.user._id)
             }
