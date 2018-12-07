@@ -19,19 +19,29 @@
 <body>
     {{> header_partial }} <!-- Notice that this is the same name as the header_partial.hbs file sans the extension, thats cuz line35 does this for all in a dir -->
     <div id="leftSideAccountPage">
+        {{#if canEdit}}
+        <div id="profilePicEditableContainer">
+            <img id="profilePic" class="profilePic" src={{userDetails.profilePicUrl}}></img>
+            <div id="profilePicOverlay">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7.127 22.564l-7.126 1.436 1.438-7.125 5.688 5.689zm-4.274-7.104l5.688 5.689 15.46-15.46-5.689-5.689-15.459 15.46z"/></svg>
+            </div>
+        </div>
+        {{else}}
         <div id="profilePicContainer">
             <img id="profilePic" class="profilePic" src={{userDetails.profilePicUrl}}></img>
             <div id="profilePicOverlay">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7.127 22.564l-7.126 1.436 1.438-7.125 5.688 5.689zm-4.274-7.104l5.688 5.689 15.46-15.46-5.689-5.689-15.459 15.46z"/></svg>
             </div>
         </div>
+        {{/if}}
+        
         <h2 id="userNameHeading">{{userDetails.name}}</h2>
 
         <form id="userSearchInput">
             <input type="text" placeholder="View a User's Account">
             <input type="submit" value="Find User">
         </form>
-        {{#if user.isJustOwner}}<button type="button" id="changePassButton">Change Password</button>{{/if}}
+        {{#if isJustOwner}}<button type="button" id="changePassButton">Change Password</button>{{/if}}
         {{#if user.isAdmin}}<button type="button" id="changePassButtonAdmin">Change Password</button>
         <button type="button" id="revokeAdmin">{{#if userDetails.isAdmin}}Revoke Admin Priveleges{{else}}Make This User Admin{{/if}}</button>       
         <button type="button" id="banUser">{{#if userDetails.isBanned}}Unban this user{{else}}Ban this user{{/if}}</button>{{/if}}
@@ -49,7 +59,7 @@
                 <div class="userInfoSectionContent" id="userLocation">
                     {{userDetails.city}}
                 </div>
-                {{#if user.canEdit}}<button type="button" class="infoEditButton">
+                {{#if canEdit}}<button type="button" class="infoEditButton">
                     Edit
                 </button>{{/if}}
             </div>
@@ -61,7 +71,7 @@
                 <div class="userInfoSectionContent" id="userBday">
                     July 25, 1998
                 </div>
-                {{#if user.canEdit}}<button type="button" class="infoEditButton">
+                {{#if canEdit}}<button type="button" class="infoEditButton">
                     Edit
                 </button>{{/if}}
             </div>
@@ -72,7 +82,7 @@
                 <div class="userInfoSectionContent" id="userAbout">
                 {{userDetails.about}}
                 </div>
-                {{#if user.canEdit}}<button type="button" class="infoEditButton">
+                {{#if canEdit}}<button type="button" class="infoEditButton">
                     Edit{{/if}}
                 </button>
             </div>

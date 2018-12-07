@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
     cb(null, __dirname + '/public/resources/images/profile-pictures/')
   },
   filename: function (req, file, cb) {
-    cb(null, req.session.user.name + '.png')
+    cb(null, req.session.viewingUser + '.png')
   }
 })
 const upload = multer({storage: storage})
@@ -185,7 +185,7 @@ app.get('/post/edit/:id', authenticate, (req, res) => {
 //changes the creator field of each post their username and their
 //profile pic url is added as a field. 
 //the json 
-app.get('/posts',(req,res)=>{
+app.get('/posts', authenticate, (req,res)=>{
 	Post.find({isDeleted: false})
     .populate("creator")
     .then((posts)=>{//return only relevant homepage data
@@ -199,6 +199,7 @@ app.get('/posts',(req,res)=>{
                 gamePicUrl: post.gamePicUrl,
                 totalPlayers: post.playersNeeded,
                 platform: post.plaform,
+                gameGenres: post.gameGenres,
                 playersCurrentlyIn: post.members.length,
                 title: post.title,
                 isSessionUserMember: post.members.includes(req.session.user._id)
@@ -207,7 +208,6 @@ app.get('/posts',(req,res)=>{
         })
     }).then((posts) => {
         res.send({
-            sessionUserName: req.session.user.name,
             isSessionUserAdmin: false,
             posts: posts
         })
@@ -215,6 +215,26 @@ app.get('/posts',(req,res)=>{
         res.status(400).send("internal server error?")
     })
 
+})
+
+//creates an invite request by the logged in user to the post
+//and returns "success" or "failure" or "post is full"
+app.post('/api/invitereq/:post_id/',  (req, res)=> {
+    const id = req.params.post_id
+    Post.findById(id).then((post)=> {
+        if(post.members.length >= post.playersNeeded) {
+            res.status(403).send("post is full")
+        } else {
+            let inviteReqs = post.inviteReqs
+            inviteReqs.push(req.session.user._id)
+            post.set({inviteReqs: inviteReqs})
+            return post.save()
+        }
+    }).then((whatevere)=> {
+        res.send("success")
+    }).catch((error)=> {
+        res.status(404).send("failure")
+    })
 })
 
 //getting a page to make post
@@ -255,7 +275,7 @@ app.post('/api/post/createnoauth', (req, res)=> {
 })
 
 //editing a post, assuming json body has all fields
-//the ref fields should be OBJECT IDs
+//the ref fields should be OBJECT IDs, use this for editing any part of post
 //EXCEPT CREATOR, AND DATE MADE (you can change these, but why would you)
 app.patch('/api/post/edit/:id', authenticate, (req, res) => {
     const id = req.params.id
@@ -307,13 +327,15 @@ app.get('/users/:username', authenticate, (req, res) => {
             res.status(404).send("404 NOT FOUND SORRY")
         }
         if(req.session.user.isAdmin) {
-            retObj.user.canEdit = true
-            retObj.user.isJustOwner = false //means this guy doesnt ONLY own the username, this is for differences in view for these two(admins dont need to confirm password changes)
+            retObj.canEdit = true
+            retObj.isJustOwner = false //means this guy doesnt ONLY own the username, this is for differences in view for these two(admins dont need to confirm password changes)
         }
         else if(req.session.user.name == username) {//these guys can edit parts of the post and add user
-            retObj.user.canEdit = true
-            retObj.user.isJustOwner = true
+            retObj.canEdit = true
+            retObj.isJustOwner = true
         }
+        req.session.viewingUser = retObj.userDetails.name// for admin profile pic updating
+        console.log(retObj)
         res.render("user_profile.hbs", retObj)
 
     }).catch((error)=> {
