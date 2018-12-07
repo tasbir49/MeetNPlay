@@ -678,6 +678,14 @@ app.post('/users', (req, res) => {
 
 })
 
+app.get('/platforms', (req, res) => {
+    Platform.find().then((platform) => {
+        res.send({platform})
+    }, (error) => {
+        res.status(400).send(error)
+    })
+})
+
 //update a profile picure
 app.post('/update-profile-pic', upload.single('update-profile-pic'), (req, res) => {
     res.send(req.file);
