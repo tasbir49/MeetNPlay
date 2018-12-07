@@ -1,12 +1,9 @@
 "use strict";
 
-let allPosts = ["Kirby","Legend of Zelda","Game of Thrones","Super Smash Brothers Brawl","Bull","Page2","stuff page2","more page 3"]
-//displayPosts = ["hi","fail"]
-//the dialog boxes
+let allPosts;
 
 
-
-let displayPosts = allPosts.posts;
+let displayPosts;
 
 const postNotFound = document.querySelector("#postNotFound");
 const postsOnPage = document.getElementsByClassName("post");

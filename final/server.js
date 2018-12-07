@@ -432,7 +432,7 @@ app.post('/reports/api/create', authenticate, (req, res)=> {
     })
 })
 
-//postman only
+//postman only same as /reports/api/create but no authentication for easy postman test
 app.post('/reports/api/createnoauth', (req, res)=> {
     User.findOne({name: req.body.perpetrator.toLowerCase()}//this is slightly confusing, perpetrator in this context refers to the NAME of the user
     ).then((user)=>{
@@ -471,7 +471,7 @@ app.post('/reports/api/close/:id', authenticate, (req, res)=> {
 
 })
 
-//need to implement pagination with this
+//Route to get all teh active  reports if you are admin
 app.get('/reports', authenticate, (req,res)=> {
     if(req.session.user.isAdmin){
         Report.find({isClosed:false}).sort({date: -1})
@@ -508,7 +508,6 @@ app.get('/home', (req, res) => {
 })
 
 // User login and logout and creation routes
-
 app.post('/login/start', (req, res) => {
 	const name = req.body.name
 	const password = req.body.password
@@ -533,6 +532,7 @@ app.post('/login/start', (req, res) => {
 	})
 })
 
+//logout route
 app.get('/logout', (req, res) => {
 
 	req.session.destroy((error) => {
@@ -544,7 +544,7 @@ app.get('/logout', (req, res) => {
 	})
 })
 
-
+//get 10 game id and cover from igdb
 app.get('/igdb',(req,res)=>{
 
 	igdb_client.games({
@@ -583,7 +583,7 @@ app.get('/igdb',(req,res)=>{
 })
 
 
-
+//get igdb given a name
 app.get('/igdb/:name',(req,res)=>{
 
 	igdb_client.games({
@@ -623,6 +623,7 @@ app.get('/igdb/:name',(req,res)=>{
 	})
 })
 
+//we have to pay for this so no need
 app.get('/igdball',(req,res)=>{
 	igdb_client.scroll('/games/?fields=name&filter[genre][eq]=7&limit=50').then(response => {
 		res.send(response.body);
@@ -647,6 +648,7 @@ app.post('/api/comments/:post_id',authenticate,(req,res) =>{
   })
 })
 
+//route to delete comments from posts.,
 app.delete('/api/comments/:post_id/:comment_id',authenticate,(req,res)=>{
   const post_id = req.params.post_id;
   const comment_id = req.params.comment_id;
@@ -668,6 +670,7 @@ app.delete('/api/comments/:post_id/:comment_id',authenticate,(req,res)=>{
   })
 })
 
+//route to add a comment to a post
 app.post('/users', (req, res) => {
 
 	// Create a new user
@@ -682,6 +685,7 @@ app.post('/users', (req, res) => {
 
 })
 
+//update a profile picure
 app.post('/update-profile-pic', upload.single('update-profile-pic'), (req, res) => {
     res.send(req.file);
 })
