@@ -183,9 +183,10 @@ app.get('/post/edit/:id', authenticate, (req, res) => {
 
 //get all posts as json array with items relevant for home page as well as user session info
 //changes the creator field of each post their username and their
-//profile pic url is added as a field. 
-//the json 
-app.get('/posts', authenticate, (req,res)=>{
+
+//profile pic url is added as a field.
+//the json
+app.get('/posts',authenticate, (req,res)=>{
 	Post.find({isDeleted: false})
     .populate("creator")
     .then((posts)=>{//return only relevant homepage data
@@ -195,6 +196,7 @@ app.get('/posts', authenticate, (req,res)=>{
                 creatorName: post.creator.name,
                 creatorProfilePicUrl: post.creator.profilePicUrl,
                 date: post.date,
+                gameGenres: post.gameGenres,
                 gameTitle: post.gameTitle,
                 gamePicUrl: post.gamePicUrl,
                 totalPlayers: post.playersNeeded,
@@ -413,6 +415,24 @@ app.post('/reports/api/create', authenticate, (req, res)=> {
     })
 })
 
+//postman only
+app.post('/reports/api/createnoauth', (req, res)=> {
+    User.findOne({name: req.body.perpetrator.toLowerCase()}//this is slightly confusing, perpetrator in this context refers to the NAME of the user
+    ).then((user)=>{
+        let templateReport = req.body
+        //templateReport.perpetrator = user._id
+        return templateReport
+    }).then((reportTemplate)=>{
+        reportTemplate.date = Date.now()
+        reportTemplate.isClosed = false
+        const report = new Report(reportTemplate)
+        return report.save()
+    }).then((report)=>{
+        res.send(report)
+    }).catch((error)=>{
+        res.status(400).send(error)
+    })
+})
 
 //closes report with id
 //expects only  the id, other fields are ignored
