@@ -384,12 +384,12 @@ app.patch('/api/users/changeInfo/:username', authenticate, (req,res)=> {
         }
 })
 
-//just expects a password, returns json of user, ignores other fields
+//just expects a password,, oldPassword returns json of user, ignores other fields
 //returns user json
 app.patch('/api/users/changePassword/:username', authenticate,  (req,res)=> {
     const username = req.params.username
-    if(req.sesssion.user.name === username || req.session.user.isAdmin) {
-        User.findByNamePassword(username, req.body.password).then((user)=>{
+    if(req.session.user.name === username || req.session.user.isAdmin) {
+        User.findByNamePassword(username, req.body.oldPassword).then((user)=>{
             user.password = req.body.password
             return user.save()
         },
