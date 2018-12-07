@@ -234,26 +234,36 @@ app.get('/posts', (req,res)=>{
 //and returns "success" or "failure" or "post is full"
 app.post('/api/invitereq/:post_id', authenticate,  (req, res)=> {
     const id = req.params.post_id
-    Post.findById(id).then((post)=> {
+    Post.findById(id)
+    .populate("inviteReqs")
+    .populate("members")
+    .then((post)=> {
+       
         if(post.members.length >= post.playersNeeded-1) {
             res.status(403).send("post is full")
-        } else if(post.members.includes(req.session.user._id)) {
+        } else if(post.members.map((mem)=>{
+            return mem.name
+        }).includes(req.session.user.name)) {
             res.status(403).send("already in")
 
-        } else if(post.inviteReqs.incudes(req.session.user._id)) {
+        } else if(post.inviteReqs.map((mem)=>{
+            return mem.name; 
+        }).incudes(req.session.user.name)) {
             res.status(403).send("already requested")
-        }
-        else {
-            let inviteReqs = post.inviteReqs
-            inviteReqs.push(req.session.user._id)
-            post.set({inviteReqs: inviteReqs})
-            return post.save()
         }
     }).then((whatevere)=> {
         res.send("success")
     }).catch((error)=> {
         res.status(404).send("failure")
     })
+    
+    Post.findById(id).then((post)=> {
+            let inviteReqs = post.inviteReqs
+            inviteReqs.push(req.session.user._id)
+            post.set({inviteReqs: inviteReqs})
+            return post.save()
+    }).then(res.status(200).send("success"))
+
 })
 
 //getting a page to make post
