@@ -4,7 +4,9 @@ let allPosts = ["Kirby","Legend of Zelda","Game of Thrones","Super Smash Brother
 //displayPosts = ["hi","fail"]
 //the dialog boxes
 
-let displayPosts = allPosts;
+
+
+let displayPosts = allPosts.posts;
 
 const postNotFound = document.querySelector("#postNotFound");
 const postsOnPage = document.getElementsByClassName("post");
@@ -18,8 +20,6 @@ let maxPage;
 postNotFound.addEventListener("click", bringDownUserPrompt);
 
 usrSearchForm.addEventListener("submit", searchUser);
-
-
 
 let acc = document.getElementsByClassName("accordion");
 
@@ -47,7 +47,7 @@ xhttp.send();
 xhttp.onreadystatechange = function() {
   if (this.readyState == 4 && this.status == 200) {
     allPosts = JSON.parse(this.response);
-    displayPosts = allPosts;
+    displayPosts = allPosts.posts;
     maxPage = Math.ceil(displayPosts.length/postPerPage)
     loadPage();
   }
@@ -63,7 +63,7 @@ function searchUser(e) {
       return a.gameTitle.includes(searchParam)
     })
     if(displayPosts.length ==0){
-      displayPosts = allPosts;
+      displayPosts = allPosts.posts;
       bringUpUserPrompt(e);
     } else{
       maxPage = Math.ceil(displayPosts.length/postPerPage);
@@ -82,7 +82,6 @@ function bringDownUserPrompt(e) {
 }
 
 function loadPage(){
-
   const middle = document.getElementById("gamePost")
   const start = postPerPage*pageNumber;
   const end = Math.min(((pageNumber+1)*postPerPage),displayPosts.length)
@@ -127,6 +126,7 @@ function clearPage(){
   numbers[0].remove()
 }
 function makeDefaultPost(post){
+
   const postSection = document.createElement("section");
   postSection.className = "post";
 
@@ -141,25 +141,32 @@ function makeDefaultPost(post){
   gameTitle.appendChild(document.createTextNode(post.gameTitle))
   const status = document.createElement("span")
   status.className = "status";
-  status.appendChild(document.createTextNode(post.members.length+1 + "/"+post.playersNeeded))
+  status.appendChild(document.createTextNode(post.playersCurrentlyIn+1 + "/"+post.totalPlayers))
   const postTitle = document.createElement("span")
   postTitle.className = "postTitle";
   postTitle.appendChild(document.createTextNode(post.title))
+  const posterName = document.createElement("span")
+  posterName.className = "gameGenre"
+  posterName.appendChild(document.createTextNode(post.creatorName))
+  const postPlatform = document.createElement("span")
+  postPlatform.className = "gamePlatform"
+  postPlatform.appendChild(document.createTextNode(post.platform))
+  const datePosted = document.createElement("span")
+  datePosted.className = "datePosted"
+  datePosted.appendChild(document.createTextNode((new Date(post.date) ).toDateString() ) )
 
   divGameImg.appendChild(img)
   divGameImg.appendChild(gameTitle)
   divGameImg.appendChild(status)
   divGameImg.appendChild(postTitle)
+  divGameImg.appendChild(posterName)
+  divGameImg.appendChild(postPlatform)
+  divGameImg.appendChild(datePosted)
 
   const gameDet = document.createElement("div")
   gameDet.className = "gameDetails";
 
-  const inviteBut = document.createElement("button")
-  inviteBut.className = "requestInvite";
-  inviteBut.type = "button"
-  inviteBut.name = "Request"
-  inviteBut.appendChild(document.createTextNode("Requst Invite"))
-  inviteBut.addEventListener("click",processRequest)
+  const inviteBut = createInviteButton(post);
   const reportBut = document.createElement("button")
   reportBut.className = "reportButton";
   reportBut.type = "button"
@@ -173,24 +180,45 @@ function makeDefaultPost(post){
   postSection.appendChild(divGameImg)
   postSection.appendChild(gameDet)
   return postSection;
-
-  /**
-  <section class="post">
-    <div class="gameImgIcon">
-      <img src="../resources/images/rayman.jpg" class = "gameImg">
-      <span class= "gameTitle">Rayman Origins</span>
-      <span class= "status">Status: <strong>1/2</strong></span>
-      <span class= "postTitle">Looking for players</span>
-    </div>
-    <div class="gameDetails">
-              <button class ="requestInvite" type="button" name="Request">Request Invite</button>
-      <button class ="reportButton" type="button" name="Report">Report</button>
-
-    </div>
-  </section>
-  **/
-
 }
+
+function createInviteButton(post){
+
+
+  const inviteBut = document.createElement("button")
+  inviteBut.type = "button"
+  inviteBut.name = "Request"
+  if(allPosts.isSessionUserAdmin || post.isSessionUserMember || (post.creatorName == post.sessionUserName)){
+    inviteBut.className = "requestGranted";
+    inviteBut.appendChild(document.createTextNode("Invited"))
+    inviteBut.setAttribute("data_id",post._id);
+    inviteBut.addEventListener("click",goToPost);
+  } else if(post.totalPlayers == post.playersCurrentlyIn){
+    inviteBut.className = "requestInvite";
+    inviteBut.appendChild(document.createTextNode("Full"))
+  } else if(post.waitingForInvite){
+    inviteBut.className = "requestPending";
+    inviteBut.appendChild(document.createTextNode("Waiting for Invite"))
+  } else{
+    inviteBut.className = "requestInvite";
+    inviteBut.appendChild(document.createTextNode("Requst Invite"))
+    inviteBut.addEventListener("click",processRequest)
+  }
+  return inviteBut;
+}
+
+function goToPost(e){
+
+  let xhttp = new XMLHttpRequest();
+  xhttp.open("GET", "post/edit/:id");
+  xhttp.send();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      console.log(this.response);
+    }
+  }
+}
+
 function reportPrompt(e){
   const reportIssue = prompt("Reason for Reporting","");
   alert("Issue Reported. Thanks")
@@ -226,32 +254,33 @@ function createLink() {
 function applyFilter(e){
   const value = e.target.value;
   const compare =e.target.innerText;
-  displayPosts = allPosts;
-  if(value =="people"){
+  if(value == "people"){
+    displayPosts = allPosts.posts;
     displayPosts = displayPosts.filter(function(a){
-      return compare == a.members.length+1;
+      return compare <= a.totalPlayers;
     })
-  } else if(value =="platform") {
+  } else if(value == "platform") {
+    displayPosts = allPosts.posts;
     displayPosts =displayPosts.filter(function(a){
-      return compare == a.platforms;
+      return compare == a.platform;
     })
   } else if(value == "genre"){
-      displayPosts = displayPosts.filter(function(a){
+    displayPosts = allPosts.posts;
+      displayPosts= displayPosts.filter(function(a){
         return a.gameGenres.findIndex(function(b){
-
           return b == compare;
         }) != -1;
       })
   } else if (value == "sort"){
     if (compare == "by Game Name"){
       displayPosts = displayPosts.sort(function(a,b){
-        if (a.gameTitle<b.gameTitle) {return -1};
-        if (a.gameTitle>b.gameTitle) {return 1};
+        if (a.gameTitle.toLowerCase()<b.gameTitle.toLowerCase()) {return -1};
+        if (a.gameTitle.toLowerCase()>b.gameTitle.toLowerCase()) {return 1};
       })
     } else if (compare == "by Date Posted"){
       displayPosts = displayPosts.sort(function(a,b){
-        if (a.dateMade<b.dateMade) {return -1};
-        if (a.dateMade>b.dateMade) {return 1};
+        if (a.date<b.date) {return -1};
+        if (a.date>b.date) {return 1};
       })
     }
   } else{
