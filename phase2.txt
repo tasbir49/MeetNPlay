@@ -1,4 +1,86 @@
-/ route for root; redirect to home
+Late by one day
+
+Out web app is a meetup app for local multiplayer games.
+Users can make posts to host a gaming session and other users and request
+to be invited, upon being invited, users can now more details about the post.
+
+User Instructions:
+    By clicking on the top right profile picture, user may select the option
+    to make a new most. After filling in the information, they can submit the
+    form to create the new post
+
+    In the main home page, users can view multiple different posts from other users
+    They are allowed to access the pages of posts that they are hosting or ones
+    that they have been invited to. Otherwise it will show either that the post
+    is full, waiting for invite, or prompts the user to submit an invite request
+    They can also report different posts and the creator of the post by clicking
+    on the report button at the bottom of the picture.
+
+    On the left of the homepage there are a series of filters and sorting options
+    that the users can choose to their personal preferences.
+    They can also navigate the different pages of posts at the bottom of the screen
+
+    To view your own profile, click the profile picture on the top right corner
+    of the screen on the homepage.
+
+    On the profile page, the user may change any information on there except for
+    member since field, as well as look for other users.
+
+    add more
+
+
+Admin Instructions:
+    This is mostly the same as the User:
+
+    Additional Features:
+        An admin can view any post regardless if they are full or not or invited
+        or not.
+        They can shut down any users by banning on the soon-to-be banned user's
+        profile page
+        They can view all the reports submitted by going to the top right corner
+        on their page and clicking the profile picture, they can see an extra field
+        called reports.
+
+
+
+
+
+
+Login Credentials:
+
+Regular Users:
+username: tasbir
+password: password
+
+username: tasbir49
+password: password
+
+username: Bond
+password: password
+
+ADMIN:
+username: superman
+password: 123456
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// route for root; redirect to home
 app.get('/', sessionChecker, (req, res)
 // route for login
 '/login'
@@ -87,18 +169,3 @@ app.post('/users', (req, res)
 
 //update a profile picure
 app.post('/update-profile-pic', upload.single('update-profile-pic'), (req, res)
-
-
-
-
-Login Credentials:
-
-user: tasbir
-pass: password
-
-user: tasbir49
-pass: password
-
-ADMIN:
-user: superman
-pass: 123456
