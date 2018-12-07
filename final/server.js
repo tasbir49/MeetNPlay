@@ -270,6 +270,7 @@ app.post('/api/post/create', authenticate, (req, res)=> {
     let templatePost = req.body
     templatePost.creator = req.session.user._id
     const post = new Post(templatePost)
+    console.log(post)
     post.save().then((result)=> {
         res.redirect('/post/view/' + result._id.toString())
 
@@ -675,6 +676,14 @@ app.post('/users', (req, res) => {
 		res.status(400).send(error) // 400 for bad request
 	})
 
+})
+
+app.get('/platforms', (req, res) => {
+    Platform.find().then((platform) => {
+        res.send({platform})
+    }, (error) => {
+        res.status(400).send(error)
+    })
 })
 
 //update a profile picure
