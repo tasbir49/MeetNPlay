@@ -84,6 +84,8 @@ function insertLoadingIcon(elem, relativeX="0px", relativeY="0px",
 	for (let i = 0; i < 3; i++) {
 		let div = document.createElement("div");
 		div.style.borderColor = color + " transparent transparent transparent";
+		div.style.width = width;
+		div.style.height = height;
 		loadingIcon.appendChild(div);
 	}
 

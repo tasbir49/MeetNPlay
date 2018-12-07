@@ -235,6 +235,7 @@ header #headerTitle {
 	position: absolute;
     z-index: 11;
     cursor: pointer;
+    background: none !important;
 }
 .hamburger .bar {
     width: 1.75em;
@@ -334,8 +335,6 @@ header #headerTitle {
 .loadingIcon {
 	display: inline-block;
 	position: absolute;
-	width: 16px;
-	height: 16px;
 }
 .loadingIcon div {
 	box-sizing: border-box;

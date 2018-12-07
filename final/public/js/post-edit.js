@@ -3,19 +3,37 @@
 const editFormInputs = document.getElementsByClassName("editFormInput");
 const apiUrl = "/";
 
+const gameInp = document.getElementById("gameTitle-edit");
 const gameLabel = document.getElementById("gameTitle-editLabel");
 let apiTimer;
 let loadingIcon = insertLoadingIcon(gameLabel, "102px", "-1.125rem");
 loadingIcon.style.display = 'none';
 let prevInp = "";
 
+const timeInp = document.getElementById("time-edit");
+const dateInp = document.getElementById("date-edit");
+timeInp.value = "18:00";
+let nextDay = new Date();
+nextDay.setDate(new Date().getDate() + 1)
+dateInp.value = nextDay.getFullYear() + "-" + (nextDay.getMonth() + 1) + "-" + ("0" + nextDay.getDate()).slice(-2);
+
 
 for (let i = 0; i < editFormInputs.length; i++) {
 	editFormInputs[i].addEventListener("focus", (e) => {
-		e.target.parentNode.getElementsByClassName("editFormInputLabel")[0].classList.add("active");
+		if (editFormInputs[i].id !== "platform-edit") {
+			editFormInputs[i].parentElement.getElementsByClassName("editFormInputLabel")[0].classList.add("active");
+		} else {
+			editFormInputs[i].parentElement.parentElement.getElementsByClassName("editFormInputLabel")[0].classList.add("active");
+			editFormInputs[i].parentElement.classList.add("active");
+		}
 	});
 	editFormInputs[i].addEventListener("focusout", (e) => {
-		e.target.parentNode.getElementsByClassName("editFormInputLabel")[0].classList.remove("active");
+		if (editFormInputs[i].id !== "platform-edit") {
+			editFormInputs[i].parentElement.getElementsByClassName("editFormInputLabel")[0].classList.remove("active");
+		} else {
+			editFormInputs[i].parentElement.parentElement.getElementsByClassName("editFormInputLabel")[0].classList.remove("active");
+			editFormInputs[i].parentElement.classList.remove("active");
+		}
 	});
 }
 /**
@@ -27,20 +45,25 @@ searchOptions.game.sort();
 
 **/
 
+const curGame = {
+	name: "",
+	id: "",
+	cover: "",
+	platforms: "",
+	genres: ""
+}
 let gameInfo;
 let xhttp = new XMLHttpRequest();
 xhttp.open("GET", "/igdb/");
-xhttp.send();
 xhttp.onreadystatechange = function() {
 	if (this.readyState == 4 && this.status == 200) {
 		gameInfo = JSON.parse(this.response);
-		const gameInp = document.getElementById("gameTitle-edit");
 		addAutocomplete(gameInp);
 	}
 }
+xhttp.send();
 
 function addAutocomplete(inp) {
-	let optionListInfo = gameInfo;
 	let optionList  = "";
 	if (gameInfo !=null){
 		optionList = gameInfo.names;
@@ -69,11 +92,13 @@ function addAutocomplete(inp) {
 		apiTimer = setTimeout(() => {
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
-					console.log("Show new");
-					optionListInfo = JSON.parse(this.response);
-					optionList = optionListInfo.names;
+					gameInfo = JSON.parse(this.response);
+					optionList = gameInfo.names;
 					loadingIcon.style.display = 'none';
-					showAutocomplete();
+					if (inp === document.activeElement) {
+						showAutocomplete();
+					}
+					updatePlatforms();
 				}
 			}
 			xhttp.open("GET", "/igdb/"+inp.value);
@@ -84,23 +109,7 @@ function addAutocomplete(inp) {
 	function showAutocomplete() {
 		closeAutocomplete();
 		const value = (!inp.value) ? "" : inp.value;
-		// console.log(gameInfo.names)
-		// if (inp.value == ""){
-		// 	optionList = gameInfo.names;
-		// } else if(prevInp != inp.value && timerDone==1){
-		// 	console.log("Timer done")
-		// 	timerDone = 0;
-		// 	prevInp = inp.value;
-		// 	xhttp.onreadystatechange = function() {
-		// 		if (this.readyState == 4 && this.status == 200) {
-		// 			optionListInfo = JSON.parse(this.response);
-		// 			optionList = optionListInfo.names;
-		// 			resetTimer();
-		// 		}
-		// 	}
-		// 	xhttp.open("GET", "/igdb/"+inp.value);
-		// 	xhttp.send();
-		// }
+
 		curItem = -1;
 
 		const itemsContainer = document.createElement("div");
@@ -138,9 +147,15 @@ function addAutocomplete(inp) {
 						inp.focus();
 						const itemVal = item.getElementsByTagName("input")[0].value;
 						inp.value = itemVal;
+						curGame.platforms = gameInfo.platforms[i];
+						curGame.name = itemVal;
+						curGame.id = gameInfo.ids[i];
+						curGame.cover = gameInfo.covers[i];
+						curGame.genres = gameInfo.genres[i];
 
 						closeAutocomplete();
 						showAutocomplete();
+						updatePlatforms();
 					});
 
 					itemsContainer.appendChild(item);
@@ -223,14 +238,140 @@ function addAutocomplete(inp) {
 	}
 }
 
-function removeFromArray(arr, value) {
-	for(let i = 0; i < arr.length; i++) {
-		if (arr[i] === value) {
-			arr.splice(i, 1);
-		}
-	}
-}
-
 function hasClass(element, className) {
 	return (' ' + element.className + ' ').indexOf(' ' + className+ ' ') > -1;
 }
+
+const platformInput = document.getElementById("platform-edit");
+let platforms;
+let platformXHR = new XMLHttpRequest();
+platformXHR.open("GET", "/platforms");
+platformXHR.onreadystatechange = function() {
+	if (this.readyState == 4 && this.status == 200) {
+		const res = JSON.parse(this.response);
+		platforms = res.platforms;
+	}
+}
+platformXHR.send();
+
+function updatePlatforms() {
+	console.log(curGame)
+	if (curGame.name.toUpperCase() !== gameInp.value.toUpperCase()) {
+		curGame.name = gameInp.value;
+		for (let i in gameInfo.names) {
+			if (gameInfo.names[i].toUpperCase() === curGame.name.toUpperCase()) {
+				curGame.platforms = gameInfo.platforms[i];
+				curGame.id = gameInfo.ids[i];
+				curGame.cover = gameInfo.covers[i];
+				curGame.genres = gameInfo.genres[i];
+				break;
+			}
+		}
+	}
+
+	while (platformInput.lastChild) {
+		platformInput.removeChild(platformInput.lastChild);
+	}
+	const matchedPlatforms = platforms.filter(elem => {
+		if (curGame.platforms) {
+			return curGame.platforms.find(e => {
+				return e === elem.igdb_id;
+			});
+		} else {
+			return false;
+		}
+	});
+
+	matchedPlatforms.forEach(elem => {
+		platformInput.appendChild(new Option(elem.name, elem.name));
+	})
+}
+
+platformInput.addEventListener("focus", updatePlatforms);
+
+const postForm = document.getElementById("post-edit");
+let isSubmitting = false;
+
+postForm.addEventListener("submit", e => {
+	e.preventDefault();
+	if (isSubmitting) return;
+	isSubmitting = true;
+	const submitButton = document.getElementById("post-editSubmit");
+	const submitLoadingIcon = insertLoadingIcon(submitButton, "-130px", "2px", "white", "24px", "24px");
+
+	const formData = new FormData(postForm);
+
+	let val = formData.get("game");
+	formData.delete("game");
+	formData.append("gameTitle", val);
+
+	val = formData.get("plaforms");
+	console.log(val)
+
+	const time = formData.get("postTime");
+	const date = formData.get("postDate");
+	formData.delete("postTime");
+	formData.delete("postDate");
+	val = new Date(date + " " + time + ":00")
+	formData.append("date", val);
+	
+	const curDate = new Date();
+	formData.append("dateMade", curDate);
+
+	formData.append("gameGenres", curGame.genres);
+	formData.append("gamePicUrl", curGame.cover);
+	formData.append("gameGenres", curGame.genres);
+
+	// formData.append("members", []);
+	// formData.append("inviteReqs", []);
+	// formData.append("isDeleted", false);
+	// formData.append("creator", "5c06fd100857471b28a74183")
+	// formData.append("comments", [])
+
+	const data = {};
+	// formData.forEach((val, key) => {
+	// 	data[key] = val;
+	// });
+
+
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", "/api/post/create");
+	xhr.setRequestHeader("Content-Type", "application/json");
+	xhr.send(JSON.stringify(data));
+
+	// xhr.onreadystatechange = function() {
+	//     if (this.readyState === 4 && this.status === 200) {
+	//         location.reload();
+	//     } else if (this.readyState === 4) {
+	//         if (!document.getElementById("editProfilePicError")) {
+	//             const errorText = document.createElement("span");
+	//             errorText.id = "editProfilePicError";
+	//             errorText.append(document.createTextNode("Cannot update profile picture."))
+	//             profilePicSample.parentElement.insertBefore(errorText, profilePicSample);
+	//         }
+	//     }
+	// }
+	
+})
+/*
+keywords:Array 0:"play"1:"video"
+gameGenres:Array0:"Fighting"1:"Multiplayer"
+members:Array0:5c06fce30857471b28a74182
+gameTitle:"Battlefield"
+gamePicUrl:"/resources/images/logo.png"
+date:2018-12-07T02:00:16.842+00:00
+dateMade:2018-12-07T02:00:16.842+00:00
+meetLocation:"27 King's College Cir, Toronto, ON M5S"
+playersNeeded:2
+details:"Let's have a lot of fun!There will be great food, a friendly atmosphe..."
+inviteReqs:Array
+plaforms:"PC"
+isDeleted:false
+creator:5c06fd100857471b28a74183
+title:"IDK what im doing"
+comments:
+Array
+__v
+:
+0
+*/
