@@ -140,7 +140,20 @@ li.sideNavGames:hover{
 	width: 75px;
 	border-radius: 50%;
 }
-
+.gameGenre{
+  width: 25%;
+  margin-left: 10%;
+}
+.gamePlatform{
+  display: inline-block;
+  width: 30%;
+  margin-left: 15%;
+}
+.datePosted{
+  display: inline;
+  width: 5%;
+  margin-left: 0;
+}
 .dropdown-content {
     display: none;
     position: absolute;
@@ -209,6 +222,8 @@ button {
 color: inherit;
 border: none;
 padding: 0;
+padding-top: 4px;
+padding-bottom: 4px;
 font: inherit;
 cursor: pointer;
 outline: inherit;
@@ -220,11 +235,31 @@ width: 100%;
 	color: white;
 }
 .requestInvite{
-    display: block;
+  margin-top: 0%;
+  display: block;
 	float: right;
 	width:75%;
 	height:75%;
 }
+
+
+.requestGranted{
+  margin-top: 0%;
+  display: block;
+	float: right;
+	width:75%;
+	height:75%;
+  background-color: #45C48B;
+}
+.requestPending{
+  background-color: #FFD039;
+  margin-top: 0%;
+  display: block;
+  float: right;
+  width:75%;
+  height:75%;
+}
+
 .reportButton{
 	width:10%;
 }
@@ -370,7 +405,7 @@ button:hover {
 }
 
 .panel {
-    padding: 0 18px;
+    padding: 5 18px;
     background-color: white;
     max-height: 0;
     overflow: hidden;

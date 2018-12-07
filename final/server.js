@@ -200,10 +200,12 @@ app.get('/posts',authenticate, (req,res)=>{
                 gameTitle: post.gameTitle,
                 gamePicUrl: post.gamePicUrl,
                 totalPlayers: post.playersNeeded,
-                platform: post.plaform,
+                platform: post.plaforms,
                 gameGenres: post.gameGenres,
                 playersCurrentlyIn: post.members.length,
                 title: post.title,
+                sessionUserName: req.session.user._id,
+                waitingForInvite: post.inviteReqs.includes(req.session.user._id),
                 isSessionUserMember: post.members.includes(req.session.user._id)
             }
             return relevantHomepagePerPostData
