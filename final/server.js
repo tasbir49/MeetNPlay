@@ -264,7 +264,10 @@ app.post('/api/invitereq/:post_id', authenticate,  (req, res)=> {
             inviteReqs.push(req.session.user._id)
             post.set({inviteReqs: inviteReqs})
             return post.save()
-    }).then(res.status(200).send("success"))
+    }).then(res.status(200).send("success")
+    ).catch((error)=> {
+        res.status(400).send("failure")
+    })
 
 })
 
