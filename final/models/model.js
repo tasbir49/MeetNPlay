@@ -37,19 +37,19 @@ const UserSchema = new mongoose.Schema({
     memberSince: {
         type: Date,
         default: Date.now(),
-		required: true 
+		required: true
     },
     profilePicUrl: {
         type: String,
         default: "/resources/images/user_avatar.png",
         required: true
-        
+
     },
     isAdmin : {
         type: Boolean,
         default: false,
         required: true
-        
+
     },
     isBanned : {
         type: Boolean,
@@ -152,7 +152,7 @@ const PostSchema = new mongoose.Schema({//most of these defaults are for testing
         type: Date,
         default: Date.now(), //default is a week from now
         required: true
-    }, 
+    },
     meetLocation: {
         type: String,
         default: "27 King's College Cir, Toronto, ON M5S", //uoft
@@ -166,25 +166,30 @@ const PostSchema = new mongoose.Schema({//most of these defaults are for testing
     details: {
         type: String,
         default: "Let's have a lot of fun!\nThere will be great food, a friendly atmosphere, and some hardcore gaming.\nThe only rule is to bring your own alcohol :D.",
-        required: true 
+        required: true
     },
     inviteReqs: {
         type: [{type: mongoose.Schema.Types.ObjectId, ref: "User"}],
         default: [],
         required: true
     },
+    plaforms: {
+        type: String,
+        default: "",
+        required: false
+    },
     comments: {
         type: [CommentSchema],
         default: [],
         required: true
     },
-    
+
     isDeleted: {
         type: Boolean,
         default: false,
         required: true
     }
-    
+
 })
 
 const ReportSchema= new mongoose.Schema({
@@ -201,7 +206,7 @@ const ReportSchema= new mongoose.Schema({
         required: true
     },
     content: String
-    
+
 })
 
 const Report = mongoose.model('Report', ReportSchema)
