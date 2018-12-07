@@ -184,10 +184,11 @@ function makeDefaultPost(post){
 
 function createInviteButton(post){
 
-
+  console.log(post);
   const inviteBut = document.createElement("button")
   inviteBut.type = "button"
   inviteBut.name = "Request"
+  console.log(post);
   if(allPosts.isSessionUserAdmin || post.isSessionUserMember || (post.creatorName == post.sessionUserName)){
     inviteBut.className = "requestGranted";
     inviteBut.appendChild(document.createTextNode("Invited"))
@@ -202,20 +203,22 @@ function createInviteButton(post){
   } else{
     inviteBut.className = "requestInvite";
     inviteBut.appendChild(document.createTextNode("Requst Invite"))
+    inviteBut.setAttribute("data_id",post._id);
     inviteBut.addEventListener("click",processRequest)
   }
   return inviteBut;
 }
 
 function goToPost(e){
+  const id = e.target.getAttribute("data_id")
+  console.log(id);
 
   let xhttp = new XMLHttpRequest();
   xhttp.open("GET", "post/edit/:id");
   xhttp.send();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      console.log(this.response);
-    }
+        }
   }
 }
 
@@ -225,14 +228,20 @@ function reportPrompt(e){
   //api call for reporting issue
 }
 function processRequest(e){
-  //api send invite request
-  if(requestInviteButton.innerText == "Request Invite"){
-    requestInviteButton.innerText = "Invite Requested";
-    setTimeout(function () {
-      acceptRequest();
-    }, 2000);
-  }
+  const id =e.target.getAttribute("data_id");
 
+  console.log(id);
+  let xhttp = new XMLHttpRequest();
+  xhttp.open("POST", "/api/invitereq/"+id);
+  xhttp.send();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+
+      e.target.className = "requestPending";
+      e.target.innerText = "Waiting for Invite"
+
+    }
+  }
 }
 
 function acceptRequest() {

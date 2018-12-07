@@ -137,7 +137,8 @@ app.get('/post/view/:id', authenticate, (req, res) => {
             retObj.canEdit = true
             res.render("post_view.hbs", retObj)
         } else if(post.members.includes(req.session.user)) {//only members of post can view
-
+            console.log(req.session.user)
+            console.log(post.members)
             res.render("post_view.hbs", retObj)
 
         } else {
@@ -207,9 +208,13 @@ app.get('/posts', (req,res)=>{
                 playersCurrentlyIn: post.members.length,
                 title: post.title,
                 sessionUserName: req.session.user.name,
-                waitingForInvite: post.inviteReqs.includes(req.session.user._id),
-                isSessionUserMember: post.members.includes(req.session.user._id)
+
+                waitingForInvite: String(post.inviteReqs).includes(req.session.user._id),
+                isSessionUserMember: String(post.members).includes(req.session.user._id)
             }
+            console.log(post.inviteReqs);
+            console.log(String(post.inviteReqs).includes(String(req.session.user._id)));
+            console.log(req.session.user._id);
             return relevantHomepagePerPostData
         })
     }).then((posts) => {
