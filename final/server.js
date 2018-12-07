@@ -141,7 +141,6 @@ app.get('/post/view/:id', authenticate, (req, res) => {
                 return member.name
             })
             if(memNames.includes(req.session.user.name)) {
-                console.log("poyo")
                 res.render("post_view.hbs", retObj)
             } else {
                 return res.status(403).send("YOU DONT HAVE PERMISSION TO ACCESS THIS RESOURCE")
