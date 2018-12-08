@@ -51,8 +51,7 @@ xhttp.onreadystatechange = function() {
 }
 
 
-//normally this function would search a database of users in back end
-//but for front end, itll just not find anything
+
 function searchUser(e) {
     e.preventDefault();
     const searchParam = document.querySelector("#searchParam").value
@@ -154,17 +153,17 @@ function makeDefaultPost(post){
   const img = document.createElement("img");
   img.className = "gameImg"
   img.setAttribute("src",post.gamePicUrl)
-  const gameTitle = document.createElement("span")
+  const gameTitle = document.createElement("div")
   gameTitle.className = "gameTitle";
   gameTitle.appendChild(document.createTextNode(post.gameTitle))
-  const status = document.createElement("span")
+  const status = document.createElement("div")
   status.className = "status";
   status.appendChild(document.createTextNode(post.playersCurrentlyIn+1 + "/"+post.totalPlayers))
   const postTitle = document.createElement("span")
   postTitle.className = "postTitle";
   postTitle.appendChild(document.createTextNode(post.title))
   const posterName = document.createElement("span")
-  posterName.className = "gameGenre"
+  posterName.className = "creatorName"
   posterName.appendChild(document.createTextNode(post.creatorName))
   const postPlatform = document.createElement("span")
   postPlatform.className = "gamePlatform"
@@ -173,13 +172,13 @@ function makeDefaultPost(post){
   datePosted.className = "datePosted"
   datePosted.appendChild(document.createTextNode((new Date(post.date) ).toDateString() ) )
 
-  divGameImg.appendChild(img)
-  divGameImg.appendChild(gameTitle)
-  divGameImg.appendChild(status)
   divGameImg.appendChild(postTitle)
-  divGameImg.appendChild(posterName)
-  divGameImg.appendChild(postPlatform)
-  divGameImg.appendChild(datePosted)
+  divGameImg.appendChild(gameTitle)
+  divGameImg.appendChild(img)
+  divGameImg.appendChild(status)
+  // divGameImg.appendChild(posterName)
+  // divGameImg.appendChild(postPlatform)
+  // divGameImg.appendChild(datePosted)
 
   const gameDet = document.createElement("div")
   gameDet.className = "gameDetails";
@@ -194,10 +193,13 @@ function makeDefaultPost(post){
   reportBut.addEventListener("click",reportPrompt);
 
   gameDet.appendChild(inviteBut)
-  gameDet.appendChild(reportBut)
 
   postSection.appendChild(divGameImg)
   postSection.appendChild(gameDet)
+  postSection.appendChild(posterName)
+  postSection.appendChild(postPlatform)
+  postSection.appendChild(datePosted)
+  postSection.appendChild(reportBut)
   return postSection;
 }
 

@@ -114,22 +114,25 @@ li.sideNavGames:hover{
 	padding: 0;
 	margin: 0;
 	float: left;
+
 }
 .gameImg{
 	height: 100%;
 	max-width: 100%;
-	padding: 0;
+	padding: 5px;
 	margin: 0;
-	float: left;
+  display: block;
 }
 .gameTitle{
-	display: inline-block;
-	float: left;
+  padding: 2px;
+	display: block;
 }
 
 .postTitle{
 	display:inline;
-	float: right;
+  float: right;
+  margin-right: 15em;
+
 }
 .gameDetails{
 	display: inline-block;
@@ -140,7 +143,7 @@ li.sideNavGames:hover{
 	width: 75px;
 	border-radius: 50%;
 }
-.gameGenre{
+.creatorName{
   width: 25%;
   margin-left: 10%;
 }
@@ -262,10 +265,11 @@ width: 100%;
 
 .reportButton{
 	width:10%;
+  margin-left: 5em;
 }
 
 .status{
-	margin-left: 10%
+  margin-left: 1em;
 }
 
 #leftSideAccountPage button {
