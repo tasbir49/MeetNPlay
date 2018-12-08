@@ -124,6 +124,7 @@ app.get('/post/view/:id', authenticate, (req, res) => {
     Post.findById(id)
         .populate('creator')
         .populate('members')
+        .populate('comments.user')
         .then((post) => {
 
         if(!post) {
@@ -140,7 +141,7 @@ app.get('/post/view/:id', authenticate, (req, res) => {
             post: post,
             postUrlLocation: formattedLocation
         }
-
+        console.log(retObj.post.comments)
         if(req.session.user.name == post.creator.name || req.session.user.isAdmin) {//these guys can edit parts of the post and add user
             retObj.canEdit = true
             res.render("post_view.hbs", retObj)
@@ -604,7 +605,9 @@ app.post('/api/comments/:post_id',authenticate,(req,res) =>{
   const user = req.session.user._id;
   const content = req.body
   const id = req.params.post_id
-  Post.findByIdAndUpdate(id, {$push:{"comments":{date: new Date(),user:user,content:content}}},{new:true}).then((post)=>{
+  Post.findByIdAndUpdate(id, {$push:{"comments":{date: new Date(),user:user,content:content}}},{new:true})
+  .populate("comments.user")
+  .then((post)=>{
     if(!post){
       res.status(404).send()
     } else{

@@ -14,6 +14,20 @@ if (form) form.addEventListener("submit", addComment);
 
 function addComment(e) {
 	e.preventDefault();
+    
+    let xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+    xmlhttp.open("POST", "/api/comments/:post_id");
+    xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    let sendObj = {}
+    sendObj.perpetrator = document.querySelector('#userNameHeading').innerText
+    sendObj.content = document.querySelector('#reportUserContent').value
+    xmlhttp.send(JSON.stringify(sendObj));
+
+    xmlhttp.onreadystatechange = function() {
+        console.log(this.status)
+            cleanReportUserPrompt();
+
+    }
 
 	const comment = document.createElement("section");
 	comment.className = "comment curUser";
