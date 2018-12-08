@@ -273,7 +273,7 @@ app.post('/api/post/create', authenticate, (req, res)=> {
     post.save().then((result)=> {
         res.redirect('/post/view/' + result._id.toString())
     }).catch((error)=>{
-        res.status(400).send(error)
+\        res.status(400).send(error)
     })
 })
 
