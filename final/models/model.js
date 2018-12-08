@@ -127,7 +127,7 @@ const PostSchema = new mongoose.Schema({//most of these defaults are for testing
     },
     title: {
         type: String,
-        default: "MeetNPlay Meet"
+        default: "MeetNPlay Meet",
         required: true
     },
     keywords : {
