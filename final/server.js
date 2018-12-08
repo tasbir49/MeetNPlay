@@ -270,10 +270,8 @@ app.post('/api/post/create', authenticate, (req, res)=> {
     let templatePost = req.body
     templatePost.creator = req.session.user._id
     const post = new Post(templatePost)
-    console.log(post)
     post.save().then((result)=> {
         res.redirect('/post/view/' + result._id.toString())
-
     }).catch((error)=>{
         res.status(400).send(error)
     })
@@ -541,62 +539,31 @@ app.get('/logout', (req, res) => {
 	})
 })
 
-//get 10 game id and cover from igdb
-app.get('/igdb',(req,res)=>{
-
-	igdb_client.games({
-		fields:"id,name,cover",
-		limit:10,
-		filters: {"version_parent-not_exists":1}
-	}).then(response=>{
-		response.body.sort((a,b)=>{
-			let x = a.name.toLowerCase()
-			let y = b.name.toLowerCase()
-			if(x<y) {return -1}
-			if(x>y) {return 1}
-		});
-		let names =[];
-		let ids =[];
-		let covers = [];
-		response.body.forEach(a=>{
-			names.push(a.name);
-			ids.push(a.id);
-			let coverURL = "/resources/images/logo.png";
-			if (a.cover != null){ //change to big logo if exists
-				const cloud_id = a.cover.cloudinary_id
-				coverURL = igdb_client.image({cloudinary_id:cloud_id},"cover_big","jpg")
-			}
-			covers.push(coverURL);
-		})
-		res.send({names:names,ids:ids,covers:covers});
-
-	}).catch(error=>{
-		res.status(400).send(error)
-	})
-})
-
-
 //get igdb given a name
-app.get('/igdb/:name',(req,res)=>{
+app.get('/igdb/:name*?',(req,res)=>{
+    const gamesData = {
+        fields: "id,name,cover,platforms,genres",
+        limit: 30
+    };
 
-	igdb_client.games({
-		fields:"id,name,cover",
-		limit:30,
-        order: "popularity:desc",
-        search: req.params.name
-		// filters: {"name-prefix": req.params.name,
-							// "version_parent-not_exists":1}
-	}).then(response=>{
-		//res.send(response.body)
+    if (req.params.name) {
+        gamesData.search = req.params.name;
+    } else {
+        gamesData.order = "popularity:desc";
+    }
+
+	igdb_client.games(gamesData).then(response=>{
 		response.body.sort((a,b)=>{
 			let x = a.name.toLowerCase()
 			let y = b.name.toLowerCase()
 			if(x<y) {return -1}
 			if(x>y) {return 1}
 		});
-		let names =[];
-		let ids =[];
-		let covers = [];
+		const names =[];
+		const ids =[];
+		const covers = [];
+        const platforms = [];
+        const genres = [];
 		response.body.forEach(a=>{
 			names.push(a.name);
 			ids.push(a.id);
@@ -606,8 +573,16 @@ app.get('/igdb/:name',(req,res)=>{
 				coverURL = igdb_client.image({cloudinary_id:cloud_id},"cover_big","jpg")
 			}
 			covers.push(coverURL);
+            platforms.push(a.platforms);
+            genres.push(a.genres);
 		})
-		res.send({names:names,ids:ids,covers:covers});
+		res.send({
+            names:names,
+            ids:ids,
+            covers:covers,
+            platforms:platforms,
+            genres:genres
+        });
 
 	}).catch(error=>{
 		res.status(400).send(error)
@@ -679,8 +654,8 @@ app.post('/users', (req, res) => {
 })
 
 app.get('/platforms', (req, res) => {
-    Platform.find().then((platform) => {
-        res.send({platform})
+    Platform.find().then((platforms) => {
+        res.send({platforms})
     }, (error) => {
         res.status(400).send(error)
     })

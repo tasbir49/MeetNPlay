@@ -307,6 +307,7 @@ postForm.addEventListener("submit", e => {
 
 	val = formData.get("plaforms");
 	console.log(val)
+	formData.delete("plaforms");
 
 	const time = formData.get("postTime");
 	const date = formData.get("postDate");
@@ -315,43 +316,35 @@ postForm.addEventListener("submit", e => {
 	val = new Date(date + " " + time + ":00")
 	formData.append("date", val);
 	
-	const curDate = new Date();
-	formData.append("dateMade", curDate);
+	// const curDate = new Date();
+	// formData.append("dateMade", curDate);
 
-	formData.append("gameGenres", curGame.genres);
-	formData.append("gamePicUrl", curGame.cover);
-	formData.append("gameGenres", curGame.genres);
-
-	// formData.append("members", []);
-	// formData.append("inviteReqs", []);
-	// formData.append("isDeleted", false);
-	// formData.append("creator", "5c06fd100857471b28a74183")
-	// formData.append("comments", [])
+	// formData.append("gameGenres", curGame.genres);
+	// formData.append("gamePicUrl", curGame.cover);
 
 	const data = {};
-	// formData.forEach((val, key) => {
-	// 	data[key] = val;
-	// });
-
+	formData.forEach((val, key) => {
+		data[key] = val;
+	});
 
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", "/api/post/create");
 	xhr.setRequestHeader("Content-Type", "application/json");
-	xhr.send(JSON.stringify(data));
 
-	// xhr.onreadystatechange = function() {
-	//     if (this.readyState === 4 && this.status === 200) {
-	//         location.reload();
-	//     } else if (this.readyState === 4) {
-	//         if (!document.getElementById("editProfilePicError")) {
-	//             const errorText = document.createElement("span");
-	//             errorText.id = "editProfilePicError";
-	//             errorText.append(document.createTextNode("Cannot update profile picture."))
-	//             profilePicSample.parentElement.insertBefore(errorText, profilePicSample);
-	//         }
-	//     }
-	// }
-	
+	xhr.onreadystatechange = function() {
+	    if (this.readyState === 4 && this.status === 200) {
+	    	console.log(this.response);
+	    } else if (this.readyState === 4) {
+	        // if (!document.getElementById("editProfilePicError")) {
+	        //     const errorText = document.createElement("span");
+	        //     errorText.id = "editProfilePicError";
+	        //     errorText.append(document.createTextNode("Cannot update profile picture."))
+	        //     profilePicSample.parentElement.insertBefore(errorText, profilePicSample);
+	        // }
+	    }
+	}
+
+	xhr.send(JSON.stringify(data));
 })
 /*
 keywords:Array 0:"play"1:"video"
