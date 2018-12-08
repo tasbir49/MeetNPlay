@@ -36,6 +36,7 @@ const User = Models.User
 const Post = Models.Post
 const Report = Models.Report
 const Platform = Models.Platform
+const Genre = Models.Genre
 const igdb_client = igdb('e5ca32669192cb320e449d73603725d6');
 
 // express
@@ -656,6 +657,13 @@ app.post('/users', (req, res) => {
 app.get('/platforms', (req, res) => {
     Platform.find().then((platforms) => {
         res.send({platforms})
+    }, (error) => {
+        res.status(400).send(error)
+    })
+})
+app.get('/genres', (req, res) => {
+    Genre.find().then((genres) => {
+        res.send({genres})
     }, (error) => {
         res.status(400).send(error)
     })

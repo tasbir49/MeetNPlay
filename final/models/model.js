@@ -22,6 +22,19 @@ const PlatformSchema = new mongoose.Schema({
     }
 })
 
+//hardcoded cache of igdb genres and ids
+const GenreSchema = new mongoose.Schema({
+    genreName: {
+        type: String,
+        required: true
+    },
+    igdb_id: {
+        type: Number,
+        required: true
+    }
+})
+
+
 // We'll make this model in a different way
 const UserSchema = new mongoose.Schema({
 	name: {
@@ -221,9 +234,10 @@ const ReportSchema= new mongoose.Schema({
 
 })
 
+const Genre = mongoose.model('Genre', GenreSchema)
 const Platform = mongoose.model('Platform', PlatformSchema)
 const Report = mongoose.model('Report', ReportSchema)
 const User = mongoose.model('User', UserSchema)
 const Post = mongoose.model('Post', PostSchema)
 
-module.exports = { User:User, Post:Post, Report:Report, Platform:Platform}
+module.exports = { User:User, Post:Post, Report:Report, Platform:Platform, Genre: Genre}

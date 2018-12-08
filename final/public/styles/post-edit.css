@@ -10,7 +10,7 @@ EB3E4A
 }
 
 .editFormInputLabel {
-	display: inline-block;
+	display: block;
 	font-family: "EncodeSans-Light";
 	opacity: 0.75;
 	margin: 0;
@@ -154,6 +154,7 @@ EB3E4A
 	margin-top: 0;
 }
 #spaceAvailable-editLabel {
+	display: inline-block;
 	margin-bottom: 10px;
 }
 #userMessage-edit {
@@ -195,4 +196,21 @@ EB3E4A
 
 #gameDetails > div:not(:first-child) {
 	margin-top: 20px;
+}
+
+#errorMsg {
+	float: right;
+	display: none;
+	margin-top: 20px;
+	/*opacity: 0.75;*/
+	color: #EB3E4A;
+	/*padding: 10px;*/
+}
+
+.required {
+	color: #EB3E4A;
+}
+
+#location-edit {
+	width: 100%;
 }
