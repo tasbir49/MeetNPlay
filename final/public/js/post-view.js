@@ -71,24 +71,23 @@ function addComment(e) {
 	// == == /added USER SECTION
 
 	if (user.userName.nodeValue.toUpperCase() === "ADMIN" || user.userName.nodeValue.toUpperCase() === "POSTER") {
-		console.log("add!");
 		// == == USER OPTIONS BUTTON
 		divSection = document.createElement("div");
 		divSection.className = "userSectionOptionsContainer";
 		divSection2 = document.createElement("div");
 		divSection2.className = "userSectionOptions";
 
-		
+
 		const parser = new DOMParser();
 		// Need to find a framework that inserts SVGs in a better way
 		let svg = parser.parseFromString('<svg class="userOptionsSVG" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 18c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3zm0-9c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3zm0-9c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3z"/></svg>',
 			"image/svg+xml");
-		
+
 		divSection2.appendChild(svg.documentElement);
 
 		elem = document.createElement("ul");
 		elem.className = "userSectionOptionsList";
-		
+
 		// -- Edit comment button
 		// elem2 = document.createElement("li");
 		// elem3 = document.createElement("a");
@@ -96,7 +95,7 @@ function addComment(e) {
 
 		// svg = parser.parseFromString('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7.127 22.564l-7.126 1.436 1.438-7.125 5.688 5.689zm-4.274-7.104l5.688 5.689 15.46-15.46-5.689-5.689-15.459 15.46z"/></svg>',
 		// 	"image/svg+xml");
-		
+
 		// elem3.appendChild(svg.documentElement);
 		// elem3.appendChild(document.createTextNode(" Edit Comment"));
 
@@ -109,7 +108,7 @@ function addComment(e) {
 		elem3.className = "delete deleteComment";
 		svg = parser.parseFromString('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z"/></svg>',
 			"image/svg+xml");
-		
+
 		elem3.appendChild(svg.documentElement);
 		elem3.appendChild(document.createTextNode(" Delete Comment"));
 

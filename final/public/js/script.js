@@ -1,5 +1,7 @@
+"use strict";
 /* AJAX fetch() calls */
 const log = console.log
+
 
 log('Our script')
 function addStudent() {
@@ -11,7 +13,7 @@ function addStudent() {
     }
     // Create our request constructor with all the parameters we need
     const request = new Request(url, {
-        method: 'post', 
+        method: 'post',
         body: JSON.stringify(data),
         headers: {
             'Accept': 'application/json, text/plain, */*',
@@ -27,14 +29,14 @@ function addStudent() {
             console.log('Added student')
             message.innerText = 'Success: Added a student.'
             message.setAttribute("style", "color: green")
-           
+
         } else {
             message.innerText = 'Could not add student'
             message.setAttribute("style", "color: red")
-     
+
         }
         console.log(res)
-        
+
     }).catch((error) => {
         console.log(error)
     })
@@ -44,12 +46,12 @@ function getStudents() {
     const url = '/students';
 
     fetch(url)
-    .then((res) => { 
+    .then((res) => {
         if (res.status === 200) {
-           return res.json() 
+           return res.json()
        } else {
             alert('Could not get students')
-       }                
+       }
     })
     .then((json) => {
         studentsList = document.querySelector('#studentsList')

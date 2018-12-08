@@ -1,3 +1,4 @@
+"use strict";
 
 //the dialog boxes
 const infoChange = document.querySelector("#infoChange");
@@ -20,7 +21,7 @@ if(infoChange){
     infoChange.addEventListener("click", closeInfoPromptCallback);
 }
 
-if(passChange){ 
+if(passChange){
     passChange.addEventListener("click", closePassPromptCallback);
     passChange.addEventListener("submit", changePassCallback);
 }
@@ -31,7 +32,7 @@ if(reportUser) {
 
 }
 
-if(passChangeAdmin){ 
+if(passChangeAdmin){
     passChangeAdmin.addEventListener("click", closePassPromptAdminCallback);
     passChangeAdmin.addEventListener("submit", changePassAdminCallback);
 }
@@ -65,7 +66,7 @@ if(passChangeButton) {
     passChangeButton.addEventListener("click", openPassPromptCallback);
 }
 if(reportUserButton) {
-    reportUserButton.addEventListener("click", openReportUserCallback);    
+    reportUserButton.addEventListener("click", openReportUserCallback);
 }
 
 userNotFound.addEventListener("click", closeUserNotFoundPromptCallback);
@@ -78,8 +79,8 @@ usrSearchForm.addEventListener("submit", searchUserCallback);
 
 function searchUserCallback(e) {
     e.preventDefault();
-    
-    let xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+
+    let xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
     xmlhttp.open("GET", "/users/" + document.querySelector('#userSearchQuery').value);
 
     xmlhttp.send()
@@ -88,11 +89,10 @@ function searchUserCallback(e) {
             window.location = ("/users/" + document.querySelector('#userSearchQuery').value)
 
         } else {
-            console.log(this.status)
             openUserNotFoundPromptCallback()
         }
-    } 
-}    
+    }
+}
 
 
 
@@ -112,7 +112,7 @@ function closeUserNotFoundPromptCallback(e) {
 
 //info prompt----------------------------------------------------
 function openInfoPromptCallback(e) {
-    
+
     infoChange.style.display = "block";
 }
 function closeInfoPromptCallback(e) {
@@ -133,15 +133,15 @@ function cleanInfoPrompt() {
 //due to no backend, this does nothing
 function openPassPromptCallback(e) {
     passChange.style.display = "block";
-    
+
 }
 
 function closePassPromptCallback(e) {
-    
+
      if(e.target.classList.contains("closeBox") || e.target.classList.contains("dialogContainer"))
         {
             cleanPassPrompt();
-        }    
+        }
 }
 
 function cleanPassPrompt() {
@@ -158,15 +158,15 @@ function cleanPassPrompt() {
 //so far no backend integration so changing pass does nothing
 function openPassPromptAdminCallback(e) {
     passChangeAdmin.style.display = "block";
-    
+
 }
 
 function closePassPromptAdminCallback(e) {
-    
+
      if(e.target.classList.contains("closeBox") || e.target.classList.contains("dialogContainer"))
         {
             cleanPassAdminPrompt();
-        }    
+        }
 }
 
 function cleanPassAdminPrompt() {
@@ -184,14 +184,14 @@ function cleanPassAdminPrompt() {
 //report user prompt-----------------
 
 function openReportUserCallback(e) {
-    reportUser.style.display = "block";    
+    reportUser.style.display = "block";
 }
 
 function closeReportUserPromptCallback(e) {
     if(e.target.classList.contains("closeBox") || e.target.classList.contains("dialogContainer"))
         {
             cleanReportUserPrompt();
-        }     
+        }
 }
 
 function cleanReportUserPrompt() {
@@ -215,27 +215,25 @@ function cleanReportUserPrompt() {
 
 //normally this would update info to the backend as well
 function editInfoCallback(e) {
-    infoEditSetup(e.target.parentNode);    
+    infoEditSetup(e.target.parentNode);
     openInfoPromptCallback(e)
 }
 
 //function using closures to allow access to infoSection from infoEditCallback
 function infoEditSetup(infoSectionNode) {
-    
+
     //Function to edit fields in account page
     function infoEditCallback(e) {
         e.preventDefault();
-        console.log(this);
         let newInfoContent = e.target.parentNode.querySelector("#newInfo").value
         let infoContentArea = infoSectionNode.querySelector(".userInfoSectionContent");
 
-        let xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+        let xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
         xmlhttp.open("PATCH", "/api/users/changeInfo/" + document.querySelector('#userNameHeading').innerText);
         xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         let sendObj = {}
-        console.log(infoSectionNode)
         sendObj[infoSectionNode.getAttribute("data-property")] = newInfoContent
-        
+
         xmlhttp.send(JSON.stringify(sendObj));
 
         xmlhttp.onreadystatechange = function() {
@@ -250,16 +248,15 @@ function infoEditSetup(infoSectionNode) {
                     infoChange.removeEventListener("submit", infoEditCallback);
                     cleanInfoPrompt();
             } else {
-                    console.log(sendObj)
-                    console.log(this.status)
+
                     infoChange.removeEventListener("submit", infoEditCallback);
                     cleanInfoPrompt();
             }
-        }        
-       
-   
+        }
+
+
     }
-    
+
     //listener only needed for setup
     infoChange.addEventListener("submit", infoEditCallback);
 
@@ -272,16 +269,16 @@ function changePassCallback(e) {
     let newPass = document.querySelector("#newPass").value
     let confirmPass = document.querySelector("#confirmPass").value
     if(newPass === confirmPass) {
-        let xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+        let xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
             xmlhttp.open("PATCH", "/api/users/changePassword/" + document.querySelector('#userNameHeading').innerText);
             xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             let sendObj = {}
-                
-            sendObj.oldPassword = document.querySelector("#oldPass").value    
-            sendObj.password = document.querySelector("#newPass").value    
-            
+
+            sendObj.oldPassword = document.querySelector("#oldPass").value
+            sendObj.password = document.querySelector("#newPass").value
+
             xmlhttp.send(JSON.stringify(sendObj));
-           
+
             xmlhttp.onreadystatechange = function() {
                 if (this.status == 200) {
                     cleanPassPrompt();
@@ -293,17 +290,15 @@ function changePassCallback(e) {
                     document.querySelector("#oldPass").value = ""
                     document.querySelector("#oldPass").placeholder = this.responseText
 
-                    console.log(this.status)
-                    console.log(this.responseText)
                 }
-        } 
+        }
     } else {
         document.querySelector("#newPass").value = ""
         document.querySelector("#newPass").placeholder = "try again"
         document.querySelector("#confirmPass").value = ""
         document.querySelector("#confirmPass").placeholder = "try again"
         document.querySelector("#oldPass").value = ""
-        document.querySelector("#oldPass").placeholder = "confirm and new not same"   
+        document.querySelector("#oldPass").placeholder = "confirm and new not same"
     }
 }
 
@@ -311,17 +306,17 @@ function changePassCallback(e) {
 //password
 function changePassAdminCallback(e) {
     e.preventDefault();
-    
-    let xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+
+    let xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
     xmlhttp.open("PATCH", "/api/users/changeInfo/" + document.querySelector('#userNameHeading').innerText);
     xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     let sendObj = {}
-        
 
-    sendObj.password = document.querySelector("#newPassAdmin").value    
-    
+
+    sendObj.password = document.querySelector("#newPassAdmin").value
+
     xmlhttp.send(JSON.stringify(sendObj));
-   
+
     xmlhttp.onreadystatechange = function() {
         if (this.status == 200) {
                 cleanPassAdminPrompt();
@@ -331,22 +326,21 @@ function changePassAdminCallback(e) {
             document.querySelector("#newPassAdmin").value = ""
             document.querySelector("#newPassAdmin").placeholder = "try again"
 
-            console.log(this.status)
         }
-    } 
-    
+    }
+
 }
 
 //adds or removes user to banned database but does nothing for now
 //but change the button to say Unban
 function banOrUnbanUserCallback(e) {
-    let xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+    let xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
     xmlhttp.open("PATCH", "/api/users/changeInfo/" + document.querySelector('#userNameHeading').innerText);
     xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     let sendObj = {}
-        
 
-       
+
+
     let textVal = banUserButton.firstChild.nodeValue;
     let newTextNode;
     if(textVal == "Ban this user") {
@@ -355,7 +349,7 @@ function banOrUnbanUserCallback(e) {
         sendObj.isBanned = false
     }
     xmlhttp.send(JSON.stringify(sendObj));
-   
+
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             if(textVal == "Ban this user") {
@@ -366,21 +360,19 @@ function banOrUnbanUserCallback(e) {
                 banUserButton.removeChild(banUserButton.firstChild);
             banUserButton.appendChild(newTextNode);
 
-        } else {
-            console.log(this.status)
         }
-    } 
+    }
 }
 
 
 function makeOrRevokeAdminCallback(e) {
-    let xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+    let xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
     xmlhttp.open("PATCH", "/api/users/changeInfo/" + document.querySelector('#userNameHeading').innerText);
     xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     let sendObj = {}
-        
 
-       
+
+
     let textVal = revokeAdminButton.firstChild.nodeValue;
     let newTextNode;
     if(textVal == "Revoke Admin Priveleges") {
@@ -389,7 +381,7 @@ function makeOrRevokeAdminCallback(e) {
         sendObj.isAdmin = true
     }
     xmlhttp.send(JSON.stringify(sendObj));
-   
+
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             if(textVal == "Revoke Admin Priveleges") {
@@ -400,16 +392,14 @@ function makeOrRevokeAdminCallback(e) {
             revokeAdminButton.removeChild(revokeAdminButton.firstChild);
             revokeAdminButton.appendChild(newTextNode);
 
-        } else {
-            console.log(this.status)
         }
-    } 
+    }
 }
 
 //should add to report database in backend
 function reportUserCallback(e) {
     e.preventDefault();
-    let xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+    let xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
     xmlhttp.open("POST", "/reports/api/create");
     xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     let sendObj = {}
@@ -418,7 +408,6 @@ function reportUserCallback(e) {
     xmlhttp.send(JSON.stringify(sendObj));
 
     xmlhttp.onreadystatechange = function() {
-        console.log(this.status)
             cleanReportUserPrompt();
 
     }
@@ -457,7 +446,7 @@ if(profilePicEditable) {
 
         const reader = new FileReader();
         reader.onloadend = () => {
-            document.getElementById("editProfilePicSample").style.backgroundImage = "url(" + reader.result + ")";        
+            document.getElementById("editProfilePicSample").style.backgroundImage = "url(" + reader.result + ")";
         }
         reader.readAsDataURL(file);
 

@@ -14,7 +14,6 @@ let pageNumber = 0;
 if(reports) {
     let i = 0;
     for(i = 0; i < reports.length; i++) {
-        console.log("heyyyy");
         currButton = reports[i].querySelector(".closeReport");
         currButton.addEventListener("click", closeReport);
         allReports.push(reports[i]);

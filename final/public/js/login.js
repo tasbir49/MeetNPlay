@@ -1,5 +1,6 @@
 "use strict"
 
+
 const loginForm = document.querySelector('#loginForm')
 loginForm.addEventListener('submit',login);
 
@@ -10,10 +11,8 @@ function login(e){
 
   const nextPg = validLogin(loginForm.firstElementChild.value,loginForm.firstElementChild.nextElementSibling.value);
   if (nextPg){
-    console.log("hi");
     window.location.href = nextPg;
   } else{
-    console.log("wrong");
     alert("wrong login please try again");
   }
 }
