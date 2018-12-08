@@ -6,7 +6,7 @@ const apiUrl = "/";
 const gameInp = document.getElementById("gameTitle-edit");
 const gameLabel = document.getElementById("gameTitle-editLabel");
 let apiTimer;
-let loadingIcon = insertLoadingIcon(gameLabel, "102px", "-1.125rem");
+let loadingIcon = insertLoadingIcon(gameLabel, "112px", "-1.125rem");
 loadingIcon.style.display = 'none';
 let prevInp = "";
 
@@ -54,11 +54,12 @@ const curGame = {
 }
 let gameInfo;
 let xhttp = new XMLHttpRequest();
-xhttp.open("GET", "/igdb/");
+xhttp.open("GET", "/igdb/"+gameInp.value);
 xhttp.onreadystatechange = function() {
 	if (this.readyState == 4 && this.status == 200) {
 		gameInfo = JSON.parse(this.response);
 		addAutocomplete(gameInp);
+		updatePlatforms();
 	}
 }
 xhttp.send();
@@ -244,7 +245,7 @@ function hasClass(element, className) {
 
 const platformInput = document.getElementById("platform-edit");
 let platforms;
-let platformXHR = new XMLHttpRequest();
+const platformXHR = new XMLHttpRequest();
 platformXHR.open("GET", "/platforms");
 platformXHR.onreadystatechange = function() {
 	if (this.readyState == 4 && this.status == 200) {
@@ -254,8 +255,18 @@ platformXHR.onreadystatechange = function() {
 }
 platformXHR.send();
 
+let genres;
+const genreXHR = new XMLHttpRequest();
+genreXHR.open("GET", "/genres");
+genreXHR.onreadystatechange = function() {
+	if (this.readyState == 4 && this.status == 200) {
+		const res = JSON.parse(this.response);
+		genres = res.genres;
+	}
+}
+genreXHR.send();
+
 function updatePlatforms() {
-	console.log(curGame)
 	if (curGame.name.toUpperCase() !== gameInp.value.toUpperCase()) {
 		curGame.name = gameInp.value;
 		for (let i in gameInfo.names) {
@@ -306,8 +317,9 @@ postForm.addEventListener("submit", e => {
 	formData.append("gameTitle", val);
 
 	val = formData.get("plaforms");
-	console.log(val)
-	formData.delete("plaforms");
+	if (!val) {
+		formData.delete("plaforms");
+	}
 
 	const time = formData.get("postTime");
 	const date = formData.get("postDate");
@@ -316,55 +328,58 @@ postForm.addEventListener("submit", e => {
 	val = new Date(date + " " + time + ":00")
 	formData.append("date", val);
 	
-	// const curDate = new Date();
-	// formData.append("dateMade", curDate);
 
-	// formData.append("gameGenres", curGame.genres);
-	// formData.append("gamePicUrl", curGame.cover);
-
-	const data = {};
-	formData.forEach((val, key) => {
-		data[key] = val;
+	const matchedGenres = genres.filter(elem => {
+		if (curGame.genres) {
+			return curGame.genres.find(e => {
+				return e === elem.igdb_id;
+			});
+		} else {
+			return false;
+		}
 	});
 
+	if (matchedGenres.length) {
+		formData.append("gameGenres", matchedGenres);
+	}
+	formData.append("gamePicUrl", curGame.cover);
+
+	const data = {};
+
+	formData.forEach((val, key) => {
+		if (!val && key !== "plaforms" && key !== "keywords" && isSubmitting) {
+			isSubmitting = false;
+			submitButton.removeChild(submitLoadingIcon);
+			document.getElementById("errorMsg").style.display = 'inline';
+			const inps = document.getElementsByClassName("editFormInput");
+			for (let i in inps) {
+				if (inps[i].name === key || (inps[i].name === "game" && key === "gameTitle")) {
+					inps[i].previousElementSibling.classList.add("required");
+				}
+			}
+		}
+		if (isSubmitting) {
+			data[key] = val;
+		}
+	});
+	if (!isSubmitting) {
+		return;
+	}
+
 	let xhr = new XMLHttpRequest();
-	xhr.open("POST", "/api/post/create");
+	if (!isEdit) {
+		xhr.open("POST", "/api/post/create");
+	} else {
+		const editID = location.pathname.substr(location.pathname.lastIndexOf('/') + 1);
+		xhr.open("PATCH", "/api/post/edit/" + editID);
+	}
 	xhr.setRequestHeader("Content-Type", "application/json");
 
 	xhr.onreadystatechange = function() {
-	    if (this.readyState === 4 && this.status === 200) {
-	    	console.log(this.response);
-	    } else if (this.readyState === 4) {
-	        // if (!document.getElementById("editProfilePicError")) {
-	        //     const errorText = document.createElement("span");
-	        //     errorText.id = "editProfilePicError";
-	        //     errorText.append(document.createTextNode("Cannot update profile picture."))
-	        //     profilePicSample.parentElement.insertBefore(errorText, profilePicSample);
-	        // }
+	    if (this.readyState === 4) {
+	    	location = this.responseURL;
 	    }
 	}
 
 	xhr.send(JSON.stringify(data));
 })
-/*
-keywords:Array 0:"play"1:"video"
-gameGenres:Array0:"Fighting"1:"Multiplayer"
-members:Array0:5c06fce30857471b28a74182
-gameTitle:"Battlefield"
-gamePicUrl:"/resources/images/logo.png"
-date:2018-12-07T02:00:16.842+00:00
-dateMade:2018-12-07T02:00:16.842+00:00
-meetLocation:"27 King's College Cir, Toronto, ON M5S"
-playersNeeded:2
-details:"Let's have a lot of fun!There will be great food, a friendly atmosphe..."
-inviteReqs:Array
-plaforms:"PC"
-isDeleted:false
-creator:5c06fd100857471b28a74183
-title:"IDK what im doing"
-comments:
-Array
-__v
-:
-0
-*/

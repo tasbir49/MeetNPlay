@@ -661,6 +661,13 @@ app.get('/platforms', (req, res) => {
         res.status(400).send(error)
     })
 })
+app.get('/genres', (req, res) => {
+    Genre.find().then((genres) => {
+        res.send({genres})
+    }, (error) => {
+        res.status(400).send(error)
+    })
+})
 
 //update a profile picure
 app.post('/update-profile-pic', upload.single('update-profile-pic'), (req, res) => {
