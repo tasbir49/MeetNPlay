@@ -70,7 +70,6 @@ function searchUser(e) {
 }
 
 function checkKeyWords(post,search){
-  console.log(post);
   const gameTitle =checkValid(post.gameTitle,search)
 
   const title =checkValid(post.title,search)
@@ -208,11 +207,9 @@ function makeDefaultPost(post){
 
 function createInviteButton(post){
 
-  console.log(post);
   const inviteBut = document.createElement("button")
   inviteBut.type = "button"
   inviteBut.name = "Request"
-  console.log(post);
   if(allPosts.isSessionUserAdmin || post.isSessionUserMember || (post.creatorName == post.sessionUserName)){
     inviteBut.className = "requestGranted";
     inviteBut.appendChild(document.createTextNode("Go to Details"))
@@ -235,7 +232,7 @@ function createInviteButton(post){
 
 function goToPost(e){
   const id = e.target.getAttribute("data_id")
-  console.log(id);
+
 
   let xhttp = new XMLHttpRequest();
   xhttp.open("GET", "post/view/"+id);
@@ -272,7 +269,6 @@ function reportPrompt(e){
 function processRequest(e){
   const id =e.target.getAttribute("data_id");
 
-  console.log(id);
   let xhttp = new XMLHttpRequest();
   xhttp.open("POST", "/api/invitereq/"+id);
   xhttp.send();
