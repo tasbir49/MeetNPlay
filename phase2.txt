@@ -1,5 +1,8 @@
 Late by one day
 
+link to deployed app:
+https://arcane-falls-88322.herokuapp.com/home
+
 Out web app is a meetup app for local multiplayer games.
 Users can make posts to host a gaming session and other users and request
 to be invited, upon being invited, users can now more details about the post.
@@ -43,7 +46,7 @@ Admin Instructions:
 
         They can change anyones password without knowing their original password on their profile page
         They can edit users info and profile picture, and revoke or give admin rights while on their page
-        They have the same priveleges as the creator of 
+        They have the same priveleges as the creator of
 
 
 
