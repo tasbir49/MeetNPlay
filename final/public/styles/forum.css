@@ -146,6 +146,7 @@ li.sideNavGames:hover{
 .creatorName{
   width: 25%;
   margin-left: 10%;
+  color: white;
 }
 .gamePlatform{
   display: inline-block;
