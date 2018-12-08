@@ -103,6 +103,7 @@ app.get('/', sessionChecker, (req, res) => {
 	res.redirect('/home')
 })
 
+
 // route for login
 app.route('/login')
 	.get(sessionChecker, (req, res) => {
@@ -273,6 +274,7 @@ app.post('/api/post/create', authenticate, (req, res)=> {
     const post = new Post(templatePost)
     post.save().then((result)=> {
         res.redirect('/post/view/' + result._id.toString())
+
     }).catch((error)=>{
         res.status(400).send(error)
     })
@@ -323,7 +325,16 @@ app.patch('/api/post/edit/:id', authenticate, (req, res) => {
 })
 
 
-
+//this is for postman, shouldnt be used anywhere else
+app.post('/api/post/createnoauth', (req, res)=> {
+    let templatePost = req.body
+    const post = new Post(templatePost)
+    post.save().then((result)=> {
+        res.redirect('/post/view/' + result._id.toString())
+    }).catch((error)=>{
+        res.status(400).send(error)
+    })
+})
 
 //getting a users page (NOT THE JSON, THE ACTUAL WEBPAGE)
 app.get('/users/:username', authenticate, (req, res) => {
