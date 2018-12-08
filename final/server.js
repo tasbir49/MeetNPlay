@@ -36,6 +36,7 @@ const User = Models.User
 const Post = Models.Post
 const Report = Models.Report
 const Platform = Models.Platform
+const Genre = Models.Genre
 const igdb_client = igdb('e5ca32669192cb320e449d73603725d6');
 
 // express
