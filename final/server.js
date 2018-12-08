@@ -278,16 +278,6 @@ app.post('/api/post/create', authenticate, (req, res)=> {
     })
 })
 
-//this is for postman
-app.post('/api/post/createnoauth', (req, res)=> {
-    let templatePost = req.body
-    const post = new Post(templatePost)
-    post.save().then((result)=> {
-        res.redirect('/post/view/' + result._id.toString())
-    }).catch((error)=>{
-        res.status(400).send(error)
-    })
-})
 
 //editing a post, assuming json body has all fields
 //the ref fields should be OBJECT IDs, use this for editing any part of post
@@ -322,7 +312,7 @@ app.patch('/api/post/edit/:id', authenticate, (req, res) => {
 
 })
 
-app.get('/api/users/:id',authenticate,(req,res)=>{
+app.get('/api/users/:id',(req,res)=>{
 
   const id = req.params.id
 
@@ -382,7 +372,6 @@ app.patch('/api/users/changeInfo/:username', authenticate, (req,res)=> {
             res.status.send(403).send("NO PERMISSION")
             } else {
                 User.findOne({name: username}).then((user)=> {
-                console.log(req.body)
                 user.set(req.body)
                 return user.save()
                }).then((user)=>{
@@ -440,24 +429,6 @@ app.post('/reports/api/create', authenticate, (req, res)=> {
     })
 })
 
-//postman only same as /reports/api/create but no authentication for easy postman test
-app.post('/reports/api/createnoauth', (req, res)=> {
-    User.findOne({name: req.body.perpetrator.toLowerCase()}//this is slightly confusing, perpetrator in this context refers to the NAME of the user
-    ).then((user)=>{
-        let templateReport = req.body
-        //templateReport.perpetrator = user._id
-        return templateReport
-    }).then((reportTemplate)=>{
-        reportTemplate.date = Date.now()
-        reportTemplate.isClosed = false
-        const report = new Report(reportTemplate)
-        return report.save()
-    }).then((report)=>{
-        res.send(report)
-    }).catch((error)=>{
-        res.status(400).send(error)
-    })
-})
 
 //closes report with id
 //expects only  the id, other fields are ignored
@@ -653,10 +624,8 @@ app.delete('/api/comments/:post_id/:comment_id',authenticate,(req,res)=>{
 app.post('/users', (req, res) => {
 
 	// Create a new user
-  console.log(req.body);
 	let user = new User(req.body)
   user.name = user.name.toLowerCase()
-  console.log(user);
 	// save user to database
 	user.save().then((result) => {
 		res.send(user)
