@@ -322,7 +322,7 @@ app.patch('/api/post/edit/:id', authenticate, (req, res) => {
 
 })
 
-app.get('/api/users/:id',(req,res)=>{
+app.get('/api/users/:id',authenticate,(req,res)=>{
 
   const id = req.params.id
 
@@ -334,6 +334,7 @@ app.get('/api/users/:id',(req,res)=>{
     }
   })
 })
+
 
 
 //getting a users page (NOT THE JSON, THE ACTUAL WEBPAGE)
