@@ -1,0 +1,18 @@
+.spaceAvailable {
+    left: 0;
+    top: 4rem;
+    width: 130px;
+}
+ul.userSectionOptionsList.spaceAvailable.active {
+    display: block;
+}
+
+#spaceAvailableSlots,
+#memberSlots {
+    display: block;
+}
+
+.spaceL {
+    display: block;
+    margin-bottom: 10px;
+}

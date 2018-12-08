@@ -255,6 +255,28 @@ app.post('/api/invitereq/:post_id', authenticate,  (req, res)=> {
 
 })
 
+app.delete('/api/invitereq/:post_id/:user_id', authenticate,  (req, res)=> {
+    const postID = req.params.post_id
+    const userID = req.params.user_id
+
+
+    Post.findById(id).then((post)=> {
+            let inviteReqs = post.inviteReqs
+            for (let i = 0; i < inviteReqs.length; i++) {
+                if (inviteReqs[i] === userID) {
+                    inviteReqs.splice(i, 1);
+                    break;
+                }
+            }
+            post.set({inviteReqs: inviteReqs})
+            return post.save()
+    }).then(res.status(200).send("success")
+    ).catch((error)=> {
+        res.status(400).send("failure")
+    })
+
+})
+
 //getting a page to make post
 app.get('/post/make', authenticate, (req, res) => {
         let retObj = {

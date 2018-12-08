@@ -9,10 +9,10 @@ EB3E4A
 .spaceAvailableSlotsImg {
 	position: relative;
 }
-.spaceAvailableSlotsImg:hover {
+.spaceAvailableSlotsImg2:hover {
 	opacity: 1;
 }
-.spaceAvailableSlotsImg:active {
+.spaceAvailableSlotsImg2:active {
 	opacity: 0.8;
 }
 

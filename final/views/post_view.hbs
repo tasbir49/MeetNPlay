@@ -15,6 +15,7 @@
 	<link rel="stylesheet" href="/styles/post-main.css">
 	<link rel="stylesheet" href="/styles/user_header.css">
 	<link rel="stylesheet" href="/styles/post-view.css">
+	<link rel="stylesheet" href="/styles/post-invite.css">
 </head>
 <body>
     {{> header_partial }} 
@@ -54,8 +55,13 @@
                         <h3><a href="https://www.google.com/maps/search/?api=1&query={{{postUrlLocation}}}">{{post.meetLocation}}</a></h3>
 					</section></div>
 					<div id="spaceAvailableContainer"><section id="spaceAvailable" class="sectionCard">
-						<span id="spaceAvailableTitle">Space Available: </span><span id="spaceAvailableNum">{{post.playersNeeded}}</span><button id="requestInvite"></button>
+						<span id="spaceAvailableTitle">Space Available: </span><span id="spaceAvailableNum"></span><button id="requestInvite" value="{{post.playersNeeded}}"></button>
+						
+						<div class="spaceL">Invite requests</div>
 						<div id="spaceAvailableSlots">
+						</div>
+						<div class="spaceL">Members</div>
+						<div id="memberSlots">
 						</div>
 					</section></div>
 				</section></div>
@@ -134,6 +140,7 @@
 
 	<script>
 		const inviteIDs = "{{post.inviteReqs}}".split(",");
+		const memberIDs = "{{post.members}}".split(",");
 		const postID = "{{post._id}}";
         const userName = "{{user.name}}";
         const userCity = "{{user.city}}";
@@ -142,5 +149,6 @@
 	</script>
 	<script src="/js/post-main.js"></script>
 	<script src="/js/post-view.js"></script>
+	<script src="/js/post-invite.js"></script>
 </body>
 </html>

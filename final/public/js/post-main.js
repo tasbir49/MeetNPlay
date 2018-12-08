@@ -54,36 +54,6 @@ document.addEventListener("click", (e) => {
 	}
 });
 
-
-
-
-// This if statement is a hacky check if user is logged in; just for phase 1.
-if (document.getElementById("navUser")) {
-	const inviteBtn = document.getElementById("requestInvite");
-	let invited = false;
-	if (inviteBtn) {
-		inviteBtn.addEventListener("click", (e) => {
-			if (!inviteBtn.classList.contains("active") && !invited) {
-				invited = true;
-
-				// insertLoadingIcon defined in /scripts/main.js
-				let loadingIcon;
-				if (inviteBtn.classList.contains("requestJoin")) {
-					loadingIcon = insertLoadingIcon(inviteBtn, "22px", "2px");
-				} else {
-					loadingIcon = insertLoadingIcon(inviteBtn, "7px", "2px", "black");
-				}
-				setTimeout(() => {
-					inviteBtn.classList.add("active");
-					inviteBtn.removeChild(loadingIcon);
-				}, 2000);
-			}
-		});
-	}
-} else {
-	// console.log("Go log in!");
-}
-
 function isOverflown(elem) {
 	return elem.scrollHeight > elem.clientHeight;
 }
