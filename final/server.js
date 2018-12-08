@@ -298,7 +298,7 @@ app.patch('/api/post/edit/:id', authenticate, (req, res) => {
         return res.status(404).send("404 NOT FOUND SORRY")
     }
 
-    Post.findById(id).then((post) => {
+    Post.findById(id).populate("creator").then((post) => {
 
         if(!post) {
             res.status(404).send("404 NOT FOUND SORRY")
@@ -308,7 +308,7 @@ app.patch('/api/post/edit/:id', authenticate, (req, res) => {
             user: req.session.user
         }
 
-        if(req.session.user.name === post.creator || req.session.user.isAdmin) {//these guys can edit parts of the post and add user
+        if(req.session.user.name === post.creator.name || req.session.user.isAdmin) {//these guys can edit parts of the post and add user
             post.set(req.body)
             post.save().then( (post) => {res.redirect("/post/view/" + post.id.toString())}
             ).catch((error) => {return res.status(400).send(error)})
