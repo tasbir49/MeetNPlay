@@ -54,9 +54,8 @@
                         <h3><a href="https://www.google.com/maps/search/?api=1&query={{{postUrlLocation}}}">{{post.meetLocation}}</a></h3>
 					</section></div>
 					<div id="spaceAvailableContainer"><section id="spaceAvailable" class="sectionCard">
-						<span id="spaceAvailableTitle">Space Available: </span><span id="spaceAvailableNum">1</span><button id="requestInvite"></button>
+						<span id="spaceAvailableTitle">Space Available: </span><span id="spaceAvailableNum">{{post.playersNeeded}}</span><button id="requestInvite"></button>
 						<div id="spaceAvailableSlots">
-							<div class="spaceAvailableSlotsImg"></div>
 						</div>
 					</section></div>
 				</section></div>
@@ -132,6 +131,10 @@
 		</section></div>
 	</section>
 
+	<script>
+		const inviteIDs = "{{post.inviteReqs}}".split(",");
+		const postID = "{{post._id}}";
+	</script>
 	<script src="/js/post-main.js"></script>
 	<script src="/js/post-view.js"></script>
 </body>
