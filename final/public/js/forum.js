@@ -162,9 +162,12 @@ function makeDefaultPost(post){
   const postTitle = document.createElement("span")
   postTitle.className = "postTitle";
   postTitle.appendChild(document.createTextNode(post.title))
-  const posterName = document.createElement("span")
+
+  const posterName = document.createElement("a")
+  posterName.href ="/users/"+post.creatorName
   posterName.className = "creatorName"
   posterName.appendChild(document.createTextNode(post.creatorName))
+
   const postPlatform = document.createElement("span")
   postPlatform.className = "gamePlatform"
   postPlatform.appendChild(document.createTextNode(post.platform))
