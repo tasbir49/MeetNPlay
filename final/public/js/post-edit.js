@@ -337,8 +337,9 @@ postForm.addEventListener("submit", e => {
 		} else {
 			return false;
 		}
-	});
-
+	}).map(elem => {
+		return elem.genreName;
+	})
 	if (matchedGenres.length) {
 		formData.append("gameGenres", matchedGenres);
 	}

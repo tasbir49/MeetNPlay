@@ -32,6 +32,12 @@ input:hover{
   opacity: 0.8;
 }
 
+.newUser{
+  color:white;
+}
+.newUser:hover{
+  color:gold;
+}
 
 #mainlogo{
   width: 33%;
