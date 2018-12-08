@@ -322,7 +322,18 @@ app.patch('/api/post/edit/:id', authenticate, (req, res) => {
 
 })
 
+app.get('/api/users/:id',(req,res)=>{
 
+  const id = req.params.id
+
+  User.findById(id).then((user)=>{
+    if(!user){
+      res.status(404).send()
+    } else{
+      res.send({user})
+    }
+  })
+})
 
 
 //getting a users page (NOT THE JSON, THE ACTUAL WEBPAGE)
