@@ -4,31 +4,29 @@ const form = document.getElementById("commentForm");
 const inp = document.getElementById("commentInput");
 const thread = document.getElementById("thread");
 
-const user = {
-	userName : document.getElementById("navUserName").childNodes[0],
-	userLocation : "Harare, Zimbabwe",
-}
+
 
 // Will soon properly append to DOM to avoid adding event listener again
 if (form) form.addEventListener("submit", addComment);
 
 function addComment(e) {
 	e.preventDefault();
-    
+    console.log(postID)
     let xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
-    xmlhttp.open("POST", "/api/comments/:post_id");
+    xmlhttp.open("POST", "/api/comments/" + postID);
     xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    
     let sendObj = {}
-    sendObj.perpetrator = document.querySelector('#userNameHeading').innerText
-    sendObj.content = document.querySelector('#reportUserContent').value
+    sendObj.content = inp.value
     xmlhttp.send(JSON.stringify(sendObj));
 
     xmlhttp.onreadystatechange = function() {
-        console.log(this.status)
-            cleanReportUserPrompt();
+        if (this.status == 200) {
 
-    }
-
+        } else {
+            console.log(this.status)
+        }
+    } 
 	const comment = document.createElement("section");
 	comment.className = "comment curUser";
 
@@ -46,7 +44,11 @@ function addComment(e) {
 
 	let elem = document.createElement("h4");
 	elem.className = "userName";
-	elem.appendChild(user.userName.cloneNode());
+    let linkElem = document.createElement("a");
+    linkElem.setAttribute("href", "/users/" + userName);
+    let usernameNode = document.createTextNode(userName);
+	elem.appendChild(linkElem);
+    linkElem.appendChild(usernameNode)
 	divSection2.appendChild(elem);
 
 	// -- Date
@@ -74,7 +76,7 @@ function addComment(e) {
 	elem.appendChild(document.createTextNode("Location: "));
 
 	elem2 = document.createElement("i");
-	elem2.appendChild(document.createTextNode(user.userLocation));
+	elem2.appendChild(document.createTextNode(userCity));
 	elem.appendChild(elem2);
 	divSection2.appendChild(elem);
 
@@ -84,7 +86,7 @@ function addComment(e) {
 	comment.appendChild(divSection);
 	// == == /added USER SECTION
 
-	if (user.userName.nodeValue.toUpperCase() === "ADMIN" || user.userName.nodeValue.toUpperCase() === "POSTER") {
+	if (userIsAdmin || userName === creatorName) {
 		console.log("add!");
 		// == == USER OPTIONS BUTTON
 		divSection = document.createElement("div");

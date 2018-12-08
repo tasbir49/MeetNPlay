@@ -92,7 +92,6 @@ function deletePrompt(elem) {
 	const box = document.createElement("div");
 	box.id = "deleteDialog";
 	const msg = document.createElement("div");
-
 	document.body.appendChild(box);
 	box.append(msg);
 
@@ -113,6 +112,21 @@ function deletePrompt(elem) {
 	msg.appendChild(btn);
 
 	box.addEventListener("click", (e) => {
+            let xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+            xmlhttp.open("DELETE", "/api/comments/" + postID +"/" + elem.id);
+            xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            
+            let sendObj = {}
+            sendObj.content = inp.value
+            xmlhttp.send(JSON.stringify(sendObj));
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.status == 200) {
+
+                } else {
+                    console.log(this.status)
+                }
+            } 
 		document.body.removeChild(box);
 	});
 }
